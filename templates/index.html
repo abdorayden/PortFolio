@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Abdenour Souane Portfolio</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='css/styles.css') }}"
+		/>
+
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+			rel="stylesheet"
+		/>
+	</head>
+
+	<body>
+		<header>
+			<span class="hacker-text"
+				>Welcome to Rayden's Portfolio</span
+			>
+		</header>
+		<nav>
+			<a href="#about">About Me</a>
+			<a href="#skills">My Skills</a>
+			<a href="#projects">My Projects</a>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div id="about" class="card">
+					<h2>About Me</h2>
+					<p>
+						Hello! My name is Abdenour
+						Souane, also known as Rayden.
+						I'm a Computer Science
+						Engineering student and a
+						penetration tester with a deep
+						passion for cybersecurity and
+						low-level programming.
+					</p>
+				</div>
+				<div class="card-client">
+					<p class="name-client">
+						Souane Abdenour
+					</p>
+					<p>CS Engineer student</p>
+					<div class="social-media">
+						<a
+							href="https://www.linkedin.com/in/abdenour-souane"
+							target="_blank"
+							><i
+								class="fab fa-linkedin"
+							></i
+						></a>
+						<a
+							href="https://github.com/abdorayden"
+							target="_blank"
+							><i
+								class="fab fa-github"
+							></i
+						></a>
+						<a
+							href="https://www.instagram.com/abdenour__souane/"
+							target="_blank"
+							><i
+								class="fab fa-instagram"
+							></i
+						></a>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div id="skills" class="card">
+					<h2>My Skills</h2>
+					<ul class="skills">
+						<li>Vim</li>
+						<li>Linux</li>
+						<li>C</li>
+						<li>lua</li>
+						<li>go</li>
+						<li>bash</li>
+						<li>python</li>
+						<li>java</li>
+					</ul>
+				</div>
+
+				<div id="projects" class="card">
+					<h2>My GitHub Projects</h2>
+					<ul class="projects-list">
+						<li>
+							<a
+								href="https://github.com/abdorayden/raylist"
+								target="_blank"
+								>RayList</a
+							>
+							<p>
+								A C library that
+								implements a
+								dynamic linked
+								list with
+								support for
+								multiple data
+								types.
+							</p>
+						</li>
+						<li>
+							<a
+								href="https://github.com/abdorayden/raynet.git"
+								target="_blank"
+								>RayNet</a
+							>
+							<p>
+								raynet is
+								network analyser
+								tool for
+								pentesters have
+								multiple modules
+								for scannig and
+								testing
+								vulerabilitys
+								and Exploit this
+								tool is still
+								under
+								developement
+							</p>
+						</li>
+						<li>
+							<a
+								href="https://github.com/abdorayden/raymp"
+								target="_blank"
+								>RayMp</a
+							>
+							<p>
+								A CLI music
+								player with a
+								beautiful UI.
+							</p>
+						</li>
+						<li>
+							<a
+								href="https://github.com/abdorayden/csvlib"
+								target="_blank"
+								>RayCsv</a
+							>
+							<p>
+								A C library for
+								parsing CSV
+								files.
+							</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="vim-editor-container">
+				<div class="vim-editor">
+					<textarea
+						id="editor-textarea"
+						placeholder="Write useful information, advice or quote that others may benefit from :)) ..."
+					></textarea>
+					<button
+						class="submit-button"
+						id="submit-button"
+					>
+						ReadMe
+					</button>
+					<div class="status-bar" id="status-bar">
+						-- INSERT --
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="notification" class="notification">
+			<span class="close-btn" onclick="closeNotification()"
+				>&times;</span
+			>
+			<strong class="resp">Success!</strong>
+		</div>
+
+		<script>
+			const textarea =
+				document.getElementById("editor-textarea");
+			const statusBar = document.getElementById("status-bar");
+			const submitButton =
+				document.getElementById("submit-button");
+
+			function showNotification() {
+				const notification =
+					document.getElementById("notification");
+				notification.classList.add("show");
+
+				setTimeout(() => {
+					notification.classList.remove("show");
+				}, 4000);
+			}
+
+			function closeNotification() {
+				const notification =
+					document.getElementById("notification");
+				notification.classList.remove("show");
+			}
+
+			let isInsertMode = true;
+
+			document.addEventListener("keydown", (event) => {
+				if (event.key === "Escape") {
+					isInsertMode = false;
+					statusBar.textContent = "-- COMMAND --";
+					textarea.blur();
+				}
+				if (!isInsertMode && event.key === "i") {
+					isInsertMode = true;
+					statusBar.textContent = "-- INSERT --";
+					textarea.focus();
+				}
+			});
+
+			const submitContent = () => {
+				const responsebox =
+					document.getElementById("resp");
+				const content = textarea.value;
+				fetch("http://127.0.0.1:5000/submit", {
+					method: "POST",
+					headers: {
+						"Content-Type":
+							"application/json",
+					},
+					body: JSON.stringify({ content }),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						responsebox.textContent =
+							"Success!";
+					})
+					.catch((error) => {
+						responsebox.textContent =
+							"Failed!";
+					});
+				textarea.value = "";
+			};
+
+			submitButton.addEventListener("click", submitContent);
+			submitButton.addEventListener(
+				"click",
+				showNotification
+			);
+		</script>
+	</body>
+</html>

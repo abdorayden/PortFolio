@@ -1,0 +1,330 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Courier New", Courier, monospace;
+	background: #121212;
+	color: #00bcd4;
+	overflow-y: auto;
+}
+
+header {
+	padding: 20px;
+	text-align: center;
+	font-size: 24px;
+	background: #1e1e1e;
+	border-bottom: 2px solid #00bcd4;
+}
+
+nav {
+	display: flex;
+	justify-content: center;
+	background: #1e1e1e;
+	padding: 10px;
+	border-bottom: 2px solid #00bcd4;
+}
+
+nav a {
+	color: #00bcd4;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 16px;
+	border: 2px solid #00bcd4;
+	padding: 5px 15px;
+	border-radius: 5px;
+	transition:
+		background 0.3s ease,
+		color 0.3s ease;
+}
+
+nav a:hover {
+	background: #00bcd4;
+	color: #121212;
+}
+
+.hacker-text {
+	overflow: hidden;
+	white-space: nowrap;
+	display: inline-block;
+	animation:
+		typing 3s steps(30, end),
+		blink 2.5s step-end infinite;
+	border-right: 2px solid #00bcd4;
+	margin-top: 10px;
+}
+
+@keyframes typing {
+	from {
+		width: 0%;
+	}
+
+	to {
+		width: 35%;
+	}
+}
+
+@keyframes blink {
+	50% {
+		border-color: transparent;
+	}
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	padding: 20px;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	width: 100%;
+	justify-content: center;
+}
+
+.card {
+	background: #1e1e1e;
+	border: 2px solid #00bcd4;
+	border-radius: 10px;
+	padding: 20px;
+	flex: 1;
+	min-width: 300px;
+	max-width: 500px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-shadow: 0px 0px 20px #00bcd4;
+	transition: transform 0.3s ease;
+}
+
+.projects-list {
+	list-style: none;
+	padding: 0;
+	margin-top: 20px;
+}
+
+.projects-list li {
+	margin: 15px 0;
+	padding: 10px;
+	background: #121212;
+	border: 1px dashed #00bcd4;
+	border-radius: 5px;
+	text-align: center;
+	transition:
+		background 0.3s ease,
+		transform 0.3s ease;
+}
+
+.projects-list li:hover {
+	background: #1e1e1e;
+	transform: scale(1.02);
+}
+
+.projects-list a {
+	color: #00bcd4;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.projects-list a:hover {
+	text-decoration: underline;
+	color: #00ffcc;
+}
+
+.projects-list p {
+	margin-top: 5px;
+	font-size: 14px;
+	color: #b0c4de;
+	line-height: 1.5;
+}
+
+a {
+	font-size: 30px;
+	margin-right: 15px;
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	color: #0073b1;
+}
+
+.card:hover {
+	transform: scale(1.05);
+}
+
+.skills {
+	list-style: none;
+	padding: 0;
+}
+
+.skills li {
+	margin: 10px 0;
+	background: #121212;
+	padding: 10px;
+	border: 1px dashed #00bcd4;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.github-projects ul {
+	list-style: none;
+	padding: 0;
+}
+
+.github-projects li {
+	margin: 10px 0;
+	padding: 10px;
+	background: #121212;
+	border: 1px dashed #00bcd4;
+	border-radius: 5px;
+}
+
+.github-projects a {
+	color: #00bcd4;
+	text-decoration: none;
+}
+
+.github-projects a:hover {
+	text-decoration: underline;
+}
+
+.vim-editor .submit-button {
+	margin-top: 10px;
+	padding: 5px 10px;
+	border: 2px solid #00bcd4;
+	background: transparent;
+	color: #00bcd4;
+	font-size: 14px;
+	cursor: pointer;
+	transition:
+		background 0.3s ease,
+		color 0.3s ease;
+	display: inline-block;
+	width: 100%;
+}
+
+.vim-editor .submit-button:hover {
+	background: #00bcd4;
+	color: #121212;
+}
+
+.vim-editor-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	width: 100%;
+}
+
+.vim-editor {
+	background: #121212;
+	color: #00ff00;
+	border: 2px solid #00bcd4;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 500px;
+	height: 200px;
+	padding: 10px;
+	font-family: "Courier New", Courier, monospace;
+	box-shadow: 0px 0px 20px #00bcd4;
+}
+
+.vim-editor textarea {
+	width: 100%;
+	height: 150px;
+	background: transparent;
+	color: #00ff00;
+	border: none;
+	resize: none;
+	outline: none;
+	font-size: 14px;
+}
+
+.vim-editor .status-bar {
+	background: #1e1e1e;
+	padding: 5px;
+	color: #00bcd4;
+	border-top: 2px solid #00bcd4;
+	font-size: 12px;
+	text-align: left;
+}
+
+.card-client {
+	background: #2cb5a0;
+	width: 13rem;
+	padding: 20px;
+	border: 4px solid #7cdacc;
+	box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+	border-radius: 10px;
+	text-align: center;
+	color: #fff;
+}
+
+.card-client .social-media {
+	margin-top: 15px;
+}
+
+.card-client .social-media a {
+	margin: 0 10px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.card-client .social-media a svg {
+	width: 20px;
+	height: 20px;
+	fill: #fff;
+	transition: fill 0.3s ease;
+}
+
+.card-client .social-media a:hover svg {
+	fill: #00bcd4;
+}
+
+@media (max-width: 768px) {
+	.row {
+		flex-direction: column;
+	}
+}
+
+.notification {
+	background-color: #4caf50;
+	color: white;
+	padding: 15px;
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: 300px;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	font-size: 16px;
+	display: none;
+	z-index: 1000;
+	transition: opacity 0.5s ease;
+}
+
+.notification.show {
+	display: block;
+	opacity: 1;
+}
+
+.close-btn {
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	cursor: pointer;
+}
+
+.close-btn:hover {
+	color: #ccc;
+}
