@@ -233,15 +233,6 @@
 					},
 					body: JSON.stringify({ content }),
 				})
-					.then((response) => response.json())
-					.then((data) => {
-						responsebox.textContent =
-							"Success!";
-					})
-					.catch((error) => {
-						responsebox.textContent =
-							"Failed!";
-					});
 				textarea.value = "";
 			};
 

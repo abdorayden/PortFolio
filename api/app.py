@@ -14,7 +14,7 @@ def submit():
     content = data.get('content', '')
     with open('quotes/quote.txt', 'a') as file:
         file.write("\n" + content + "\n")
-    return jsonify({'message': content}), 200
+    return 200
 
 if __name__ == '__main__':
-    app.run(port = 80)
+    app.run()
