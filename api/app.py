@@ -12,7 +12,7 @@ def index() :
 def submit():
     data = request.json
     content = data.get('content', '')
-    with open('../quotes/quote.txt', 'a') as file:
+    with open('quotes/quote.txt', 'a') as file:
         file.write("\n" + content + "\n")
     return jsonify({'message': content}), 200
 
