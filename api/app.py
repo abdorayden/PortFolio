@@ -12,9 +12,12 @@ def index() :
 def submit():
     data = request.json
     content = data.get('content', '')
-    with open('quotes/quote.txt', 'a') as file:
-        file.write("\n" + content + "\n")
+    try :
+        with open('quotes/quote.txt', 'a') as file:
+            file.write("\n" + content + "\n")
+    except Exception :
+        return 500
     return 200
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port = 443)
