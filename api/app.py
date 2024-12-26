@@ -16,7 +16,7 @@ def submit():
         with open('quotes/quote.txt', 'a') as file:
             file.write("\n" + content + "\n")
     except Exception as err:
-        return jsonify({'message': "ok"}), 200
+        return jsonify({'message': err}), 404
 
     return jsonify({'message': "ok"}), 200
 
