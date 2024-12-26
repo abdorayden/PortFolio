@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify , render_template_string
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../static', template_folder='../templates')
 
 @app.route('/')
 def index() :
@@ -12,7 +12,7 @@ def index() :
 def submit():
     data = request.json
     content = data.get('content', '')
-    with open('quotes/quote.txt', 'a') as file:
+    with open('../quotes/quote.txt', 'a') as file:
         file.write("\n" + content + "\n")
     return jsonify({'message': content}), 200
 
