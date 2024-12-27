@@ -236,13 +236,13 @@
 				textarea.value = "";
 			};
 
-				submitButton.addEventListener("click", submitContent);
 			if(textarea.value !== ""){
 				submitButton.addEventListener(
 					"click",
 					showNotification
 				);
 			}
+			submitButton.addEventListener("click", submitContent);
 		</script>
 	</body>
 </html>
