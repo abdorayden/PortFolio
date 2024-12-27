@@ -236,7 +236,9 @@
 				textarea.value = "";
 			};
 
-			submitButton.addEventListener("click", submitContent);
+			if(textarea.value !== ""){
+				submitButton.addEventListener("click", submitContent);
+			}
 			submitButton.addEventListener(
 				"click",
 				showNotification
