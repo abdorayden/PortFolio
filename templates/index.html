@@ -190,17 +190,17 @@
 			const submitButton =
 				document.getElementById("submit-button");
 
-			function showNotification() {
-				if(textarea.value !== ""){
-					const notification =
-						document.getElementById("notification");
-					notification.classList.add("show");
+			//function showNotification() {
+			//	if(textarea.value !== ""){
+			//		const notification =
+			//			document.getElementById("notification");
+			//		notification.classList.add("show");
 
-					setTimeout(() => {
-						notification.classList.remove("show");
-					}, 4000);
-				}
-			}
+			//		setTimeout(() => {
+			//			notification.classList.remove("show");
+			//		}, 4000);
+			//	}
+			//}
 
 			function closeNotification() {
 				const notification =
@@ -227,6 +227,15 @@
 				const responsebox =
 					document.getElementById("resp");
 				const content = textarea.value;
+				if(content !== ""){
+					const notification =
+						document.getElementById("notification");
+					notification.classList.add("show");
+
+					setTimeout(() => {
+						notification.classList.remove("show");
+					}, 4000);
+				}
 				fetch("https://rayden-six.vercel.app/submit", {
 					method: "POST",
 					headers: {
@@ -239,10 +248,10 @@
 			};
 
 			submitButton.addEventListener("click", submitContent);
-			submitButton.addEventListener(
-				"click",
-				showNotification
-			);
+			//submitButton.addEventListener(
+			//	"click",
+			//	showNotification
+			//);
 		</script>
 	</body>
 </html>
