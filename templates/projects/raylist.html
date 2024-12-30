@@ -199,6 +199,10 @@
             <li><a href="#method-filter">List_Filter</a></li>
             <li><a href="#method-map">List_Map</a></li>
             <li><a href="#method-clear">List_Clear</a></li>
+
+            <li><a href="#stack-queue">Stack and Queue</a></li>
+            <li><a href="#collections">RLCollections </a></li>
+
             <li><a href="#macro-defer">List_Defer</a></li>
             <li><a href="#macro-SetObject">List_SetObject</a></li>
             <li><a href="#macro-CopyObject-DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
@@ -856,6 +860,98 @@ int main() {
 	mylist.List_Clear(); // len list == 0
 
     return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+
+			<div id="stack-queue" class="card">
+				<h3>Queue and Stack</h3>
+				<p>
+					both of thoes functions implements RLCollections interface 
+					this functions accept buffer limiter (can fix the size)
+					and also you can put Buf_Disable parameter to make it dynamic
+					RLCollections has macro RLPush this macro is generic like RLappend macro
+					magic macros also work for this interface
+				</p>
+			</div>
+
+
+			<div id="collections" class="card">
+				<h3>List Defer</h3>
+				<p>
+					RLCollections Example :
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// RLCollections interface
+	/*
+	 *	Max_Buffer() return true if buffer equal to fixed buffer else false
+	 * */
+
+	// 	LBOOL Max_Buffer(void);
+
+	/*
+	 *	return true if stack is empty else false
+	 * */
+	//	LBOOL Is_Empty(void);
+	/*
+	 *  return String if the error is set true (status > 0)
+	 * */ 
+	//	string Get_Error(void);
+	/*
+	 *	Push function will take the data and stored to the __list__ global variable 
+	 *
+	 * 	Push(
+	 *		Type : the data type
+	 *		void*: data pointer point address of stored data
+	 * 	)
+	 *	
+	 *	NOTE : the append method works like push in stack algorithm
+	 *
+	 *	Example :
+	 *		my_list.Push(RL_STR , "Hello World");
+	 *
+	 * */
+	//	void Push(Type type, void* data);
+	/*
+	 *	Peek function return last value of the Stack (Stack)
+	 *	Example : 
+	 *		void* value = my_list.Stack_Peek();
+	 * */
+	//	void* Peek(void);
+	/*
+	 *	Stack_Pop function will pop the last value from the list
+	 *
+	 *	Example : 
+	 *		void* value = my_list.Stack_Pop();
+	 * */
+	//	void* Pop(void);
+
+	// clear Stack
+	//	void Clear(void);
+
+
+	RLCollections stack = Stack(Buf_Disable);
+
+	RLDefer(stack.Clear); // clear will be called at the end of program
+
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		RLPush(RL_INT , i);
+	}
+
+	RLSetObject(2);
+	RLCollections queue = Queue(10); // queue with 10 buffer
+	RLPush(RL_FLT , 10.23f);
+
+    	return 0;
 }
                 </code></pre>
 				</div>
