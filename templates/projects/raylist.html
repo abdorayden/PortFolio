@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>RayList Documentation</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css"
+		/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
+		<style>
+			body {
+				font-family: "Courier New", Courier, monospace;
+				background: #121212;
+				color: #c7d1d9;
+				margin: 0;
+				display: flex;
+				height: 100vh;
+				overflow: hidden;
+			}
+			header {
+				padding: 20px;
+				text-align: center;
+				background: #1e1e1e;
+				border-bottom: 2px solid #00bcd4;
+			}
+			nav {
+				display: flex;
+				justify-content: center;
+				background: #1e1e1e;
+				padding: 10px;
+				border-bottom: 2px solid #00bcd4;
+			}
+			nav a {
+				color: #00bcd4;
+				text-decoration: none;
+				margin: 0 15px;
+				font-size: 16px;
+				padding: 5px 15px;
+				border-radius: 5px;
+				transition:
+					background 0.3s ease,
+					color 0.3s ease;
+			}
+			nav a:hover {
+				background: #00bcd4;
+				color: #121212;
+			}
+			.sidebar {
+				width: 200px;
+				background: #1e1e1e;
+				padding: 20px;
+				border-right: 2px solid #00bcd4;
+				overflow-y: auto;
+				height: 100vh;
+				position: fixed;
+			}
+			.sidebar h2 {
+				color: #ffeb3b;
+				margin: 0;
+			}
+			.sidebar ul {
+				list-style: none;
+				padding: 0;
+			}
+			.sidebar ul li {
+				margin: 10px 0;
+			}
+			.sidebar ul li a {
+				color: #00bcd4;
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+			.sidebar ul li a:hover {
+				color: #ffeb3b;
+			}
+			.container {
+				padding: 20px;
+				margin-left: 220px;
+				overflow-y: auto;
+				height: 100vh;
+				flex: 1;
+			}
+			.card {
+				background: #1e1e1e;
+				border-radius: 8px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				margin-bottom: 20px;
+				padding: 20px;
+				animation: fadeIn 1s ease-in-out;
+			}
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+				to {
+					opacity: 1;
+				}
+			}
+			.card h2,
+			.card h3 {
+				color: #ffeb3b;
+			}
+			.terminal {
+				background: #1e1e1e;
+				color: #00ff00;
+				padding: 20px;
+				border-radius: 5px;
+				font-family: "Courier New", Courier, monospace;
+				box-shadow: 0px 0px 20px #00bcd4;
+				display: flex;
+				align-items: center;
+			}
+			pre[class*="language-"],
+			code[class*="language-"] {
+				background: #1e1e1e !important;
+				color: #f8f8f2;
+			}
+			.hacker-text {
+				overflow: hidden;
+				white-space: nowrap;
+				display: inline-block;
+				animation:
+					typing 3s steps(30, end),
+					blink 2.5s step-end infinite;
+				border-right: 2px solid #00bcd4;
+			}
+			@keyframes typing {
+				from {
+					width: 0%;
+				}
+				to {
+					width: 100%;
+				}
+			}
+			@keyframes blink {
+				50% {
+					border-color: transparent;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="sidebar">
+			<h2>Documentation</h2>
+			<ul>
+				<li>
+					<a href="#raylist-library"
+						>RayList Library</a
+					>
+				</li>
+				<li><a href="#features">Features</a></li>
+				<li>
+					<a href="#installation">Installation</a>
+				</li>
+				<li><a href="#usage">Usage</a></li>
+				<li><a href="#preffix">Preffix method Call</a></li>
+				<li><a href="#types">Types</a></li>
+				<li><a href="#List">List</a></li>
+				<li><a href="#rlappend">RLAppend macro</a></li>
+				<li><a href="#method-append">List_Append</a></li>
+				<li><a href="#method-insert">List_Insert</a></li>
+				<li><a href="#method-search">List_Search</a></li>
+				<li><a href="#method-delete">List_Del_Index</a></li>
+				<li><a href="#method-get">List_Get</a></li>
+				<li><a href="#method-reverse">List_Reverse</a></li>
+				<li><a href="#method-print">List_Print</a></li>
+				<li><a href="#method-error-handling">List_Get_Error</a></li>
+				<li><a href="#method-len">List_Len</a></li>
+				<li><a href="#method-execfunctions-sync">List_Exec_Sync</a></li>
+				<li><a href="#method-execfunctions-async">List_Exec_Async</a></li>
+				<li><a href="#method-filter">List_Filter</a></li>
+				<li><a href="#method-map">List_Map</a></li>
+				<li><a href="#method-clear">List_Clear</a></li>
+
+				<li><a href="#macro-defer">List_Defer</a></li>
+				<li><a href="#macro-SetObject">List_SetObject</a></li>
+				<li><a href="#macro-CopyObject - DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
+
+			</ul>
+		</div>
+		<div class="container">
+			<header>
+				<h1 class="hacker-text">
+					RayList Project Documentation
+				</h1>
+			</header>
+			<nav>
+				<a href="https://rayden-six.vercel.app">Home</a>
+				<a
+					href="https://github.com/abdorayden/raylist"
+					target="_blank"
+					><i
+						class="fab fa-github"
+					></i
+				></a>
+			</nav>
+			<div id="raylist-library" class="card">
+				<h2>RayList Library</h2>
+				<p>
+					RayList is a C library that implements a
+					dynamic linked list supporting multiple
+					data types, with various functions for
+					list manipulation. It allows you to
+					manage lists, stacks, and queues
+					efficiently with support for custom data
+					types and asynchronous task execution.
+					raylist also contains magic macros to solve list C problems like (RLSetObject , RLDefer , ...)
+				</p>
+			</div>
+			<div id="features" class="card">
+				<h3>Features</h3>
+				<ul>
+					<li>
+						Dynamic linked list supporting
+						multiple data types
+					</li>
+					<li>
+						Functions for list manipulation
+						(append, insert, delete, search,
+						filter, map, etc.)
+					</li>
+					<li>
+						Support for stack and queue data
+						structures
+					</li>
+					<li>
+						Asynchronous task execution
+						using threads
+					</li>
+					<li>
+						Customizable memory allocation
+						functions
+					</li>
+				</ul>
+			</div>
+			<div id="installation" class="card">
+				<h3>Installation</h3>
+				<p>
+					To use RayList in your project, include
+					the <code>raylist.h</code> header file
+					and link against the compiled library.
+					Ensure you have the required
+					dependencies installed.
+					and define macro LIST_C to act like C file
+					because the library is like stb stile
+					header only library
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+// should include stdarg.h
+#include <stdarg.h>
+// enable raylist implementation
+#define LIST_C
+#include "raylist.h"
+                </code></pre>
+				</div>
+			</div>
+			<div id="usage" class="card">
+				<h3>Usage</h3>
+				<p>
+					Here is a basic example of how to use
+					RayList:
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#include<stdarg.h>
+#include<stdio.h>
+
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+    RLList my_list = List(0);  // Initialize an empty list
+    my_list.List_Append(RL_INT, (void*)&(int){10});
+    my_list.List_Append(RL_STR, "Hello, World!");
+    my_list.List_Print();
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="preffix" class="card">
+				<h3>List</h3>
+				<p>
+					list contains methods like in python
+					and it's own preffix
+					Example :
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+// this macro enable list preffix
+#define USING_LIST
+
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+    RLList my_list = List(0);
+
+    // after define USING_LIST macro
+    my_list.Filter(callback, RL_INT); // now you can use method like this
+    my_list.Print();
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+
+
+			<div id="types" class="card">
+				<h3>List Types</h3>
+				<p>
+					types can used in list , stack , queue
+					this type helps raylist for memory managment
+
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+// this macro enable list preffix
+#define USING_LIST
+
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// RL_INT	type int
+	// RL_STR	type str (char*)
+	// RL_VOIDPTR	type void ptr (void*)
+	// RL_FLT	type float
+	// RL_BOOL	type boolean
+	// RL_CHR	type char
+
+	// RL_STRFUNC   type function return string
+	// RL_CHARFUNC	type function return char
+	// RL_INTFUNC	type function return int
+	// RL_VOIDFUNC	type function return void
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="List" class="card">
+				<h3>List</h3>
+				<p>
+					List return RLList interface which implements all list method
+					list also accept va_list arguments to add data dynamicly 
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(3, // 3 is number of the data we add to the list
+				RL_STR , "Hello", // <type> , <data> 
+				RL_BOOL , true,	  //   .
+				RL_STR , "world"  //   .
+	);
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="rlappend" class="card">
+				<h3>List RLAppend</h3>
+				<p>
+					RLAppend macro works like append method but use generics 
+					macro can detecte type of the data , without casting to void*
+
+					work with int , float and char only
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(0);
+	RLAppend(RL_INT , 1);
+	RLAppend(RL_INT , 2);
+	RLAppend(RL_INT , 3);
+	RLAppend(RL_CHR , 'e');
+	RLAppend(RL_CHR , 'h');
+	RLAppend(RL_FLT , 3.14f);
+	RLAppend(RL_FLT , 2.73f);
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-append" class="card">
+				<h3>List Append</h3>
+				<p>
+					append method takes type and data 	
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(0);
+	// U can call method append like this if you defined USING_LIST macro
+	mylist.Append(RL_STR , "Hello");
+	mylist.Append(RL_STR , "World");
+	// if not
+	mylist.List_Append(RL_STR , "Hello");
+	mylist.List_Append(RL_STR , "World");
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-insert" class="card">
+				<h3>List Insert</h3>
+				<p>
+					insert method takes index poition to add data , type and data 	
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(4,
+		RL_STR , "Hello",
+		RL_STR , "World",
+		RL_STR , "rayden",
+		RL_STR , "foo"
+
+	);
+	mylist.List_Insert(2 , RL_STR , "bar"); // insert bar str in index 2
+	mylist.List_Insert(0 , RL_STR , "baz"); // insert baz str in index 0
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-search" class="card">
+				<h3>List Search</h3>
+				<p>
+					search method takes int pointer type to return index of the data we search for , type of data and the data 	
+					function return boolean true if function found the data else false
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(2,
+		RL_STR , "Hello",
+		RL_STR , "World"
+
+	);
+	int idx;
+	if(mylist.List_Search(&idx , RL_STR , "World")){
+		printf("data found at index : %d\n" , idx);
+	}else{
+		printf("data not found \n");
+	}
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-delete" class="card">
+				<h3>List Delete</h3>
+				<p>
+					delete method takes int index the position of the data we want to delete 	
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(2,
+		RL_STR , "Hello",
+		RL_STR , "World"
+
+	);
+
+	//  Hello data will  be delete it
+	mylist.Del_Index(0);
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-get" class="card">
+				<h3>List Get</h3>
+				<p>
+					get method takes int index the position of the data we want to get 	
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(3,
+		RL_STR , "World",
+		RL_STR , "foo",
+		RL_STR , "bar"
+
+	);
+	// function will return foo 
+	puts((char*)mylist.List_Get(1));
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-reverse" class="card">
+				<h3>List Reverse</h3>
+				<p>
+					reverse method take no argument and return nothing 
+					reverse will reverse the list
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(3,
+		RL_STR , "World",
+		RL_STR , "foo",
+		RL_STR , "bar"
+
+	);
+	mylist.List_Reverse(); // list reverse
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-print" class="card">
+				<h3>List Print</h3>
+				<p>
+					print method take no argument and return nothing 
+					print method will print the data in list like python3 format
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(3,
+		RL_STR , "World",
+		RL_STR , "foo",
+		RL_STR , "bar"
+
+	);
+	mylist.List_Print(); 
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-error-handling" class="card">
+				<h3>List Error Handle</h3>
+				<p>
+					get_error method take no argument and return string error , and NULL if not
+					while you working with raylist , library detecte errors , so after any operation
+					check if method return NULL or not ,
+					if return value is not NULL log the error
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(3,
+		RL_STR , "World",
+		RL_STR , "foo",
+		RL_STR , "bar"
+
+	);
+	char* err = mylist.List_Get_Error(); 
+	if(err != NULL){
+		fprintf(stderr , "[ERROR] %s" , err);
+	}
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-len" class="card">
+				<h3>List length</h3>
+				<p>
+					len method take no argument and return how many data in list
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(3,
+		RL_STR , "World",
+		RL_STR , "foo",
+		RL_STR , "bar"
+
+	);
+	int len = mylist.List_Len(); // len == 3
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-execfunctions-sync" class="card">
+				<h3>List Call Functions Sync</h3>
+				<p>
+					exec_sync method take index of the function , and the data (data passed to calling function argument) , and the flag
+					if index is less than 0 or bigger than length of list will execute all functions
+
+					Exec_Flag : 
+
+						OUTT 	the return value from called function will returned in Exec_Sync method
+						 	OUTT flag is not enabled if index parameter in Exec_Sync was out of range
+
+						INPLACE	the return value will replaced function callback index  
+							the void function is not replaced 
+
+						
+						ADDED 	the function return value will added to the list
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+void foo(void){
+	printf("foo");
+}
+
+char* myname(char* name) {
+	return name;
+}
+
+int main() {
+	// Example Append
+	RLList mylist = List(2,
+		RL_VOIDFUNC , foo,
+		RL_STRFUNC , myname
+
+	);
+	myname.List_Exec_Sync(0 , NULL , OUTT); // void return type function don't care about flag
+	myname.List_Exec_Sync(1 , "rayden" , ADDED); 
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-execfunctions-async" class="card">
+				<h3>List Call Functions Async</h3>
+				<p>
+					exec_async method take index of the function , and the data (data passed to calling function argument)
+					if index is less than 0 or bigger than length of list will execute all functions
+
+					this function will call functions Asynchronously , this method call function iin separite thread and return interface 
+
+					interface : 
+						thread_id -> thread handler of the calling function
+						Kill : 
+	 						* Kill function
+	 						* for killing the thread
+
+						Wait : 
+	 						* Wait function 
+	 						* function waits for the thread specified by thread to terminate
+						- both of these method takes handle thread in parameter
+
+					this method work with specific macro called RLTestCancel this macro should be called inside target function Kill method can detecte the function and kill thread
+
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+void limitloop(void)
+{
+	for(int i = 0 ; i < 20 ; i++){
+		puts("Test");
+		sleep(1);
+		RLTestCancel();
+	}
+}
+
+void limitloop2(void)
+{
+	for(int i = 0 ; i < 20 ; i++){
+		puts("Hello");
+		sleep(1);
+		RLTestCancel();
+	}
+}
+
+int main() {
+	// Example Append
+	RLList mylist = List(2,
+		RL_VOIDFUNC , limitloop,
+		RL_VOIDFUNC , limitloop2
+
+	);
+	IfaceThread tr = my_list.Exec_Async(3 , NULL);
+	IfaceThread rt = my_list.Exec_Async(4 , NULL);
+
+	RLUNUSED(tr); // unused variable
+
+	// functions now works in the same time
+	rt.Kill(tr.thread); // killing functionof tr interface
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-filter" class="card">
+				<h3>List Filter</h3>
+				<p>
+					filter method used to filter the list According to condition in callback function except void* parameter and return boolean
+					filter accept function call back  , type for filter , and Filter_Flag
+
+					Filter_Flag :
+						ALL  	// (filtring all list)
+						ONLY	// (filtring only type)
+
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+
+LBOOL for_filter(void* data)
+{
+	// filtring odd numbers
+	if(*(int*)data % 2 != 0)	return true;
+	return false;
+}
+
+int main() {
+	// Example Append
+	RLList mylist = List(0);
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		RLAppend(RL_INT , i);
+	}
+	mylist.List_Filter(for_filter , RL_INT , ONLY);
+					       // now our list contains odd numbers
+					       // if flag was ALL other types will be delete it
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-map" class="card">
+				<h3>List Map</h3>
+				<p>
+					map method used to apply changes to the elemetn's in the list According to condition ,in callback function except void* parameter and return void*
+
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+
+void* for_map(void* data)
+{
+	if(*(int*)data % 2 != 0){	
+		// if data number is odd , change it to 100
+		*(int*)data = 100;
+	}
+	return data;
+}
+
+int main() {
+	// Example Append
+	RLList mylist = List(0);
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		RLAppend(RL_INT , i);
+	}
+	mylist.List_Map(for_map , RL_INT);
+					       // now all odd numbers is equale to 100
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="method-clear" class="card">
+				<h3>List Clear</h3>
+				<p>
+					clear method will free's all allocated data in list
+
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(0);
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		RLAppend(RL_INT , i);
+	}
+	mylist.List_Clear(); // len list == 0
+
+    return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="macro-defer" class="card">
+				<h3>List Defer</h3>
+				<p>
+					defer raylist macro registers the given function to be called at normal process termination , accept callback function return type void and accept no arguments
+					works like defer in go
+					macro is atexit function from standard library
+					function will not work when forced with CTRL-C
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	// Example Append
+	RLList mylist = List(0);
+
+	RLDefer(mylist.Clear); // clear will be called at the end of program
+
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		RLAppend(RL_INT , i);
+	}
+
+    	return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="macro-SetObject" class="card">
+				<h3>List RLSetObject</h3>
+				<p>
+					RLSetObject macro used for multiple list storage
+					you can create another allocated list (linked list) RLSetObject change method access direction to pointed list
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	RLList mylist = List(0);
+
+	RLList mysecondlist = List(0);
+
+	// default direction of methods and macros work with mylist object
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		RLAppend(RL_INT , i);
+	}
+	// start with 1
+	RLSetObject(2)
+	//
+	// now all methods will work with mysecondlist object
+	//
+    	return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+			<div id="macro-CopyObject - DisableCopyObject" class="card">
+				<h3>List RLCopyObject and RLDisableCopyObject</h3>
+				<p>
+					RLCopyObject allow raylist to copy the target object instead of pointing his memory
+					raylist by default point address variables and this creates problems if the target object can be NULL or data changes
+					in same object
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#define LIST_C
+#include "raylist.h"
+
+int main() {
+	RLList mylist = List(0);
+
+	RLCopyObject(sizeof(int)) // macro accept size of the copy object
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		mylist.List_Append(RL_INT , (void*)&i);
+	}
+	RLDisableCopyObject();
+	// the list result is not [9,9,9,9,9,9,9,9,9] , it's [0,1,2,3,4,5,6,7,8,9]
+    	return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+
+
+
+		</div>
+	</body>
+</html>

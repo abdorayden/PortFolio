@@ -2,6 +2,12 @@ from flask import Flask, request, jsonify , render_template_string
 
 app = Flask(__name__, static_folder='../static', template_folder='../templates')
 
+@app.route('/raylist')
+def raylist() :
+    with open('templates/projects/raylist.html') as f :
+        chtml = f.read()
+    return render_template_string(chtml)
+
 @app.route('/')
 def index() :
     with open('templates/index.html') as f :
