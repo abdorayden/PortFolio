@@ -133,16 +133,41 @@
                 position: relative;
                 border-right: none;
                 border-bottom: 2px solid #00bcd4;
+                display: none;
             }
             .container {
                 margin-left: 0;
-                margin-top: 220px;
+                margin-top: 0;
                 height: auto;
+            }
+            .menu-toggle {
+                display: block;
+                background: #1e1e1e;
+                color: #00bcd4;
+                padding: 10px;
+                text-align: center;
+                cursor: pointer;
+                border-bottom: 2px solid #00bcd4;
+            }
+            .menu-toggle:hover {
+                background: #00bcd4;
+                color: #121212;
             }
         }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuToggle = document.querySelector(".menu-toggle");
+            const sidebar = document.querySelector(".sidebar");
+
+            menuToggle.addEventListener("click", function() {
+                sidebar.style.display = sidebar.style.display === "block" ? "none" : "block";
+            });
+        });
+    </script>
 </head>
 <body>
+    <div class="menu-toggle">Menu</div>
     <div class="sidebar">
         <h2>Documentation</h2>
         <ul>
@@ -228,7 +253,7 @@ int main() {
                 </code></pre>
             </div>
         </div>
-			<div id="preffix" class="card">
+<div id="preffix" class="card">
 				<h3>List</h3>
 				<p>
 					list contains methods like in python
