@@ -1,4 +1,4 @@
-<!doctype html>
+			<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -55,6 +55,10 @@
             overflow-y: auto;
             height: 100vh;
             position: fixed;
+            transition: transform 0.3s ease;
+        }
+        .sidebar.hidden {
+            transform: translateX(-100%);
         }
         .sidebar h2 {
             color: #ffeb3b;
@@ -130,14 +134,13 @@
             .sidebar {
                 width: 100%;
                 height: auto;
-                position: relative;
+                position: fixed;
                 border-right: none;
                 border-bottom: 2px solid #00bcd4;
-                display: none;
+                transform: translateX(-100%);
             }
             .container {
                 margin-left: 0;
-                margin-top: 0;
                 height: auto;
             }
             .menu-toggle {
@@ -161,14 +164,14 @@
             const sidebar = document.querySelector(".sidebar");
 
             menuToggle.addEventListener("click", function() {
-                sidebar.style.display = sidebar.style.display === "block" ? "none" : "block";
+                sidebar.classList.toggle("hidden");
             });
         });
     </script>
 </head>
 <body>
     <div class="menu-toggle">Menu</div>
-    <div class="sidebar">
+    <div class="sidebar hidden">
         <h2>Documentation</h2>
         <ul>
             <li><a href="#raylist-library">RayList Library</a></li>
@@ -195,7 +198,7 @@
             <li><a href="#method-clear">List_Clear</a></li>
             <li><a href="#macro-defer">List_Defer</a></li>
             <li><a href="#macro-SetObject">List_SetObject</a></li>
-            <li><a href="#macro-CopyObject">List_CopyObj DisableCopyObj</a></li>
+            <li><a href="#macro-CopyObject-DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
         </ul>
     </div>
     <div class="container">
@@ -918,7 +921,7 @@ int main() {
                 </code></pre>
 				</div>
 			</div>
-			<div id="macro-CopyObject - DisableCopyObject" class="card">
+			<div id="macro-CopyObject-DisableCopyObject" class="card">
 				<h3>List RLCopyObject and RLDisableCopyObject</h3>
 				<p>
 					RLCopyObject allow raylist to copy the target object instead of pointing his memory<br>
@@ -947,6 +950,9 @@ int main() {
                 </code></pre>
 				</div>
 			</div>
-    </div>
-</body>
+
+
+
+		</div>
+	</body>
 </html>
