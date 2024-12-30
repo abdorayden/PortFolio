@@ -1,4 +1,4 @@
-			<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -55,10 +55,6 @@
             overflow-y: auto;
             height: 100vh;
             position: fixed;
-            transition: transform 0.3s ease;
-        }
-        .sidebar.hidden {
-            transform: translateX(-100%);
         }
         .sidebar h2 {
             color: #ffeb3b;
@@ -138,6 +134,10 @@
                 border-right: none;
                 border-bottom: 2px solid #00bcd4;
                 transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.hidden {
+                transform: translateX(-100%);
             }
             .container {
                 margin-left: 0;
@@ -163,15 +163,18 @@
             const menuToggle = document.querySelector(".menu-toggle");
             const sidebar = document.querySelector(".sidebar");
 
-            menuToggle.addEventListener("click", function() {
-                sidebar.classList.toggle("hidden");
-            });
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add("hidden");
+                menuToggle.addEventListener("click", function() {
+                    sidebar.classList.toggle("hidden");
+                });
+            }
         });
     </script>
 </head>
 <body>
     <div class="menu-toggle">Menu</div>
-    <div class="sidebar hidden">
+    <div class="sidebar">
         <h2>Documentation</h2>
         <ul>
             <li><a href="#raylist-library">RayList Library</a></li>
