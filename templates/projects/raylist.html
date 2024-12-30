@@ -1,283 +1,219 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<title>RayList Documentation</title>
-		<link
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-			rel="stylesheet"
-		/>
-		<link rel="icon" href="https://github.com/abdorayden/PortFolio/blob/master/assets/logo.jpeg?raw=true" type="image/x-icon type">
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css"
-		/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
-		<style>
-			body {
-				font-family: "Courier New", Courier, monospace;
-				background: #121212;
-				color: #c7d1d9;
-				margin: 0;
-				display: flex;
-				height: 100vh;
-				overflow: hidden;
-			}
-			header {
-				padding: 20px;
-				text-align: center;
-				background: #1e1e1e;
-				border-bottom: 2px solid #00bcd4;
-			}
-			nav {
-				display: flex;
-				justify-content: center;
-				background: #1e1e1e;
-				padding: 10px;
-				border-bottom: 2px solid #00bcd4;
-			}
-			nav a {
-				color: #00bcd4;
-				text-decoration: none;
-				margin: 0 15px;
-				font-size: 16px;
-				padding: 5px 15px;
-				border-radius: 5px;
-				transition:
-					background 0.3s ease,
-					color 0.3s ease;
-			}
-			nav a:hover {
-				background: #00bcd4;
-				color: #121212;
-			}
-			.sidebar {
-				width: 200px;
-				background: #1e1e1e;
-				padding: 20px;
-				border-right: 2px solid #00bcd4;
-				overflow-y: auto;
-				height: 100vh;
-				position: fixed;
-			}
-			.sidebar h2 {
-				color: #ffeb3b;
-				margin: 0;
-			}
-			.sidebar ul {
-				list-style: none;
-				padding: 0;
-			}
-			.sidebar ul li {
-				margin: 10px 0;
-			}
-			.sidebar ul li a {
-				color: #00bcd4;
-				text-decoration: none;
-				transition: color 0.3s ease;
-			}
-			.sidebar ul li a:hover {
-				color: #ffeb3b;
-			}
-			.container {
-				padding: 20px;
-				margin-left: 220px;
-				overflow-y: auto;
-				height: 100vh;
-				flex: 1;
-			}
-			.card {
-				background: #1e1e1e;
-				border-radius: 8px;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-				margin-bottom: 20px;
-				padding: 20px;
-				animation: fadeIn 1s ease-in-out;
-			}
-			@keyframes fadeIn {
-				from {
-					opacity: 0;
-				}
-				to {
-					opacity: 1;
-				}
-			}
-			.card h2,
-			.card h3 {
-				color: #ffeb3b;
-			}
-			.terminal {
-				background: #1e1e1e;
-				color: #00ff00;
-				padding: 20px;
-				border-radius: 5px;
-				font-family: "Courier New", Courier, monospace;
-				box-shadow: 0px 0px 20px #00bcd4;
-				display: flex;
-				align-items: center;
-			}
-			pre[class*="language-"],
-			code[class*="language-"] {
-				background: #1e1e1e !important;
-				color: #f8f8f2;
-			}
-			.hacker-text {
-				overflow: hidden;
-				white-space: nowrap;
-				display: inline-block;
-				animation:
-					typing 3s steps(30, end),
-					blink 2.5s step-end infinite;
-				border-right: 2px solid #00bcd4;
-			}
-			@keyframes typing {
-				from {
-					width: 0%;
-				}
-				to {
-					width: 100%;
-				}
-			}
-			@keyframes blink {
-				50% {
-					border-color: transparent;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<div class="sidebar">
-			<h2>Documentation</h2>
-			<ul>
-				<li>
-					<a href="#raylist-library"
-						>RayList Library</a
-					>
-				</li>
-				<li><a href="#features">Features</a></li>
-				<li>
-					<a href="#installation">Installation</a>
-				</li>
-				<li><a href="#usage">Usage</a></li>
-				<li><a href="#preffix">Preffix method Call</a></li>
-				<li><a href="#types">Types</a></li>
-				<li><a href="#List">List</a></li>
-				<li><a href="#rlappend">RLAppend macro</a></li>
-				<li><a href="#method-append">List_Append</a></li>
-				<li><a href="#method-insert">List_Insert</a></li>
-				<li><a href="#method-search">List_Search</a></li>
-				<li><a href="#method-delete">List_Del_Index</a></li>
-				<li><a href="#method-get">List_Get</a></li>
-				<li><a href="#method-reverse">List_Reverse</a></li>
-				<li><a href="#method-print">List_Print</a></li>
-				<li><a href="#method-error-handling">List_Get_Error</a></li>
-				<li><a href="#method-len">List_Len</a></li>
-				<li><a href="#method-execfunctions-sync">List_Exec_Sync</a></li>
-				<li><a href="#method-execfunctions-async">List_Exec_Async</a></li>
-				<li><a href="#method-filter">List_Filter</a></li>
-				<li><a href="#method-map">List_Map</a></li>
-				<li><a href="#method-clear">List_Clear</a></li>
-
-				<li><a href="#macro-defer">List_Defer</a></li>
-				<li><a href="#macro-SetObject">List_SetObject</a></li>
-				<li><a href="#macro-CopyObject - DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
-
-			</ul>
-		</div>
-		<div class="container">
-			<header>
-				<h1 class="hacker-text">
-					RayList Project Documentation
-				</h1>
-			</header>
-			<nav>
-				<a href="https://rayden-six.vercel.app">Home</a>
-				<a
-					href="https://github.com/abdorayden/raylist"
-					target="_blank"
-					><i
-						class="fab fa-github"
-					></i
-				></a>
-			</nav>
-			<div id="raylist-library" class="card">
-				<h2>RayList Library</h2>
-				<p>
-					RayList is a C library that implements a
-					dynamic linked list supporting multiple
-					data types, with various functions for
-					list manipulation. It allows you to
-					manage lists, stacks, and queues
-					efficiently with support for custom data
-					types and asynchronous task execution.
-					raylist also contains magic macros to solve list C problems like (RLSetObject , RLDefer , ...)
-				</p>
-			</div>
-			<div id="features" class="card">
-				<h3>Features</h3>
-				<ul>
-					<li>
-						Dynamic linked list supporting
-						multiple data types
-					</li>
-					<li>
-						Functions for list manipulation
-						(append, insert, delete, search,
-						filter, map, etc.)
-					</li>
-					<li>
-						Support for stack and queue data
-						structures
-					</li>
-					<li>
-						Asynchronous task execution
-						using threads
-					</li>
-					<li>
-						Customizable memory allocation
-						functions
-					</li>
-				</ul>
-			</div>
-			<div id="installation" class="card">
-				<h3>Installation</h3>
-				<p>
-					To use RayList in your project, include
-					the <code>raylist.h</code> header file
-					and link against the compiled library.
-					Ensure you have the required
-					dependencies installed.
-					and define macro LIST_C to act like C file
-					because the library is like stb stile
-					header only library
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-// should include stdarg.h
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RayList Documentation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" href="https://github.com/abdorayden/PortFolio/blob/master/assets/logo.jpeg?raw=true" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background: #121212;
+            color: #c7d1d9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            background: #1e1e1e;
+            border-bottom: 2px solid #00bcd4;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #1e1e1e;
+            padding: 10px;
+            border-bottom: 2px solid #00bcd4;
+        }
+        nav a {
+            color: #00bcd4;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            padding: 5px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover {
+            background: #00bcd4;
+            color: #121212;
+        }
+        .sidebar {
+            width: 100%;
+            max-width: 200px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-right: 2px solid #00bcd4;
+            overflow-y: auto;
+            height: 100vh;
+            position: fixed;
+        }
+        .sidebar h2 {
+            color: #ffeb3b;
+            margin: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+        .sidebar ul li a {
+            color: #00bcd4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .sidebar ul li a:hover {
+            color: #ffeb3b;
+        }
+        .container {
+            padding: 20px;
+            margin-left: 220px;
+            overflow-y: auto;
+            height: 100vh;
+            flex: 1;
+        }
+        .card {
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .card h2, .card h3 {
+            color: #ffeb3b;
+        }
+        .terminal {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            box-shadow: 0px 0px 20px #00bcd4;
+            display: flex;
+            align-items: center;
+        }
+        pre[class*="language-"], code[class*="language-"] {
+            background: #1e1e1e !important;
+            color: #f8f8f2;
+        }
+        .hacker-text {
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            animation: typing 3s steps(30, end), blink 2.5s step-end infinite;
+            border-right: 2px solid #00bcd4;
+        }
+        @keyframes typing {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 2px solid #00bcd4;
+            }
+            .container {
+                margin-left: 0;
+                margin-top: 220px;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Documentation</h2>
+        <ul>
+            <li><a href="#raylist-library">RayList Library</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#preffix">Preffix method Call</a></li>
+            <li><a href="#types">Types</a></li>
+            <li><a href="#List">List</a></li>
+            <li><a href="#rlappend">RLAppend macro</a></li>
+            <li><a href="#method-append">List_Append</a></li>
+            <li><a href="#method-insert">List_Insert</a></li>
+            <li><a href="#method-search">List_Search</a></li>
+            <li><a href="#method-delete">List_Del_Index</a></li>
+            <li><a href="#method-get">List_Get</a></li>
+            <li><a href="#method-reverse">List_Reverse</a></li>
+            <li><a href="#method-print">List_Print</a></li>
+            <li><a href="#method-error-handling">List_Get_Error</a></li>
+            <li><a href="#method-len">List_Len</a></li>
+            <li><a href="#method-execfunctions-sync">List_Exec_Sync</a></li>
+            <li><a href="#method-execfunctions-async">List_Exec_Async</a></li>
+            <li><a href="#method-filter">List_Filter</a></li>
+            <li><a href="#method-map">List_Map</a></li>
+            <li><a href="#method-clear">List_Clear</a></li>
+            <li><a href="#macro-defer">List_Defer</a></li>
+            <li><a href="#macro-SetObject">List_SetObject</a></li>
+            <li><a href="#macro-CopyObject">List_CopyObj DisableCopyObj</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <header>
+            <h1 class="hacker-text">RayList Project Documentation</h1>
+        </header>
+        <nav>
+            <a href="https://rayden-six.vercel.app">Home</a>
+            <a href="https://github.com/abdorayden/raylist" target="_blank"><i class="fab fa-github"></i></a>
+        </nav>
+        <div id="raylist-library" class="card">
+            <h2>RayList Library</h2>
+            <p>RayList is a C library that implements a dynamic linked list supporting multiple data types, with various functions for list manipulation. It allows you to manage lists, stacks, and queues efficiently with support for custom data types and asynchronous task execution. raylist also contains magic macros to solve list C problems like (RLSetObject , RLDefer , ...)</p>
+        </div>
+        <div id="features" class="card">
+            <h3>Features</h3>
+            <ul>
+                <li>Dynamic linked list supporting multiple data types</li>
+                <li>Functions for list manipulation (append, insert, delete, search, filter, map, etc.)</li>
+                <li>Support for stack and queue data structures</li>
+                <li>Asynchronous task execution using threads</li>
+                <li>Customizable memory allocation functions</li>
+            </ul>
+        </div>
+        <div id="installation" class="card">
+            <h3>Installation</h3>
+            <p>To use RayList in your project, include the <code>raylist.h</code> header file and link against the compiled library. Ensure you have the required dependencies installed. and define macro LIST_C to act like C file because the library is like stb stile header only library</p>
+            <div class="terminal">
+                <pre class="language-c"
+		><code class="language-c">
+		// should include stdarg.h
 #include <stdarg.h>
 // enable raylist implementation
 #define LIST_C
 #include "raylist.h"
                 </code></pre>
-				</div>
-			</div>
-			<div id="usage" class="card">
-				<h3>Usage</h3>
-				<p>
-					Here is a basic example of how to use
-					RayList:
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
+            </div>
+        </div>
+        <div id="usage" class="card">
+            <h3>Usage</h3>
+            <p>Here is a basic example of how to use RayList:</p>
+            <div class="terminal">
+                <pre class="language-c"><code class="language-c">
 #include<stdarg.h>
 #include<stdio.h>
 
@@ -292,8 +228,8 @@ int main() {
     return 0;
 }
                 </code></pre>
-				</div>
-			</div>
+            </div>
+        </div>
 			<div id="preffix" class="card">
 				<h3>List</h3>
 				<p>
@@ -988,9 +924,6 @@ int main() {
                 </code></pre>
 				</div>
 			</div>
-
-
-
-		</div>
-	</body>
+    </div>
+</body>
 </html>
