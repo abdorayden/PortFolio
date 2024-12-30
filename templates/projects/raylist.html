@@ -362,7 +362,7 @@ int main() {
 			<div id="List" class="card">
 				<h3>List</h3>
 				<p>
-					List return RLList interface which implements all list method
+					List return RLList interface which implements all list method<br>
 					list also accept va_list arguments to add data dynamicly 
 				</p>
 				<div class="terminal">
@@ -387,8 +387,8 @@ int main() {
 			<div id="rlappend" class="card">
 				<h3>List RLAppend</h3>
 				<p>
-					RLAppend macro works like append method but use generics 
-					macro can detecte type of the data , without casting to void*
+					RLAppend macro works like append method but use generics <br>
+					macro can detecte type of the data , without casting to void*<br>
 
 					work with int , float and char only
 				</p>
@@ -473,7 +473,7 @@ int main() {
 			<div id="method-search" class="card">
 				<h3>List Search</h3>
 				<p>
-					search method takes int pointer type to return index of the data we search for , type of data and the data 	
+					search method takes int pointer type to return index of the data we search for , type of data and the data 	<br>
 					function return boolean true if function found the data else false
 				</p>
 				<div class="terminal">
@@ -561,7 +561,7 @@ int main() {
 			<div id="method-reverse" class="card">
 				<h3>List Reverse</h3>
 				<p>
-					reverse method take no argument and return nothing 
+					reverse method take no argument and return nothing <br>
 					reverse will reverse the list
 				</p>
 				<div class="terminal">
@@ -589,7 +589,7 @@ int main() {
 			<div id="method-print" class="card">
 				<h3>List Print</h3>
 				<p>
-					print method take no argument and return nothing 
+					print method take no argument and return nothing <br>
 					print method will print the data in list like python3 format
 				</p>
 				<div class="terminal">
@@ -617,9 +617,9 @@ int main() {
 			<div id="method-error-handling" class="card">
 				<h3>List Error Handle</h3>
 				<p>
-					get_error method take no argument and return string error , and NULL if not
-					while you working with raylist , library detecte errors , so after any operation
-					check if method return NULL or not ,
+					get_error method take no argument and return string error , and NULL if not<br>
+					while you working with raylist , library detecte errors , so after any operation<br>
+					check if method return NULL or not ,<br>
 					if return value is not NULL log the error
 				</p>
 				<div class="terminal">
@@ -677,16 +677,16 @@ int main() {
 			<div id="method-execfunctions-sync" class="card">
 				<h3>List Call Functions Sync</h3>
 				<p>
-					exec_sync method take index of the function , and the data (data passed to calling function argument) , and the flag
-					if index is less than 0 or bigger than length of list will execute all functions
+					exec_sync method take index of the function , and the data (data passed to calling function argument) , and the flag<br>
+					if index is less than 0 or bigger than length of list will execute all functions<br>
 
-					Exec_Flag : 
+					Exec_Flag : <br>
 
-						OUTT 	the return value from called function will returned in Exec_Sync method
-						 	OUTT flag is not enabled if index parameter in Exec_Sync was out of range
+						OUTT 	the return value from called function will returned in Exec_Sync method<br>
+						 	OUTT flag is not enabled if index parameter in Exec_Sync was out of range<br>
 
-						INPLACE	the return value will replaced function callback index  
-							the void function is not replaced 
+						INPLACE	the return value will replaced function callback index  <br>
+							the void function is not replaced <br>
 
 						
 						ADDED 	the function return value will added to the list
@@ -724,21 +724,21 @@ int main() {
 			<div id="method-execfunctions-async" class="card">
 				<h3>List Call Functions Async</h3>
 				<p>
-					exec_async method take index of the function , and the data (data passed to calling function argument)
-					if index is less than 0 or bigger than length of list will execute all functions
+					exec_async method take index of the function , and the data (data passed to calling function argument)<br>
+					if index is less than 0 or bigger than length of list will execute all functions<br>
 
-					this function will call functions Asynchronously , this method call function iin separite thread and return interface 
+					this function will call functions Asynchronously , this method call function iin separite thread and return interface <br>
 
-					interface : 
-						thread_id -> thread handler of the calling function
-						Kill : 
-	 						* Kill function
-	 						* for killing the thread
+					interface : <br>
+						thread_id -> thread handler of the calling function<br>
+						Kill : <br>
+	 						* Kill function<br>
+	 						* for killing the thread<br>
 
-						Wait : 
-	 						* Wait function 
-	 						* function waits for the thread specified by thread to terminate
-						- both of these method takes handle thread in parameter
+						Wait : <br>
+	 						* Wait function <br>
+	 						* function waits for the thread specified by thread to terminate<br>
+						- both of these method takes handle thread in parameter<br>
 
 					this method work with specific macro called RLTestCancel this macro should be called inside target function Kill method can detecte the function and kill thread
 
@@ -791,11 +791,11 @@ int main() {
 			<div id="method-filter" class="card">
 				<h3>List Filter</h3>
 				<p>
-					filter method used to filter the list According to condition in callback function except void* parameter and return boolean
-					filter accept function call back  , type for filter , and Filter_Flag
+					filter method used to filter the list According to condition in callback function except void* parameter and return boolean<br>
+					filter accept function call back  , type for filter , and Filter_Flag<br>
 
-					Filter_Flag :
-						ALL  	// (filtring all list)
+					Filter_Flag :<br>
+						ALL  	// (filtring all list)<br>
 						ONLY	// (filtring only type)
 
 				</p>
@@ -898,9 +898,9 @@ int main() {
 			<div id="macro-defer" class="card">
 				<h3>List Defer</h3>
 				<p>
-					defer raylist macro registers the given function to be called at normal process termination , accept callback function return type void and accept no arguments
-					works like defer in go
-					macro is atexit function from standard library
+					defer raylist macro registers the given function to be called at normal process termination , accept callback function return type void and accept no arguments<br>
+					works like defer in go<br>
+					macro is atexit function from standard library<br>
 					function will not work when forced with CTRL-C
 				</p>
 				<div class="terminal">
@@ -929,7 +929,7 @@ int main() {
 			<div id="macro-SetObject" class="card">
 				<h3>List RLSetObject</h3>
 				<p>
-					RLSetObject macro used for multiple list storage
+					RLSetObject macro used for multiple list storage<br>
 					you can create another allocated list (linked list) RLSetObject change method access direction to pointed list
 				</p>
 				<div class="terminal">
@@ -962,7 +962,7 @@ int main() {
 			<div id="macro-CopyObject - DisableCopyObject" class="card">
 				<h3>List RLCopyObject and RLDisableCopyObject</h3>
 				<p>
-					RLCopyObject allow raylist to copy the target object instead of pointing his memory
+					RLCopyObject allow raylist to copy the target object instead of pointing his memory<br>
 					raylist by default point address variables and this creates problems if the target object can be NULL or data changes
 					in same object
 				</p>
