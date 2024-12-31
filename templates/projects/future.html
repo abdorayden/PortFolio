@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Future Library Documentation</title>
+		<style>
+			body {
+				font-family: "Courier New", Courier, monospace;
+				margin: 0;
+				padding: 0;
+				background-color: #1e1e1e;
+				color: #c5c6c7;
+			}
+
+			.container {
+				width: 80%;
+				margin: auto;
+				overflow: hidden;
+			}
+
+			header {
+				background: #0b0c10;
+				color: #66fcf1;
+				padding: 20px 0;
+				text-align: center;
+			}
+
+			nav {
+				background: #1f2833;
+				color: #fff;
+				padding: 10px 0;
+				text-align: center;
+			}
+
+			nav ul {
+				padding: 0;
+				list-style: none;
+			}
+
+			nav ul li {
+				display: inline;
+				margin: 0 10px;
+			}
+
+			nav ul li a {
+				color: #66fcf1;
+				text-decoration: none;
+			}
+
+			main {
+				padding: 20px 0;
+			}
+
+			section {
+				padding: 20px;
+				background: #0b0c10;
+				margin: 20px 0;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+			}
+
+			pre {
+				background-color: #1e1e1e;
+				padding: 20px;
+				overflow-x: auto;
+				border: 1px solid #c5c6c7;
+			}
+			.square-container {
+				    width: 300px;
+				    height: 100px;
+				display: flex; /* Flexbox for horizontal alignment */
+				gap: 15px; /* Space between squares */
+
+				    margin: 0 auto; /* Horizontally center */
+			}
+
+			/* Styling for each square */
+			.square {
+				width: 250px;
+				height: 50px;
+				background-color: #3498db; /* Bright blue color */
+				color: black; /* Text color */
+    				font-family: Arial, sans-serif; /* Clean font */
+    				font-size: 14px; /* Text size */
+    				display: flex; /* Flexbox to center content */
+    				justify-content: center; /* Center horizontally */
+    				align-items: center; /* Center vertically */
+				border-radius: 5px; /* Slightly rounded corners */
+				transform: translateY(
+					50px
+				); /* Start below the container */
+				opacity: 0; /* Start invisible */
+				animation: riseUp 1s ease forwards infinite; /* Define animation */
+			}
+
+			/* Define the animation: Rising effect */
+			@keyframes riseUp {
+				0% {
+					transform: translateY(
+						50px
+					); /* Start below */
+					opacity: 0; /* Invisible */
+				}
+				50% {
+    				    transform: translateY(-10px); /* Slightly overshoot */
+    				    opacity: 1; /* Fully visible */
+    				}
+				100% {
+					transform: translateY(
+						0
+					); /* Move to original position */
+					/*opacity: 1;  Fully visible */
+				}
+			}
+
+
+			footer {
+				background: #0b0c10;
+				color: #66fcf1;
+				text-align: center;
+				padding: 10px 0;
+				position: fixed;
+				width: 100%;
+				bottom: 0;
+			}
+		</style>
+	<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+/>
+</head>
+	<body>
+		<header>
+			<div class="container">
+				<h1>Future Library Documentation</h1>
+			</div>
+		</header>
+		<nav>
+			<div class="container">
+				<ul>
+					<li>
+						<a href="https://rayden-six.vercel.app/raylist"
+							>raylist</a
+						>
+					</li>
+					<li><a href="#usage">Usage</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+		</nav>
+		<main>
+			<section id="introduction">
+				<div class="container">
+					<h2>Introduction</h2>
+					<p>
+						The Future Library is designed
+						to handle asynchronous tasks in
+						C. It provides a framework for
+						creating, managing, and
+						executing tasks asynchronously.
+
+						this library is example of raylist library
+						because future library depends on raylist
+					</p>
+				</div>
+			</section>
+			<section id="usage">
+				<div class="container">
+					<h2>Usage</h2>
+					<pre><code class="language-c">
+// include libs
+#include &lt stdio.h &gt
+#include &lt stdarg.h &gt
+
+#define LIST_C
+#include "../../raylist.h"
+
+#define FUTURE_C
+#include "future.h"
+
+// define your data 
+typedef struct{
+	int a;
+}Example;
+
+// and implement poll method 
+// method should return HandlFuture structure
+// HandlFuture{
+//	bool isfinished;
+//	bool iserror;
+//	void* return_data;
+//}
+// and should accept void* in parameter return Future from other task will pushed to parameter 
+// because this is channel
+Handle my_poll(void* task){
+	// do some work
+	// if not finish
+	if(true)
+		return (HandlFuture) {
+			.isfinished = false,
+			.iserror = false,
+			.return_data = data // your data
+		};
+	return (HandlFuture) {
+		.isfinished = true, // task done
+		.iserror = false,
+		.return_data = NULL
+	};
+
+}
+
+int main(void)
+{
+	// allocate your data 
+
+	// init your Future with FutureNewTask
+	Future* tasks[2] = {
+		FutureNewTask(my_poll , my_data1);
+		FutureNewTask(my_poll , my_data2);
+	};
+	// add your tasks to event loop
+	FutureAddTasks(task,5);
+
+
+	// run your tasks
+	FutureLoop(callback);
+	// NOTE: callback function return void* and accept void* , int
+	// you can apply changes to data and any task you want ... for logging or changing something
+}
+
+                </code></pre>
+				</div>
+			</section>
+			<section id="example">
+				<div class="container">
+					<h2>Example</h2>
+				<div class="square-container">
+					<div class="square" id="square1">task 1</div>
+					<div class="square" id="square2">task 2</div>
+					<div class="square" id="square3">task 3</div>
+					<div class="square" id="square4">task 4</div>
+				</div>
+					<pre><code class="language-c">
+#include &lt stdio.h &gt
+#include &lt stdarg.h &gt
+
+#define LIST_C
+#include "../../raylist.h"
+
+#define FUTURE_C
+#include "future.h"
+
+typedef struct {
+    int count;
+    int max_count;
+} CounterData;
+
+// implementation of abstract method poll
+// NOTE : poll function should return HandlFuture structure
+HandlFuture task_poll(void* task) {
+	// getting the data from task
+	CounterData* data = (CounterData*)((Future*)task)->data;
+
+	// check if count is less than count_max
+	if (data->count < data->max_count) {
+		// do work (count++)
+        	data->count++;
+		// return NULL (function is not finished yet)
+		return (HandlFuture){
+			.isfinished = false,
+			.iserror = false,
+			.return_data = (void*)&data->count
+		};
+    	}
+	// free allocated data memory
+	free(data);
+	// return task (task is not NULL so function is done)
+	return (HandlFuture){
+		.isfinished = true,
+		.iserror = false,
+		.return_data = NULL
+	};
+}
+
+int main(void)
+{
+	// allocate the data
+	CounterData* data1 = malloc(sizeof(CounterData));
+	data1->count = 0;
+	data1->max_count = 100;
+
+	CounterData* data2 = malloc(sizeof(CounterData));
+	data2->count = 200;
+	data2->max_count = 400;
+
+	CounterData* data3 = malloc(sizeof(CounterData));
+	data3->count = 1000;
+	data3->max_count = 1200;
+
+	CounterData* data4 = malloc(sizeof(CounterData));
+	data4->count = 10000;
+	data4->max_count = 12000;
+
+	// allocate 5 tasks
+	Future* task[5];
+	task[0] = FutureNewTask(task_poll,data1);
+	task[1] = FutureNewTask(task_poll,data2);
+	task[2] = FutureNewTask(task_poll,data3);
+	task[3] = FutureNewTask(task_poll,data4);
+
+	FutureAddTasks(task,4);
+
+	// logging callback 
+	FutureLoop(lambda(void* , (void* data , int task) , {
+		// if the function executed in task 3
+		if(task == 2){
+			if(*(int*)data >= 1000)
+				*(int*)data += 5;
+		}
+		printf("Debug :: %d\n" , *(int*)data);
+		return data;
+	}));
+}
+					</pre></code>
+				</div>
+			</section>
+		</main>
+		<footer>
+			<div class="container">
+				<p>
+					&copy; 2024 by abdorayden. 
+				</p>
+			</div>
+		</footer>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+		<script>
+			// script.js
+
+			// Wait for the page to load
+			document.addEventListener("DOMContentLoaded", () => {
+				// Select all squares
+				const squares =
+					document.querySelectorAll(".square");
+
+				// Loop through each square and delay its animation
+				squares.forEach((square, index) => {
+					setTimeout(() => {
+						square.style.animationDelay = `${index * 0.5}s`; // Add delay to each square
+					}, index * 500); // Start each square's animation asynchronously
+				});
+			});
+		</script>
+	</body>
+</html>
