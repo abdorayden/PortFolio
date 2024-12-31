@@ -8,7 +8,7 @@ def raylist() :
         chtml = f.read()
     return render_template_string(chtml)
 
-@app.route('/future')
+@app.route('/raylist/future')
 def future() :
     with open('templates/projects/future.html') as f :
         chtml = f.read()
