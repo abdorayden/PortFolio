@@ -9,7 +9,7 @@ def raylist() :
     return render_template_string(chtml)
 
 @app.route('/future')
-def raylist() :
+def future() :
     with open('templates/projects/future.html') as f :
         chtml = f.read()
     return render_template_string(chtml)
