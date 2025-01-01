@@ -205,6 +205,7 @@
 
             <li><a href="#macro-defer">List_Defer</a></li>
             <li><a href="#macro-SetObject">List_SetObject</a></li>
+            <li><a href="#lambda">List_Lambda_CallBack</a></li>
             <li><a href="#macro-CopyObject-DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
         </ul>
     </div>
@@ -1021,6 +1022,67 @@ int main() {
                 </code></pre>
 				</div>
 			</div>
+
+			<div id="lambda" class="card">
+				<h3>RLAmbda Callback</h3>
+				<p>
+				RLAmbda macro allows you to implements anonymouse function directly in parameter function type,<br>
+				Positives : <br>
+				- Avoid mixing function names<br>
+				- Best choice for small functions<br>
+				- She looks beautiful<br>
+
+				also make it easier for map and filter method call back functions <br>
+				RLMap(body) : you can define this call back in map method and handle the body , the default parameter is rlmapdata <br>
+				RLFilter(body) : you can define this call back in filter method and handle the body , the default parameter is rlfilterdata
+				</p>
+				<div class="terminal">
+					<pre
+						class="language-c"
+					><code class="language-c">
+#include &ltstdio.h &gt
+#include &ltstdlib.h&gt
+#include &ltstring.h&gt
+#include &ltstdarg.h&gt
+
+#define USING_LIST
+#define LIST_C
+#include "../raylist.h"
+
+int main(void)
+{
+	RLList list = List(0);
+	RLDefer(list.Clear);
+
+	RLCopyObject(RLSIZEOF(int));
+	for(int i = 0 ; i < 10 ; i++){
+		list.Append(RL_INT , (void*)&i);
+	}
+	RLDisableCopyObject();
+
+	// callback function in Filter method
+	list.Filter(RLFilter({
+			if(*(int*)rlfilterdata % 2 != 0)	return false;
+
+			return true;
+
+	}) , RL_INT , ONLY);
+	// callback function in Map method
+	list.Map(RLMap({
+			if(*(int*)rlmapdata == 0){
+				*(int*)rlmapdata = 10;
+			}
+			return rlmapdata;
+	}) , RL_INT);
+	list.Print();
+	return 0;
+}
+                </code></pre>
+				</div>
+			</div>
+
+
+
 			<div id="macro-CopyObject-DisableCopyObject" class="card">
 				<h3>List RLCopyObject and RLDisableCopyObject</h3>
 				<p>
