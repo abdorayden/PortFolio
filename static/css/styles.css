@@ -139,11 +139,11 @@ nav a:hover {
 /*}*/
 
 @media (max-width: 768px) {
-    .quote {
-        min-width: unset; /* Remove the fixed min-width */
-        width: 90%; /* Allow the element to occupy 90% of the screen width */
-        padding: 10px; /* Adjust padding for smaller screens */
-    }
+/*    .quote {*/
+/*        min-width: unset; /* Remove the fixed min-width */*/
+/*        width: 90%; /* Allow the element to occupy 90% of the screen width */*/
+/*        padding: 10px; /* Adjust padding for smaller screens */*/
+/*    }*/
     .quote #p-quote {
         font-size: 14px; /* Reduce font size for smaller screens */
         margin-top: 5%; /* Adjust margins */
