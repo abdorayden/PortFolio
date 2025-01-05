@@ -39,7 +39,7 @@ def submit():
     if len(quotes) <= 1000 :
         content = "".join([
             char for char in content
-            if char not in ["<" , ">" , "/"]
+            if char not in ["<" , ">"]
         ])
         quotes[count] = content
         count += 1
