@@ -31,6 +31,8 @@ def index() :
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    global quotes
+    global count
     data = request.json
     content = data.get('content', '')
 
@@ -46,6 +48,8 @@ def submit():
 
 @app.route('/quote')
 def random_quote() :
+    global quotes
+    global count
     q = quotes.get(random.randrange(1 , count))
     return jsonify({'quote': q}), 200
 
