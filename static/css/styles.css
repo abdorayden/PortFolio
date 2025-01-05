@@ -121,13 +121,36 @@ nav a:hover {
 
 .quote {
     background: #1e1e1e;
-    border: 2px solid #00bcd4;
-    border-radius: 10px;
+    border: 2px solid #00bcd4; /* Visible border */
+    border-radius: 10px; /* Rounded corners */
     padding: 15px;
-    min-width: 150px; /* Keep the min-width for larger screens */
-    max-width: 100%; /* Adapt to the screen width */
-    box-shadow: 0px 0px 20px #00bcd4;
+    width: 150px; /* Default width for desktops */
+    max-width: 100%; /* Prevent overflowing on smaller screens */
+    box-shadow: 0px 0px 20px #00bcd4; /* Border box visibility */
     transition: transform 0.3s ease;
+    margin: 0 auto; /* Center align the box */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+.quote #p-quote {
+    margin-top: 10%;
+    margin-left: 2%;
+    color: #91c7d7;
+    font-size: 17px;
+    text-align: center; /* Center the text inside the box */
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .quote {
+        width: 90%; /* Responsive width for smaller screens */
+        padding: 10px; /* Adjust padding */
+    }
+
+    .quote #p-quote {
+        font-size: 14px; /* Smaller font size for readability */
+        margin-top: 5%; /* Reduce margin for smaller screens */
+    }
 }
 
 
@@ -137,19 +160,6 @@ nav a:hover {
 /*	color: #91c7d7;*/
 /*	font-size: 17px;*/
 /*}*/
-
-@media (max-width: 768px) {
-/*    .quote {*/
-/*        min-width: unset; /* Remove the fixed min-width */*/
-/*        width: 90%; /* Allow the element to occupy 90% of the screen width */*/
-/*        padding: 10px; /* Adjust padding for smaller screens */*/
-/*    }*/
-    .quote #p-quote {
-        font-size: 14px; /* Reduce font size for smaller screens */
-        margin-top: 5%; /* Adjust margins */
-    }
-}
-
 
 .projects-list {
 	list-style: none;
