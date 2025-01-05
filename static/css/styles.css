@@ -103,63 +103,28 @@ nav a:hover {
 	transition: transform 0.3s ease;
 }
 
-/*.quote {*/
-/*	/*display: flex;*/*/
-/*	background: #1e1e1e;*/
-/*	border: 2px solid #00bcd4;*/
-/*	border-radius: 10px;*/
-/*	padding: 15px;*/
-/*	/*flex: 1;*/*/
-/*	min-width: 150px;*/
-/*	max-width: 150px;*/
-/**/
-/*	/*flex-direction: column;*/*/
-/*	justify-content: space-between;*/
-/*	box-shadow: 0px 0px 20px #00bcd4;*/
-/*	transition: transform 0.3s ease;*/
-/*}*/
-
 .quote {
-    background: #1e1e1e;
-    border: 2px solid #00bcd4; /* Visible border */
-    border-radius: 10px; /* Rounded corners */
-    padding: 15px;
-    width: 150px; /* Default width for desktops */
-    max-width: 100%; /* Prevent overflowing on smaller screens */
-    box-shadow: 0px 0px 20px #00bcd4; /* Border box visibility */
-    transition: transform 0.3s ease;
-    margin: 0 auto; /* Center align the box */
-    box-sizing: border-box; /* Ensure padding and border are included in width */
+	/*display: flex;*/
+	background: #1e1e1e;
+	border: 2px solid #00bcd4;
+	border-radius: 10px;
+	padding: 15px;
+	/*flex: 1;*/
+	min-width: 150px;
+	max-width: 300px;
+
+	/*flex-direction: column;*/
+	justify-content: space-between;
+	box-shadow: 0px 0px 20px #00bcd4;
+	transition: transform 0.3s ease;
 }
 
 .quote #p-quote {
-    margin-top: 10%;
-    margin-left: 2%;
-    color: #91c7d7;
-    font-size: 17px;
-    text-align: center; /* Center the text inside the box */
-}
-
-/* Responsive Design for Mobile */
-@media (max-width: 768px) {
-    .quote {
-        width: 90%; /* Responsive width for smaller screens */
-        padding: 10px; /* Adjust padding */
-    }
-
-    .quote #p-quote {
-        font-size: 14px; /* Smaller font size for readability */
-        margin-top: 5%; /* Reduce margin for smaller screens */
-    }
-}
-
-
-/*.quote #p-quote {*/
-/*	margin-top: 10%;*/
-/*	margin-left: 2%;*/
-/*	color: #91c7d7;*/
-/*	font-size: 17px;*/
-/*}*/
+	margin-top: 10%;
+	margin-left: 2%;
+	color: #91c7d7;
+	font-size: 17px;
+ }
 
 .projects-list {
 	list-style: none;
