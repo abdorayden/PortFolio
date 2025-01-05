@@ -1,6 +1,15 @@
 from flask import Flask, request, jsonify , render_template_string
+import random
 
 app = Flask(__name__, static_folder='../static', template_folder='../templates')
+
+# vercel doesn't allow me to write a file sooo 1000 quote gonna be fine 
+# i just wanted to share with you guys
+quotes = { 
+          1 : "just be positive :)",
+          2 : "everything is gonna be  fine :)))"
+}
+count = 3
 
 @app.route('/raylist')
 def raylist() :
@@ -24,13 +33,21 @@ def index() :
 def submit():
     data = request.json
     content = data.get('content', '')
-    try :
-        with open('quotes/quote.txt', 'a') as file:
-            file.write("\n" + content + "\n")
-    except Exception as err:
-        return jsonify({'message': err}), 404
+
+    if len(quotes) <= 1000 :
+        content = "".join([
+            char for char in content
+            if char not in ["<" , ">" , "/"]
+        ])
+        quotes[count] = content
+        count += 1
 
     return jsonify({'message': "ok"}), 200
+
+@app.route('/quote')
+def random_quote() :
+    q = quotes.get(random.randrange(1 , count))
+    return jsonify({'quote': q}), 200
 
 if __name__ == '__main__':
     app.run()
