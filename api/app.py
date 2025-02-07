@@ -29,6 +29,12 @@ def index() :
         chtml = f.read()
     return render_template_string(chtml)
 
+# TODO: handle hardcoded string raylist
+@app.route('downloads/raylist')
+def download_raylist() :
+    with open('downloads/raylist.tar.gz' , "rb") as f_d :
+        return jsonify({'file': f_d.read()}), 200
+
 @app.route('/submit', methods=['POST'])
 def submit():
     global quotes
