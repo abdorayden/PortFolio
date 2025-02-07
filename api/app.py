@@ -29,15 +29,6 @@ def index() :
         chtml = f.read()
     return render_template_string(chtml)
 
-# TODO: handle hardcoded string raylist
-@app.route('downloads/<filename>')
-def download(filename) :
-    current_files_to_download = ["raylist"]
-    if filename not in current_files_to_download :
-        return jsonify({'message': "file not found"}), 404
-
-    return send_from_directory('static/downloads', filename := f"{filename}.tar.gz", as_attachment=True)
-
 @app.route('/submit', methods=['POST'])
 def submit():
     global quotes
