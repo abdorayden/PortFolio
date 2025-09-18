@@ -23,6 +23,12 @@ def future() :
         chtml = f.read()
     return render_template_string(chtml)
 
+@app.route('/raymp')
+def raymp() :
+    with open('templates/projects/raymp.html') as f :
+        chtml = f.read()
+    return render_template_string(chtml)
+
 @app.route('/')
 def index() :
     with open('templates/index.html') as f :

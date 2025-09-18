@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RayMP - Terminal Audio Player Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2d3748;
+            --accent-color: #4fd1c7;
+            --text-color: #e2e8f0;
+            --bg-color: #1a202c;
+            --card-bg: #2d3748;
+            --border-color: #4a5568;
+            --code-bg: #1a202c;
+            --terminal-green: #68d391;
+            --warning-color: #f6ad55;
+        }
+
+        body {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #252f3f 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(45, 55, 72, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #333333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .logo-text .main-text {
+            font-size: 14px;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .logo-text .sub-text {
+            font-size: 8px;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        /* Create the wavy M shape */
+        .logo-icon::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            background: white;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 18 L4 6 Q4 4, 6 6 L12 14 Q12 16, 12 14 L18 6 Q20 4, 20 6 L20 18' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 18 L4 6 Q4 4, 6 6 L12 14 Q12 16, 12 14 L18 6 Q20 4, 20 6 L20 18' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .logo-icon::after {
+            content: "MP";
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        /* Updated color scheme to match logo */
+        :root {
+            --primary-color: #333333;
+            --accent-color: #ffffff;
+            --text-color: #e2e8f0;
+            --bg-color: #1a1a1a;
+            --card-bg: #333333;
+            --border-color: #555555;
+            --code-bg: #2a2a2a;
+            --terminal-green: #68d391;
+            --warning-color: #f6ad55;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(79, 209, 199, 0.3);
+        }
+
+        .hero-tagline {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--terminal-green);
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .terminal-demo {
+            background: var(--code-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background: #ff5f57; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #28ca42; }
+
+        .terminal-content {
+            color: var(--terminal-green);
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            white-space: pre-line;
+        }
+
+        .typing-animation {
+            border-right: 2px solid var(--terminal-green);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: rgba(45, 55, 72, 0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Why TUI Section */
+        .why-tui {
+            padding: 80px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .tui-advantages, .gui-limitations {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tui-advantages {
+            border-left: 4px solid var(--terminal-green);
+        }
+
+        .gui-limitations {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .advantage-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .advantage-icon {
+            color: var(--terminal-green);
+            font-weight: bold;
+            margin-top: 0.2rem;
+        }
+
+        /* Documentation Section */
+        .docs {
+            padding: 80px 0;
+            background: rgba(45, 55, 72, 0.3);
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .doc-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .doc-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(79, 209, 199, 0.1);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Monaco', monospace;
+            font-size: 0.85rem;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: var(--terminal-green);
+        }
+
+        /* Plugin Gallery */
+        .plugin-gallery {
+            padding: 80px 0;
+        }
+
+        .plugin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .plugin-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .plugin-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+        }
+
+        .plugin-preview {
+            background: var(--code-bg);
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.8rem;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Terminal Philosophy Section */
+        .terminal-philosophy {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-color) 100%);
+            position: relative;
+        }
+
+        .philosophy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .philosophy-quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .philosophy-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Live Demo Section */
+        .live-demo {
+            padding: 80px 0;
+            background: var(--bg-color);
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: monospace;
+        }
+
+        .demo-btn:hover {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .demo-btn.active {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+
+        /* Community Section */
+        .community {
+            padding: 80px 0;
+            background: rgba(45, 55, 72, 0.3);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+            position: relative;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                RayMP
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#why-tui">Why TUI</a></li>
+                <li><a href="#docs">Documentation</a></li>
+                <li><a href="#plugins">Plugins</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>RayMP</h1>
+            <div class="hero-tagline">Where Terminal Meets Symphony</div>
+            <p>The only music player that thinks like a developer and sounds like a dream</p>
+            <p>Craft your perfect audio experience with Lua-powered plugins and infinite customization</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">2MB</span>
+                    <div class="stat-label">Ultra-lightweight binary</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <div class="stat-label">Customization possibilities</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">0ms</span>
+                    <div class="stat-label">Interface lag</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <div class="stat-label">Pure terminal magic</div>
+                </div>
+            </div>
+            
+            <div class="terminal-demo">
+                <div class="terminal-header">
+                    <div class="terminal-btn btn-red"></div>
+                    <div class="terminal-btn btn-yellow"></div>
+                    <div class="terminal-btn btn-green"></div>
+                </div>
+                <div class="terminal-content" id="terminal-output">
+$ raymp --load ~/music/playlist.m3u
+[♪ RayMP v1.0.0 - The Developer's Audio Playground ♪]
+┌─────────────────────────────────────────────────────────┐
+│                 ♫ Transcending Audio ♫                 │
+├─────────────────────────────────────────────────────────┤
+│ Track: Bohemian Rhapsody - Queen                       │
+│ Magic: [████████████████████░░░░] 4:12 / 5:55          │
+│ Soul:  ████████████████████████████████████████ 95%    │
+└─────────────────────────────────────────────────────────┘
+
+🚀 Plugins unleashed: matrix_symphony, wave_sculptor, code_radio
+Press 'i' to morph reality | 'o' to summon background wizardry
+<span class="typing-animation">_</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Features</h2>
+                <p>Everything you need for a powerful terminal music experience</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Infinitely Hackable</h3>
+                    <p><strong>Your terminal, your rules.</strong> Our plugin architecture doesn't just allow customization—it demands creativity. Turn RayMP into a digital audio workstation, a coding soundtrack manager, or something the world has never seen.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Mathematical Beauty</h3>
+                    <p><strong>UI layouts that think.</strong> Write templates with expressions like "w/3 + 10" and watch your interface adapt flawlessly to any terminal size. It's not just responsive—it's intelligent.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Audiophile's Dream Engine</h3>
+                    <p><strong>Sound quality that makes you weep.</strong> Pristine playback, surgical precision seeking, and audio controls so smooth they feel like magic. Your ears deserve better than compromise.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Impossibly Fast</h3>
+                    <p><strong>2MB. That's it.</strong> While other players bloat your system with gigabytes of cruft, RayMP launches instantly, runs anywhere, and respects your machine's resources like they're sacred.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Universal Presence</h3>
+                    <p><strong>One player, every platform.</strong> Linux servers, macOS studios, Windows workstations—RayMP speaks fluent terminal everywhere. SSH into Mars and your music follows.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Parallel Universes</h3>
+                    <p><strong>Background plugins that bend reality.</strong> Run system monitors, notification centers, and productivity tools in parallel dimensions while your main interface stays pristine and focused.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="manifesto">
+        <div class="container">
+            <div class="manifesto-content">
+                <h2 style="color: var(--accent-color); margin-bottom: 2rem;">The Terminal Renaissance</h2>
+                <div class="manifesto-text">
+                    While the world drowns in <span class="manifesto-highlight">bloated, electron-wrapped music players</span> that devour RAM like digital locusts, 
+                    a quiet revolution brews in the terminal. Here, where <span class="manifesto-highlight">keystrokes are poetry</span> and 
+                    <span class="manifesto-highlight">efficiency is art</span>, RayMP emerges not as another media player, but as a 
+                    <span class="manifesto-highlight">philosophy made code</span>.
+                </div>
+                <div class="manifesto-text">
+                    This is for the <span class="manifesto-highlight">architects of digital experiences</span>, the 
+                    <span class="manifesto-highlight">sculptors of system resources</span>, the <span class="manifesto-highlight">wizards who make terminals sing</span>. 
+                    RayMP doesn't just play music—it <span class="manifesto-highlight">orchestrates possibilities</span>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="live-demo">
+        <div class="container">
+            <div class="section-header">
+                <h2>Experience the Magic</h2>
+                <p>See RayMP's plugin system in action</p>
+            </div>
+            
+            <div class="demo-controls">
+                <button class="demo-btn active" onclick="showDemo('visualizer')">Audio Visualizer</button>
+                <button class="demo-btn" onclick="showDemo('matrix')">Matrix Rain</button>
+                <button class="demo-btn" onclick="showDemo('editor')">Text Editor</button>
+                <button class="demo-btn" onclick="showDemo('browser')">File Browser</button>
+            </div>
+            
+            <div class="terminal-demo">
+                <div class="terminal-header">
+                    <div class="terminal-btn btn-red"></div>
+                    <div class="terminal-btn btn-yellow"></div>
+                    <div class="terminal-btn btn-green"></div>
+                </div>
+                <div class="terminal-content" id="demo-output">
+┌─────────────────── Audio Visualizer ───────────────────┐
+│  ████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ██████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ██████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ████████████████████████████████░░░░░░░░░░░░░░░░░   │
+│                                                       │
+│  🎵 Frequency: 440Hz  |  Beat: ♪♪♪♫  |  BPM: 128      │
+└─────────────────────────────────────────────────────────┘
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="community"> -->
+    <!--     <div class="container"> -->
+    <!--     </div> -->
+    <!-- </section> -->
+
+    <section id="why-tui" class="why-tui">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Great Interface Awakening</h2>
+                <p>Why terminals aren't just surviving—they're conquering</p>
+            </div>
+            
+            <div class="comparison-grid">
+                <div class="tui-advantages">
+                    <h3>Terminal Interface: The Superior Species</h3>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">⚡</div>
+                        <div>
+                            <strong>Ruthless Efficiency</strong><br>
+                            2MB versus 200MB. 10ms startup versus 5 seconds. Zero GPU load versus maxing out your graphics card. The math isn't even close—terminals obliterate GUIs in pure performance.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">🔧</div>
+                        <div>
+                            <strong>Automation Superpowers</strong><br>
+                            Script everything, automate anything. While GUI users click buttons like digital peasants, you orchestrate symphonies of commands that bend computers to your will.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">🌐</div>
+                        <div>
+                            <strong>Quantum Omnipresence</strong><br>
+                            SSH into a server in Tokyo, spin up a container in São Paulo, or debug a Raspberry Pi in your garage. Your interface follows you everywhere, unchanged and uncompromised.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">♿</div>
+                        <div>
+                            <strong>Universal Accessibility</strong><br>
+                            Screen readers native. Keyboard navigation flawless. High contrast built-in. Terminals were accessible before accessibility was cool.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">🎯</div>
+                        <div>
+                            <strong>Laser Focus</strong><br>
+                            No popup notifications. No blinking sidebars. No UI elements having an identity crisis. Just you, your content, and pure digital zen.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gui-limitations">
+                    <h3>GUI: The Beautiful Burden</h3>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">🐌</div>
+                        <div>
+                            <strong>Resource Vampires</strong><br>
+                            Electron apps consuming RAM like digital black holes. GPU fans screaming for mercy. Battery life vanishing into the void of unnecessary visual effects.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">🔒</div>
+                        <div>
+                            <strong>Automation Hostility</strong><br>
+                            Try to script a GUI app and watch it laugh at your futile attempts. Headless operation? What's that? Batch processing? Not in this lifetime.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">📡</div>
+                        <div>
+                            <strong>Remote Access Nightmares</strong><br>
+                            X11 forwarding through molasses. VNC connections that stutter and die. Bandwidth consumption that would make Netflix jealous.
+                        </div>
+                    </div>
+                    <div class="advantage-item">
+                        <div class="advantage-icon">🎨</div>
+                        <div>
+                            <strong>Complexity Avalanche</strong><br>
+                            Framework dependencies multiplying like rabbits. Theme engines, widget toolkits, and rendering pipelines—all to display some text and buttons.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>>
+                            Framework dependencies, theme bloat, and inconsistent interfaces across systems.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="docs" class="docs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Documentation</h2>
+                <p>Everything you need to get started and build amazing plugins</p>
+            </div>
+            
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <h3>Quick Start</h3>
+                    <p>Get RayMP running in minutes</p>
+                    <div class="code-block">
+                        <pre># Install RayMP
+curl -sSL https://raymp.dev/install.sh | bash
+
+# Create configuration directory
+mkdir ~/.rmp
+
+# Copy default config
+cp /usr/share/raymp/init.lua ~/.rmp/
+
+# Run RayMP
+raymp</pre>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <h3>Configuration</h3>
+                    <p>Customize RayMP to your needs</p>
+                    <div class="code-block">
+                        <pre>-- ~/.rmp/init.lua
+local api = require("rmp.rmp")
+
+return {
+  settings = {
+    fps = 60,
+    volume = 75,
+  },
+  template = "my_custom_theme",
+  plugins = {
+    {
+      themeWindowId = 2,
+      switchPluginKey = api.KEY_I,
+      names = {"text_editor", "visualizer"}
+    }
+  }
+}</pre>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <h3>Plugin Development</h3>
+                    <p>Create powerful plugins with Lua</p>
+                    <div class="code-block">
+                        <pre>-- ~/.rmp/plugins/my_plugin.lua
+local api = require("rmp.rmp")
+
+return function(x, y, xx, yy)
+  local vterm = api.VirtualTerminal.new()
+  
+  vterm:writeText(x+1, y+1, "Hello World!", 
+    api.FGColors.Brights.Green)
+  
+  return vterm
+end</pre>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <h3>Template System</h3>
+                    <p>Design responsive UI layouts</p>
+                    <div class="code-block">
+                        <pre>-- ~/.rmp/themes/my_theme.lua
+return {
+  {
+    id = 1,
+    type = "Window",
+    width = "w",        -- Terminal width
+    height = "h",       -- Terminal height
+    x = 1, y = 1,
+    children = {
+      {
+        id = 2,
+        width = "w - 20",   -- Math expressions
+        height = "h/2",     -- supported
+        x = 10, y = 5
+      }
+    }
+  }
+}</pre>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <h3>Background Plugins</h3>
+                    <p>Create independent overlay tools</p>
+                    <div class="code-block">
+                        <pre>-- Background plugin example
+return function(mainFrame)
+  local popup = api.Window.new(999):createWindow(
+    api.Text.new("[ Tool ]"),
+    30, 10,     -- size
+    w-35, 5,    -- position
+    colors, bg, border,
+    function(x, y, xx, yy)
+      -- Popup content here
+    end
+  )
+  return popup
+end</pre>
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <h3>API Reference</h3>
+                    <p>Complete API documentation</p>
+                    <div class="code-block">
+                        <pre>api.VirtualTerminal.new()
+api.Window.new(id)
+api.Text.new(text, style, fg, bg)
+api.Options.new(items)
+api.Scroller.new(height, options)
+api.Sound.new(files)
+api.Frame.new()
+api.Terminal:getSize()</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="plugins" class="plugin-gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Plugin Gallery</h2>
+                <p>Discover what's possible with RayMP plugins</p>
+            </div>
+            
+            <div class="plugin-grid">
+                <div class="plugin-card">
+                    <h4>Matrix Rain Effect</h4>
+                    <div class="plugin-preview">
+                        <div style="color: #00ff00; font-family: monospace;">
+                            ░█▓▒░█▓▒<br>
+                            █▓▒░█▓▒░<br>
+                            ▓▒░█▓▒░█<br>
+                            ▒░█▓▒░█▓
+                        </div>
+                    </div>
+                    <p>Animated matrix-style background effect</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <h4>Music Visualizer</h4>
+                    <div class="plugin-preview">
+                        <div style="color: #4fd1c7;">
+                            ████░░░░████<br>
+                            ██░░░░░░░░██<br>
+                            █░░░░██░░░░█<br>
+                            ░░░██████░░░
+                        </div>
+                    </div>
+                    <p>Real-time audio spectrum visualization</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <h4>File Browser</h4>
+                    <div class="plugin-preview">
+                        <div style="text-align: left; font-size: 0.7rem;">
+                            📁 Music/<br>
+                            ├── 🎵 track1.mp3<br>
+                            ├── 🎵 track2.mp3<br>
+                            └── 📁 Albums/
+                        </div>
+                    </div>
+                    <p>Navigate and manage your music library</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <h4>Text Editor</h4>
+                    <div class="plugin-preview">
+                        <div style="text-align: left; font-size: 0.7rem;">
+                            -- editor.lua<br>
+                            local function edit()<br>
+                            &nbsp;&nbsp;-- code here<br>
+                            end█
+                        </div>
+                    </div>
+                    <p>Full-featured text editor for playlists</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <h4>System Monitor</h4>
+                    <div class="plugin-preview">
+                        <div style="text-align: left; font-size: 0.7rem;">
+                            CPU: ████████░░ 80%<br>
+                            RAM: ██████░░░░ 60%<br>
+                            NET: ↑12KB/s ↓45KB/s
+                        </div>
+                    </div>
+                    <p>Monitor system resources in background</p>
+                </div>
+                
+                <div class="plugin-card">
+                    <h4>Notification Center</h4>
+                    <div class="plugin-preview">
+                        <div style="text-align: left; font-size: 0.7rem;">
+                            🔔 New track added<br>
+                            ⚡ Plugin updated<br>
+                            💾 Playlist saved
+                        </div>
+                    </div>
+                    <p>Centralized notification system</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="download">
+        <div class="container">
+            <h2 style="color: var(--accent-color); margin-bottom: 1rem;">Get Started Today</h2>
+            <p style="margin-bottom: 2rem;">Join the community of terminal power users</p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button style="background: var(--accent-color); color: var(--bg-color); border: none; padding: 1rem 2rem; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                    Download RayMP
+                </button>
+		<a href="https://github.com/abdorayden/raymp">
+                <button style="background: transparent; color: var(--accent-color); border: 2px solid var(--accent-color); padding: 1rem 2rem; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                    View on GitHub
+                </button>
+		</a>
+            </div>
+            
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                <p>&copy; 2025 RayMP. Built with ❤️ for the terminal.</p>
+                <p style="margin-top: 0.5rem; opacity: 0.7;">read Licence in github repo. Plugin API v1.0.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Terminal typing animation
+        const terminalText = `$ raymp --load ~/music/playlist.m3u
+[♪ RayMP v1.0.0 - The Developer's Audio Playground ♪]
+┌─────────────────────────────────────────────────────────┐
+│                 ♫ Transcending Audio ♫                 │
+├─────────────────────────────────────────────────────────┤
+│ Track: Bohemian Rhapsody - Queen                       │
+│ Magic: [████████████████████░░░░] 4:12 / 5:55          │
+│ Soul:  ████████████████████████████████████████ 95%    │
+└─────────────────────────────────────────────────────────┘
+
+🚀 Plugins unleashed: matrix_symphony, wave_sculptor, code_radio
+Press 'i' to morph reality | 'o' to summon background wizardry`;
+
+        let i = 0;
+        const terminalOutput = document.getElementById('terminal-output');
+        
+        function typeWriter() {
+            if (i < terminalText.length) {
+                terminalOutput.innerHTML = terminalText.substring(0, i) + '<span class="typing-animation">_</span>';
+                i++;
+                setTimeout(typeWriter, 30);
+            } else {
+                terminalOutput.innerHTML = terminalText + '<span class="typing-animation">_</span>';
+            }
+        }
+
+        // Demo content
+        const demoContent = {
+            visualizer: `┌─────────────────── Audio Visualizer ───────────────────┐
+│  ████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ██████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ████████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ██████████████████████████░░░░░░░░░░░░░░░░░░░░░░░░   │
+│  ████████████████████████████████░░░░░░░░░░░░░░░░░   │
+│                                                       │
+│  🎵 Frequency: 440Hz  |  Beat: ♪♪♪♫  |  BPM: 128      │
+└─────────────────────────────────────────────────────────┘`,
+            matrix: `┌─────────────────── Matrix Rain ─────────────────────┐
+│  ░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒   │
+│  █▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░   │
+│  ▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█   │
+│  ▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓   │
+│  ░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒░█▓▒   │
+│                                                       │
+│  💊 Welcome to the Real... er, Terminal World 💊       │
+└─────────────────────────────────────────────────────────┘`,
+            editor: `┌─────────────────── Code Editor ─────────────────────┐
+│  -- raymp_config.lua                                 │
+│  local api = require("rmp.rmp")                      │
+│                                                       │
+│  return {                                             │
+│    plugins = {                                        │
+│      { themeWindowId = 2, name = "my_awesome_plugin" }│
+│    }                                                  │
+│  }█                                                   │
+│                                                       │
+│  📝 Lines: 8 | Chars: 156 | Mode: INSERT            │
+└─────────────────────────────────────────────────────────┘`,
+            browser: `┌─────────────────── File Browser ─────────────────────┐
+│  📁 ~/Music/                                         │
+│  ├── 📁 Rock/                                        │
+│  │   ├── 🎵 bohemian_rhapsody.flac                   │
+│  │   └── 🎵 stairway_to_heaven.mp3                   │
+│  ├── 📁 Electronic/                                  │
+│  │   └── 🎵 digital_love.wav                         │
+│  └── 📂 Playlists/                                   │
+│      └── 📄 coding_session.m3u                       │
+│                                                       │
+│  📊 Total: 42 tracks | 3.2GB | Duration: 2h 47m     │
+└─────────────────────────────────────────────────────────┘`
+        };
+
+        function showDemo(type) {
+            // Update active button
+            document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update demo content
+            document.getElementById('demo-output').textContent = demoContent[type];
+        }
+        
+        // Start typing animation after page loads
+        setTimeout(typeWriter, 1000);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
