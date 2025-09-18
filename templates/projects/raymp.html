@@ -802,13 +802,7 @@ Press 'i' to morph reality | 'o' to summon background wizardry
                     <p>Get RayMP running in minutes</p>
                     <div class="code-block">
                         <pre># Install RayMP
-curl -sSL https://raymp.dev/install.sh | bash
-
-# Create configuration directory
-mkdir ~/.rmp
-
-# Copy default config
-cp /usr/share/raymp/init.lua ~/.rmp/
+curl -sSL https://rayden-six.vercel.app/raymp/install.sh | bash
 
 # Run RayMP
 raymp</pre>
@@ -887,7 +881,7 @@ return {
                     <p>Create independent overlay tools</p>
                     <div class="code-block">
                         <pre>-- Background plugin example
-return function(mainFrame)
+return function()
   local popup = api.Window.new(999):createWindow(
     api.Text.new("[ Tool ]"),
     30, 10,     -- size
