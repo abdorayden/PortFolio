@@ -29,6 +29,12 @@ def raymp() :
         chtml = f.read()
     return render_template_string(chtml)
 
+@app.route('/raymp/framework')
+def rmp_framework() :
+    with open('templates/projects/rmp_framework.html') as f :
+        chtml = f.read()
+    return render_template_string(chtml)
+
 @app.route('/')
 def index() :
     with open('templates/index.html') as f :

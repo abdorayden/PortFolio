@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMP Framework Documentation - API v1.0.0</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --border-color: #bdc3c7;
+            --code-bg: #f8f9fa;
+            --highlight-color: #f39c12;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #61dafb;
+            --secondary-color: #21d4fd;
+            --accent-color: #ff6b6b;
+            --background-color: #0d1117;
+            --text-color: #c9d1d9;
+            --border-color: #30363d;
+            --code-bg: #161b22;
+            --highlight-color: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .nav {
+            background: #21262d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            background-color: var(--background-color);
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .section {
+            background: #21262d;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 1rem;
+        }
+
+        .section h4 {
+            color: var(--accent-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .class-item {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .class-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        [data-theme="dark"] .class-item:hover {
+            box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+        }
+
+        .class-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .method-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .method-list li {
+            background: white;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--secondary-color);
+            transition: background-color 0.2s;
+        }
+
+        .method-list li:hover {
+            background-color: var(--background-color);
+        }
+
+        [data-theme="dark"] .method-list li {
+            background: #30363d;
+        }
+
+        [data-theme="dark"] .method-list li:hover {
+            background-color: #282e34;
+        }
+
+        .method-name {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .method-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .constants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .constant-group {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        [data-theme="dark"] .constant-group {
+            background: #161b22;
+        }
+
+        .constant-group h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .constant-list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .constant-list li {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid #eee;
+            color: var(--text-color);
+        }
+
+        .constant-list li:last-child {
+            border-bottom: none;
+        }
+
+        [data-theme="dark"] .constant-list li {
+            border-bottom: 1px solid #30363d;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        /* Lua Syntax Highlighting */
+        .lua-keyword {
+            color: #d73a49;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .lua-keyword {
+            color: #ff7b72;
+        }
+
+        .lua-string {
+            color: #032f62;
+        }
+
+        [data-theme="dark"] .lua-string {
+            color: #a5d6ff;
+        }
+
+        .lua-comment {
+            color: #6a737d;
+            font-style: italic;
+        }
+
+        [data-theme="dark"] .lua-comment {
+            color: #8b949e;
+        }
+
+        .lua-number {
+            color: #005cc5;
+        }
+
+        [data-theme="dark"] .lua-number {
+            color: #79c0ff;
+        }
+
+        .lua-function {
+            color: #6f42c1;
+            font-weight: bold;
+        }
+
+        [data-theme="dark"] .lua-function {
+            color: #d2a8ff;
+        }
+
+        .lua-variable {
+            color: #e36209;
+        }
+
+        [data-theme="dark"] .lua-variable {
+            color: #ffa657;
+        }
+
+        .lua-operator {
+            color: #d73a49;
+        }
+
+        [data-theme="dark"] .lua-operator {
+            color: #ff7b72;
+        }
+
+        .example {
+            background: #f0f8ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        [data-theme="dark"] .example {
+            background: #1c2128;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .search-container {
+            position: relative;
+            margin: 2rem 0;
+            max-width: 600px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        [data-theme="dark"] .search-box {
+            background: #21262d;
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .search-box:focus {
+            box-shadow: 0 0 0 3px rgba(33, 212, 253, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--border-color);
+            font-size: 1.2rem;
+            pointer-events: none;
+        }
+
+        .search-results-count {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .emoji {
+            font-style: normal;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+            }
+            
+            .class-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .constants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .highlight {
+            background-color: yellow;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+            <h1><span class="emoji">🎵</span>RMP Framework</h1>
+            <p>Terminal-based UI Framework with Audio Playback - API v1.0.0</p>
+        </header>
+
+        <nav class="nav">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="#constants">Constants</a></li>
+                <li><a href="#enums">Enumerations</a></li>
+                <li><a href="#utilities">Utilities</a></li>
+                <li><a href="#examples">Examples</a></li>
+            </ul>
+        </nav>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search classes, methods, constants, enums..." id="searchBox">
+            <span class="search-icon">🔍</span>
+            <div class="search-results-count" id="searchResults"></div>
+        </div>
+
+        <section class="section" id="overview">
+            <h2><span class="emoji">📖</span>Overview</h2>
+            <p>The RMP (Ray Music Player) framework is a comprehensive terminal-based UI framework with audio playback capabilities designed for Lua 5.4. It provides rich terminal applications with features including window management, text styling, audio control, and cross-platform support.</p>
+            
+            <h3>Core Features</h3>
+            <ul class="feature-list">
+                <li>Terminal UI Framework with window management, borders, and titles</li>
+                <li>Text styling with ANSI color codes and formatting</li>
+                <li>Popup dialogs (error, info, warning, message)</li>
+                <li>Drawing primitives (rectangles, circles, triangles, lines)</li>
+                <li>Scrolling content views and interactive option menus</li>
+                <li>Audio file loading and playback control</li>
+                <li>Volume, speed, and position control</li>
+                <li>Playlist management with different loop modes</li>
+                <li>Cross-platform support (Windows, Linux, MacOS)</li>
+                <li>Event-driven architecture with keyboard and mouse input</li>
+            </ul>
+
+            <h3>Platform Support</h3>
+            <ul class="feature-list">
+                <li>Linux - Native support with terminal manipulation</li>
+                <li>Windows - Cross-platform terminal operations</li>
+                <li>MacOS - Full compatibility</li>
+            </ul>
+
+            <h3>License</h3>
+            <p>Copyright © 2024-2025 Ray Den. Licensed under the MIT License.</p>
+        </section>
+
+        <section class="section" id="classes">
+            <h2><span class="emoji">🏗️</span>Classes</h2>
+            
+            <div class="class-grid" id="classGrid">
+                <div class="class-item" data-search="table">
+                    <div class="class-name">RMP.Table</div>
+                    <p>Advanced table management class for data manipulation.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(data)</span><div class="method-desc">Creates new table instance</div></li>
+                        <li><span class="method-name">addRow(row)</span><div class="method-desc">Adds a row to the table</div></li>
+                        <li><span class="method-name">getRow(index)</span><div class="method-desc">Retrieves a specific row</div></li>
+                        <li><span class="method-name">removeRow(index)</span><div class="method-desc">Removes a row by index</div></li>
+                        <li><span class="method-name">clear()</span><div class="method-desc">Clears all table data</div></li>
+                        <li><span class="method-name">size()</span><div class="method-desc">Returns table size</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="text">
+                    <div class="class-name">RMP.Text</div>
+                    <p>Text rendering and styling class with position control.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(text, style, fg, bg)</span><div class="method-desc">Creates styled text object</div></li>
+                        <li><span class="method-name">setPosition(x, y)</span><div class="method-desc">Sets text position</div></li>
+                        <li><span class="method-name">getColoredText()</span><div class="method-desc">Returns styled text string</div></li>
+                        <li><span class="method-name">getText()</span><div class="method-desc">Gets raw text content</div></li>
+                        <li><span class="method-name">getStyle()</span><div class="method-desc">Gets text style</div></li>
+                        <li><span class="method-name">getFGColor()</span><div class="method-desc">Gets foreground color</div></li>
+                        <li><span class="method-name">getBGColor()</span><div class="method-desc">Gets background color</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="window">
+                    <div class="class-name">RMP.Window</div>
+                    <p>Window management with borders, titles, and callbacks.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(id)</span><div class="method-desc">Creates window with ID</div></li>
+                        <li><span class="method-name">setId(id)</span><div class="method-desc">Sets window identifier</div></li>
+                        <li><span class="method-name">getId()</span><div class="method-desc">Gets window identifier</div></li>
+                        <li><span class="method-name">createWindow(title, width, height, x, y, border_color, background_color, border_style, callback)</span><div class="method-desc">Creates and configures window</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="virtualterminal">
+                    <div class="class-name">RMP.VirtualTerminal</div>
+                    <p>Core virtual terminal for rendering and event handling.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(width, height)</span><div class="method-desc">Creates virtual terminal</div></li>
+                        <li><span class="method-name">clear()</span><div class="method-desc">Clears terminal content</div></li>
+                        <li><span class="method-name">setChar(x, y, char, fg, bg, style)</span><div class="method-desc">Sets character at position</div></li>
+                        <li><span class="method-name">writeText(x, y, text, fg, bg, style)</span><div class="method-desc">Writes text at position</div></li>
+                        <li><span class="method-name">drawBox(title, x, y, width, height, border_style, fg, bg)</span><div class="method-desc">Draws bordered box</div></li>
+                        <li><span class="method-name">render()</span><div class="method-desc">Renders terminal to screen</div></li>
+                        <li><span class="method-name">merge(thatTerm, offsetX, offsetY)</span><div class="method-desc">Merges another terminal</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="sound audio">
+                    <div class="class-name">RMP.Sound</div>
+                    <p>Comprehensive audio playback and playlist management.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(files)</span><div class="method-desc">Creates audio instance with files</div></li>
+                        <li><span class="method-name">setPlaylist(files)</span><div class="method-desc">Sets audio playlist</div></li>
+                        <li><span class="method-name">play()</span><div class="method-desc">Starts audio playback</div></li>
+                        <li><span class="method-name">pause()</span><div class="method-desc">Pauses audio playback</div></li>
+                        <li><span class="method-name">stop()</span><div class="method-desc">Stops audio playback</div></li>
+                        <li><span class="method-name">setVolume(volume)</span><div class="method-desc">Sets playback volume (0.0-1.0)</div></li>
+                        <li><span class="method-name">setSpeed(speed)</span><div class="method-desc">Sets playback speed</div></li>
+                        <li><span class="method-name">seek(seconds)</span><div class="method-desc">Seeks to position in seconds</div></li>
+                        <li><span class="method-name">nextTrack()</span><div class="method-desc">Advances to next track</div></li>
+                        <li><span class="method-name">prevTrack()</span><div class="method-desc">Goes to previous track</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="input">
+                    <div class="class-name">RMP.Input</div>
+                    <p>User text input handling with cursor management.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(label, x, y, width, defaultText, cancelKey)</span><div class="method-desc">Creates input field</div></li>
+                        <li><span class="method-name">start()</span><div class="method-desc">Activates input field</div></li>
+                        <li><span class="method-name">stop()</span><div class="method-desc">Deactivates input field</div></li>
+                        <li><span class="method-name">processKey(key)</span><div class="method-desc">Processes keyboard input</div></li>
+                        <li><span class="method-name">getText()</span><div class="method-desc">Gets input text</div></li>
+                        <li><span class="method-name">setText(text)</span><div class="method-desc">Sets input text</div></li>
+                        <li><span class="method-name">clearText()</span><div class="method-desc">Clears input text</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="options menu">
+                    <div class="class-name">RMP.Options</div>
+                    <p>Interactive option menu system with selection tracking.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(options)</span><div class="method-desc">Creates options menu</div></li>
+                        <li><span class="method-name">setOptions(options)</span><div class="method-desc">Sets menu options</div></li>
+                        <li><span class="method-name">next(block)</span><div class="method-desc">Moves to next option</div></li>
+                        <li><span class="method-name">prev(block)</span><div class="method-desc">Moves to previous option</div></li>
+                        <li><span class="method-name">getSelected()</span><div class="method-desc">Gets selected option</div></li>
+                        <li><span class="method-name">focusPos(position)</span><div class="method-desc">Sets focus position</div></li>
+                        <li><span class="method-name">parse()</span><div class="method-desc">Parses options for rendering</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="popup dialog">
+                    <div class="class-name">RMP.Popup</div>
+                    <p>Modal dialog system for notifications and messages.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">run(message, title, border_color, bg_color, poslayout)</span><div class="method-desc">Shows popup dialog</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="scroller">
+                    <div class="class-name">RMP.Scroller</div>
+                    <p>Content scrolling mechanism for large lists.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(visible_height, options_obj)</span><div class="method-desc">Creates scroller with options</div></li>
+                        <li><span class="method-name">nextLine()</span><div class="method-desc">Scrolls down one line</div></li>
+                        <li><span class="method-name">prevLine()</span><div class="method-desc">Scrolls up one line</div></li>
+                        <li><span class="method-name">nextContent()</span><div class="method-desc">Scrolls down by page</div></li>
+                        <li><span class="method-name">prevContent()</span><div class="method-desc">Scrolls up by page</div></li>
+                        <li><span class="method-name">getVisible()</span><div class="method-desc">Gets visible items</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="draw graphics">
+                    <div class="class-name">RMP.Draw</div>
+                    <p>Drawing primitives for shapes and graphics.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">rectangle(x, y, width, height, color)</span><div class="method-desc">Draws rectangle</div></li>
+                        <li><span class="method-name">circle(centerX, centerY, r, color)</span><div class="method-desc">Draws circle</div></li>
+                        <li><span class="method-name">triangle(height, pos_x, pos_y, color)</span><div class="method-desc">Draws triangle</div></li>
+                        <li><span class="method-name">line(x, y, width, color)</span><div class="method-desc">Draws horizontal line</div></li>
+                        <li><span class="method-name">column(x, y, height, color)</span><div class="method-desc">Draws vertical line</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="terminal">
+                    <div class="class-name">RMP.Terminal</div>
+                    <p>Terminal manipulation and cursor control.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">clearWindow()</span><div class="method-desc">Clears terminal window</div></li>
+                        <li><span class="method-name">moveTo(x, y)</span><div class="method-desc">Moves cursor to position</div></li>
+                        <li><span class="method-name">hideCursor()</span><div class="method-desc">Hides terminal cursor</div></li>
+                        <li><span class="method-name">showCursor()</span><div class="method-desc">Shows terminal cursor</div></li>
+                        <li><span class="method-name">getSize()</span><div class="method-desc">Gets terminal dimensions</div></li>
+                        <li><span class="method-name">handleKey()</span><div class="method-desc">Handles keyboard input</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="eventlistener events">
+                    <div class="class-name">RMP.EventListener</div>
+                    <p>Event handling system for user interactions.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor()</span><div class="method-desc">Creates event listener</div></li>
+                        <li><span class="method-name">addEventListener(event, callback)</span><div class="method-desc">Adds event listener</div></li>
+                        <li><span class="method-name">onKeyboard(callback)</span><div class="method-desc">Adds keyboard event listener</div></li>
+                        <li><span class="method-name">onMouse(callback)</span><div class="method-desc">Adds mouse event listener</div></li>
+                        <li><span class="method-name">onSound(callback)</span><div class="method-desc">Adds sound event listener</div></li>
+                        <li><span class="method-name">handleEvent(key, mouse, sound)</span><div class="method-desc">Processes events</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="path filesystem">
+                    <div class="class-name">RMP.Path</div>
+                    <p>File system operations and path manipulation.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(path)</span><div class="method-desc">Creates path object</div></li>
+                        <li><span class="method-name">getCurrentPath()</span><div class="method-desc">Gets current directory</div></li>
+                        <li><span class="method-name">getHomePath()</span><div class="method-desc">Gets home directory</div></li>
+                        <li><span class="method-name">listDir()</span><div class="method-desc">Lists directory contents</div></li>
+                        <li><span class="method-name">makeDir(dir_name)</span><div class="method-desc">Creates directory</div></li>
+                        <li><span class="method-name">find(pattern, is_find_file)</span><div class="method-desc">Finds files/directories</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="config configuration">
+                    <div class="class-name">RMP.Config</div>
+                    <p>Configuration management with cross-platform support.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(confPath)</span><div class="method-desc">Creates config manager</div></li>
+                        <li><span class="method-name">load()</span><div class="method-desc">Loads configuration file</div></li>
+                        <li><span class="method-name">getThemePath(themeName)</span><div class="method-desc">Gets theme file path</div></li>
+                        <li><span class="method-name">getPluginPath(pluginName)</span><div class="method-desc">Gets plugin file path</div></li>
+                        <li><span class="method-name">isValidConfig()</span><div class="method-desc">Validates configuration</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item" data-search="frame">
+                    <div class="class-name">RMP.Frame</div>
+                    <p>High-level frame management with FPS control.</p>
+                    <ul class="method-list">
+                        <li><span class="method-name">constructor(width, height)</span><div class="method-desc">Creates frame instance</div></li>
+                        <li><span class="method-name">setFps(fps)</span><div class="method-desc">Sets frame rate</div></li>
+                        <li><span class="method-name">add(component)</span><div class="method-desc">Adds component to frame</div></li>
+                        <li><span class="method-name">run(key, mouse, sound)</span><div class="method-desc">Runs frame update cycle</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="constants">
+            <h2><span class="emoji">🎨</span>Constants & Symbols</h2>
+            
+            <div class="constants-grid">
+                <div class="constant-group">
+                    <h4>Text Styles</h4>
+                    <ul class="constant-list">
+                        <li>TextStyle.Bold</li>
+                        <li>TextStyle.Italic</li>
+                        <li>TextStyle.Underline</li>
+                        <li>TextStyle.Strike</li>
+                        <li>TextStyle.Reverse</li>
+                        <li>TextStyle.Blink</li>
+                        <li>TextStyle.Regular</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Foreground Colors</h4>
+                    <ul class="constant-list">
+                        <li>FGColors.NoBrights.Black</li>
+                        <li>FGColors.NoBrights.Red</li>
+                        <li>FGColors.NoBrights.Green</li>
+                        <li>FGColors.NoBrights.Yellow</li>
+                        <li>FGColors.NoBrights.Blue</li>
+                        <li>FGColors.NoBrights.Magenta</li>
+                        <li>FGColors.NoBrights.Cyan</li>
+                        <li>FGColors.NoBrights.White</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Background Colors</h4>
+                    <ul class="constant-list">
+                        <li>BGColors.NoBrights.Black</li>
+                        <li>BGColors.NoBrights.Red</li>
+                        <li>BGColors.NoBrights.Green</li>
+                        <li>BGColors.NoBrights.Yellow</li>
+                        <li>BGColors.NoBrights.Blue</li>
+                        <li>BGColors.NoBrights.Magenta</li>
+                        <li>BGColors.NoBrights.Cyan</li>
+                        <li>BGColors.NoBrights.White</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Border Styles</h4>
+                    <ul class="constant-list">
+                        <li>BoxDrawing.LightBorder</li>
+                        <li>BoxDrawing.HeavyBorder</li>
+                        <li>BoxDrawing.RoundedCorners</li>
+                        <li>BoxDrawing.RoundedBorder</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Unicode Symbols</h4>
+                    <ul class="constant-list">
+                        <li>File_pos ➯</li>
+                        <li>Pause_start ⏯</li>
+                        <li>Next ⏵</li>
+                        <li>Prev ⏴</li>
+                        <li>Volume_max 🔊</li>
+                        <li>Volume_mute 🔇</li>
+                        <li>Search_emo 🔎</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Progress Bars</h4>
+                    <ul class="constant-list">
+                        <li>Bar_l_to_r_25_per ▎</li>
+                        <li>Bar_l_to_r_50_per ▌</li>
+                        <li>Bar_l_to_r_75_per ▊</li>
+                        <li>Bar_100_per █</li>
+                        <li>Bar_Shading_25_per ░</li>
+                        <li>Bar_Shading_50_per ▒</li>
+                        <li>Bar_Shading_75_per ▓</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="enums">
+            <h2><span class="emoji">🔢</span>Enumerations</h2>
+            
+            <div class="constants-grid">
+                <div class="constant-group">
+                    <h4>Platform Types</h4>
+                    <ul class="constant-list">
+                        <li>PlatformType.LINUX</li>
+                        <li>PlatformType.WINDOWS</li>
+                        <li>PlatformType.MAC</li>
+                        <li>PlatformType.UNKNOWN</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Playback Modes</h4>
+                    <ul class="constant-list">
+                        <li>PlaybackMode.ONCE</li>
+                        <li>PlaybackMode.LOOP_SINGLE</li>
+                        <li>PlaybackMode.LOOP_PLAYLIST</li>
+                        <li>PlaybackMode.SHUFFLE</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Audio States</h4>
+                    <ul class="constant-list">
+                        <li>State.STOPPED</li>
+                        <li>State.PLAYING</li>
+                        <li>State.PAUSED</li>
+                        <li>State.LOADING</li>
+                        <li>State.ERROR</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Event Types</h4>
+                    <ul class="constant-list">
+                        <li>EventType.Keyboard</li>
+                        <li>EventType.Mouse</li>
+                        <li>EventType.Focus</li>
+                        <li>EventType.Sound</li>
+                        <li>EventType.TransformDataGet</li>
+                        <li>EventType.TransformDataPut</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Popup Positions</h4>
+                    <ul class="constant-list">
+                        <li>PopupPosition.CENTER</li>
+                        <li>PopupPosition.TOP_LEFT</li>
+                        <li>PopupPosition.TOP_RIGHT</li>
+                        <li>PopupPosition.BOTTOM_LEFT</li>
+                        <li>PopupPosition.BOTTOM_RIGHT</li>
+                    </ul>
+                </div>
+
+                <div class="constant-group">
+                    <h4>Key Constants</h4>
+                    <ul class="constant-list">
+                        <li>KEY_ENTER</li>
+                        <li>KEY_ESCAPE</li>
+                        <li>KEY_UP, KEY_DOWN</li>
+                        <li>KEY_LEFT, KEY_RIGHT</li>
+                        <li>KEY_CTRL_A to KEY_CTRL_Z</li>
+                        <li>KEY_A to KEY_Z</li>
+                        <li>KEY_0 to KEY_9</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="utilities">
+            <h2><span class="emoji">🛠️</span>Utility Functions</h2>
+            
+            <div class="class-grid">
+                <div class="class-item">
+                    <div class="class-name">Global Functions</div>
+                    <ul class="method-list">
+                        <li><span class="method-name">RMP.enum(reset, value, start)</span><div class="method-desc">Creates enumeration values</div></li>
+                        <li><span class="method-name">RMP.getOs()</span><div class="method-desc">Returns platform type</div></li>
+                        <li><span class="method-name">RMP.sleep(time)</span><div class="method-desc">Sleeps for specified time</div></li>
+                        <li><span class="method-name">RMP.colorFromHex(hex, fg_or_bg)</span><div class="method-desc">Converts hex to ANSI color</div></li>
+                        <li><span class="method-name">RMP.quickRoutine(func)</span><div class="method-desc">Creates coroutine</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item">
+                    <div class="class-name">Duration Class</div>
+                    <ul class="method-list">
+                        <li><span class="method-name">Duration.new(time)</span><div class="method-desc">Creates duration object</div></li>
+                        <li><span class="method-name">fromSec()</span><div class="method-desc">Converts to milliseconds</div></li>
+                        <li><span class="method-name">fromMilsec()</span><div class="method-desc">Returns milliseconds</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item">
+                    <div class="class-name">Mouse Class</div>
+                    <ul class="method-list">
+                        <li><span class="method-name">Mouse.new(x, y, button, action)</span><div class="method-desc">Creates mouse object</div></li>
+                        <li><span class="method-name">getX(), getY()</span><div class="method-desc">Gets mouse coordinates</div></li>
+                        <li><span class="method-name">getButton()</span><div class="method-desc">Gets mouse button</div></li>
+                        <li><span class="method-name">getAction()</span><div class="method-desc">Gets mouse action</div></li>
+                    </ul>
+                </div>
+
+                <div class="class-item">
+                    <div class="class-name">Menu System</div>
+                    <ul class="method-list">
+                        <li><span class="method-name">Menu.new(title, options)</span><div class="method-desc">Creates menu</div></li>
+                        <li><span class="method-name">MenuItem.new(label, action)</span><div class="method-desc">Creates menu item</div></li>
+                        <li><span class="method-name">addOption(option)</span><div class="method-desc">Adds menu option</div></li>
+                        <li><span class="method-name">execute()</span><div class="method-desc">Executes menu action</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="examples">
+            <h2><span class="emoji">📋</span>Code Examples</h2>
+            
+            <h3>Basic Window Creation</h3>
+            <pre>
+            <div class="code-block" data-language="lua">
+<span class="lua-keyword">local </span> <span class="lua-variable">RMP</span> <span class="lua-operator">=</span> <span class="lua-function">require</span><span class="lua-operator">(</span><span class="lua-string">"rmp.rmp"</span><span class="lua-operator">)</span>
+<span class="lua-comment">-- Create a basic window</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">window</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Window</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">(</span><span class="lua-number">1</span><span class="lua-operator">)</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">vterm</span> <span class="lua-operator">=</span> <span class="lua-variable">window</span><span class="lua-operator">:</span><span class="lua-function">createWindow</span><span class="lua-operator">(</span>
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Text</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">(</span><span class="lua-string">"My Window"</span><span class="lua-operator">,</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">TextStyle</span><span class="lua-operator">.</span><span class="lua-variable">Bold</span><span class="lua-operator">,</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">FGColors</span><span class="lua-operator">.</span><span class="lua-variable">Brights</span><span class="lua-operator">.</span><span class="lua-variable">White</span><span class="lua-operator">),</span>
+    <span class="lua-number">80</span><span class="lua-operator">,</span> <span class="lua-number">24</span><span class="lua-operator">,</span> <span class="lua-number">1</span><span class="lua-operator">,</span> <span class="lua-number">1</span><span class="lua-operator">,</span>
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">FGColors</span><span class="lua-operator">.</span><span class="lua-variable">NoBrights</span><span class="lua-operator">.</span><span class="lua-variable">Blue</span><span class="lua-operator">,</span>
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">BGColors</span><span class="lua-operator">.</span><span class="lua-variable">NoBrights</span><span class="lua-operator">.</span><span class="lua-variable">Black</span><span class="lua-operator">,</span>
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">BoxDrawing</span><span class="lua-operator">.</span><span class="lua-variable">LightBorder</span><span class="lua-operator">,</span>
+    <span class="lua-keyword">function</span><span class="lua-operator">(</span><span class="lua-variable">x</span><span class="lua-operator">,</span> <span class="lua-variable">y</span><span class="lua-operator">,</span> <span class="lua-variable">width</span><span class="lua-operator">,</span> <span class="lua-variable">height</span><span class="lua-operator">)</span>
+        <span class="lua-keyword">local</span> <span class="lua-variable">content</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">VirtualTerminal</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+        <span class="lua-variable">content</span><span class="lua-operator">:</span><span class="lua-function">writeText</span><span class="lua-operator">(</span><span class="lua-variable">x</span> <span class="lua-operator">+</span> <span class="lua-number">2</span><span class="lua-operator">,</span> <span class="lua-variable">y</span> <span class="lua-operator">+</span> <span class="lua-number">2</span><span class="lua-operator">,</span> <span class="lua-string">"Hello, RMP Framework!"</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">FGColors</span><span class="lua-operator">.</span><span class="lua-variable">Brights</span><span class="lua-operator">.</span><span class="lua-variable">Green</span><span class="lua-operator">)</span>
+        <span class="lua-keyword">return</span> <span class="lua-variable">content</span>
+    <span class="lua-keyword">end</span>
+<span class="lua-operator">)</span>
+
+<span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">render</span><span class="lua-operator">()</span>
+            </div>
+
+            <h3>Audio Playbook Management</h3>
+            <div class="code-block" data-language="lua">
+<span class="lua-keyword">local</span> <span class="lua-variable">RMP</span> <span class="lua-operator">=</span> <span class="lua-function">require</span><span class="lua-operator">(</span><span class="lua-string">"rmp.rmp"</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Create audio player</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">sound</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Sound</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+
+<span class="lua-comment">-- Set playlist</span>
+<span class="lua-variable">sound</span><span class="lua-operator">:</span><span class="lua-function">setPlaylist</span><span class="lua-operator">({</span>
+    <span class="lua-string">"music/song1.mp3"</span><span class="lua-operator">,</span>
+    <span class="lua-string">"music/song2.wav"</span><span class="lua-operator">,</span>
+    <span class="lua-string">"music/song3.ogg"</span>
+<span class="lua-operator">})</span>
+
+<span class="lua-comment">-- Configure playback</span>
+<span class="lua-variable">sound</span><span class="lua-operator">:</span><span class="lua-function">setPlayBackMode</span><span class="lua-operator">(</span><span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">PlaybackMode</span><span class="lua-operator">.</span><span class="lua-variable">LOOP_PLAYLIST</span><span class="lua-operator">)</span>
+<span class="lua-variable">sound</span><span class="lua-operator">:</span><span class="lua-function">setVolume</span><span class="lua-operator">(</span><span class="lua-number">0.8</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Play music</span>
+<span class="lua-variable">sound</span><span class="lua-operator">:</span><span class="lua-function">play</span><span class="lua-operator">()</span>
+
+<span class="lua-comment">-- Event loop for auto-advance</span>
+<span class="lua-keyword">while</span> <span class="lua-keyword">true</span> <span class="lua-keyword">do</span>
+    <span class="lua-variable">sound</span><span class="lua-operator">:</span><span class="lua-function">update</span><span class="lua-operator">()</span>
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-function">sleep</span><span class="lua-operator">(</span><span class="lua-number">100</span><span class="lua-operator">)</span> <span class="lua-comment">-- 100ms</span>
+<span class="lua-keyword">end</span>
+            </div>
+
+            <h3>Interactive Input Form</h3>
+            <div class="code-block" data-language="lua">
+<span class="lua-keyword">local</span> <span class="lua-variable">RMP</span> <span class="lua-operator">=</span> <span class="lua-function">require</span><span class="lua-operator">(</span><span class="lua-string">"rmp.rmp"</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Create input field</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">input</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Input</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">(</span>
+    <span class="lua-string">"Enter name: "</span><span class="lua-operator">,</span> 
+    <span class="lua-number">5</span><span class="lua-operator">,</span> <span class="lua-number">5</span><span class="lua-operator">,</span> <span class="lua-number">30</span><span class="lua-operator">,</span> 
+    <span class="lua-string">""</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_ESCAPE</span>
+<span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Create frame for rendering</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">frame</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Frame</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">setFps</span><span class="lua-operator">(</span><span class="lua-number">30</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Event handling</span>
+<span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">addEventListener</span><span class="lua-operator">(</span><span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">EventType</span><span class="lua-operator">.</span><span class="lua-variable">Keyboard</span><span class="lua-operator">,</span> <span class="lua-keyword">function</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">)</span>
+    <span class="lua-keyword">if</span> <span class="lua-keyword">not</span> <span class="lua-variable">input</span><span class="lua-operator">:</span><span class="lua-function">processKey</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">)</span> <span class="lua-keyword">then</span>
+        <span class="lua-keyword">if</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_ESCAPE</span> <span class="lua-keyword">then</span>
+            <span class="lua-keyword">return</span> <span class="lua-keyword">false</span> <span class="lua-comment">-- Exit</span>
+        <span class="lua-keyword">end</span>
+    <span class="lua-keyword">end</span>
+    
+    <span class="lua-keyword">if</span> <span class="lua-variable">input</span><span class="lua-operator">:</span><span class="lua-function">wasSubmitted</span><span class="lua-operator">()</span> <span class="lua-keyword">then</span>
+        <span class="lua-function">print</span><span class="lua-operator">(</span><span class="lua-string">"User entered: "</span> <span class="lua-operator">..</span> <span class="lua-variable">input</span><span class="lua-operator">:</span><span class="lua-function">getText</span><span class="lua-operator">())</span>
+        <span class="lua-variable">input</span><span class="lua-operator">:</span><span class="lua-function">reset</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">end</span>
+<span class="lua-keyword">end</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Main loop</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">terminal</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Terminal</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-variable">terminal</span><span class="lua-operator">:</span><span class="lua-function">rawMode</span><span class="lua-operator">(</span><span class="lua-keyword">true</span><span class="lua-operator">)</span>
+
+<span class="lua-keyword">while</span> <span class="lua-keyword">true</span> <span class="lua-keyword">do</span>
+    <span class="lua-variable">input</span><span class="lua-operator">:</span><span class="lua-function">render</span><span class="lua-operator">()</span>
+    <span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">add</span><span class="lua-operator">(</span><span class="lua-variable">input</span><span class="lua-operator">:</span><span class="lua-function">getVterm</span><span class="lua-operator">())</span>
+    
+    <span class="lua-keyword">local</span> <span class="lua-variable">key</span> <span class="lua-operator">=</span> <span class="lua-variable">terminal</span><span class="lua-operator">:</span><span class="lua-function">handleKey</span><span class="lua-operator">()</span>
+    <span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">run</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">,</span> <span class="lua-keyword">nil</span><span class="lua-operator">,</span> <span class="lua-keyword">nil</span><span class="lua-operator">)</span>
+<span class="lua-keyword">end</span>
+            </div>
+
+            <h3>Options Menu</h3>
+            <div class="code-block" data-language="lua">
+<span class="lua-keyword">local</span> <span class="lua-variable">RMP</span> <span class="lua-operator">=</span> <span class="lua-function">require</span><span class="lua-operator">(</span><span class="lua-string">"rmp.rmp"</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Create options menu</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">options</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Options</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">({</span>
+    <span class="lua-string">"Start Game"</span><span class="lua-operator">,</span>
+    <span class="lua-string">"Load Game"</span><span class="lua-operator">,</span> 
+    <span class="lua-string">"Settings"</span><span class="lua-operator">,</span>
+    <span class="lua-string">"Exit"</span>
+<span class="lua-operator">})</span>
+
+<span class="lua-variable">options</span><span class="lua-operator">:</span><span class="lua-function">setColorFocus</span><span class="lua-operator">(</span><span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">FGColors</span><span class="lua-operator">.</span><span class="lua-variable">Brights</span><span class="lua-operator">.</span><span class="lua-variable">Yellow</span><span class="lua-operator">)</span>
+<span class="lua-variable">options</span><span class="lua-operator">:</span><span class="lua-function">setSymblFocus</span><span class="lua-operator">(</span><span class="lua-string">"► "</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Handle selection</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">frame</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Frame</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">addEventListener</span><span class="lua-operator">(</span><span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">EventType</span><span class="lua-operator">.</span><span class="lua-variable">Keyboard</span><span class="lua-operator">,</span> <span class="lua-keyword">function</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">)</span>
+    <span class="lua-keyword">if</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_UP</span> <span class="lua-keyword">then</span>
+        <span class="lua-variable">options</span><span class="lua-operator">:</span><span class="lua-function">prev</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">elseif</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_DOWN</span> <span class="lua-keyword">then</span>
+        <span class="lua-variable">options</span><span class="lua-operator">:</span><span class="lua-function">next</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">elseif</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_ENTER</span> <span class="lua-keyword">then</span>
+        <span class="lua-keyword">local</span> <span class="lua-variable">selected</span> <span class="lua-operator">=</span> <span class="lua-variable">options</span><span class="lua-operator">:</span><span class="lua-function">getSelected</span><span class="lua-operator">()</span>
+        <span class="lua-function">print</span><span class="lua-operator">(</span><span class="lua-string">"Selected: "</span> <span class="lua-operator">..</span> <span class="lua-variable">selected</span><span class="lua-operator">)</span>
+    <span class="lua-keyword">end</span>
+<span class="lua-keyword">end</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Render loop</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">vterm</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">VirtualTerminal</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-keyword">while</span> <span class="lua-keyword">true</span> <span class="lua-keyword">do</span>
+    <span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">clear</span><span class="lua-operator">()</span>
+    
+    <span class="lua-keyword">local</span> <span class="lua-variable">parsed_options</span> <span class="lua-operator">=</span> <span class="lua-variable">options</span><span class="lua-operator">:</span><span class="lua-function">parse</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">for</span> <span class="lua-variable">i</span><span class="lua-operator">,</span> <span class="lua-variable">option</span> <span class="lua-keyword">in</span> <span class="lua-function">ipairs</span><span class="lua-operator">(</span><span class="lua-variable">parsed_options</span><span class="lua-operator">)</span> <span class="lua-keyword">do</span>
+        <span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">writeText</span><span class="lua-operator">(</span>
+            <span class="lua-number">5</span><span class="lua-operator">,</span> <span class="lua-number">5</span> <span class="lua-operator">+</span> <span class="lua-variable">i</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">option</span><span class="lua-operator">.</span><span class="lua-variable">text</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">option</span><span class="lua-operator">.</span><span class="lua-variable">fg</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">option</span><span class="lua-operator">.</span><span class="lua-variable">bg</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">option</span><span class="lua-operator">.</span><span class="lua-variable">style</span>
+        <span class="lua-operator">)</span>
+    <span class="lua-keyword">end</span>
+    
+    <span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">add</span><span class="lua-operator">(</span><span class="lua-variable">vterm</span><span class="lua-operator">)</span>
+    <span class="lua-keyword">local</span> <span class="lua-variable">key</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Terminal</span><span class="lua-operator">:</span><span class="lua-function">handleKey</span><span class="lua-operator">()</span>
+    <span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">run</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">,</span> <span class="lua-keyword">nil</span><span class="lua-operator">,</span> <span class="lua-keyword">nil</span><span class="lua-operator">)</span>
+<span class="lua-keyword">end</span>
+            </div>
+
+            <h3>Drawing Graphics</h3>
+            <div class="code-block" data-language="lua">
+<span class="lua-keyword">local</span> <span class="lua-variable">RMP</span> <span class="lua-operator">=</span> <span class="lua-function">require</span><span class="lua-operator">(</span><span class="lua-string">"rmp.rmp"</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Create drawing surface</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">draw</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Draw</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">vterm</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">VirtualTerminal</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+
+<span class="lua-comment">-- Draw shapes</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">rect</span> <span class="lua-operator">=</span> <span class="lua-variable">draw</span><span class="lua-operator">:</span><span class="lua-function">rectangle</span><span class="lua-operator">(</span>
+    <span class="lua-number">10</span><span class="lua-operator">,</span> <span class="lua-number">5</span><span class="lua-operator">,</span> <span class="lua-number">20</span><span class="lua-operator">,</span> <span class="lua-number">10</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">BGColors</span><span class="lua-operator">.</span><span class="lua-variable">NoBrights</span><span class="lua-operator">.</span><span class="lua-variable">Red</span>
+<span class="lua-operator">)</span>
+
+<span class="lua-keyword">local</span> <span class="lua-variable">circle</span> <span class="lua-operator">=</span> <span class="lua-variable">draw</span><span class="lua-operator">:</span><span class="lua-function">circle</span><span class="lua-operator">(</span>
+    <span class="lua-number">30</span><span class="lua-operator">,</span> <span class="lua-number">15</span><span class="lua-operator">,</span> <span class="lua-number">5</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">BGColors</span><span class="lua-operator">.</span><span class="lua-variable">NoBrights</span><span class="lua-operator">.</span><span class="lua-variable">Blue</span>
+<span class="lua-operator">)</span>
+
+<span class="lua-keyword">local</span> <span class="lua-variable">line</span> <span class="lua-operator">=</span> <span class="lua-variable">draw</span><span class="lua-operator">:</span><span class="lua-function">line</span><span class="lua-operator">(</span>
+    <span class="lua-number">5</span><span class="lua-operator">,</span> <span class="lua-number">20</span><span class="lua-operator">,</span> <span class="lua-number">40</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">BGColors</span><span class="lua-operator">.</span><span class="lua-variable">NoBrights</span><span class="lua-operator">.</span><span class="lua-variable">Green</span>
+<span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Merge all drawings</span>
+<span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">merge</span><span class="lua-operator">(</span><span class="lua-variable">rect</span><span class="lua-operator">)</span>
+<span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">merge</span><span class="lua-operator">(</span><span class="lua-variable">circle</span><span class="lua-operator">,</span> <span class="lua-number">25</span><span class="lua-operator">,</span> <span class="lua-number">0</span><span class="lua-operator">)</span> <span class="lua-comment">-- Offset circle</span>
+<span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">merge</span><span class="lua-operator">(</span><span class="lua-variable">line</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Add text overlay</span>
+<span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">writeText</span><span class="lua-operator">(</span>
+    <span class="lua-number">15</span><span class="lua-operator">,</span> <span class="lua-number">25</span><span class="lua-operator">,</span> 
+    <span class="lua-string">"RMP Graphics Demo"</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">FGColors</span><span class="lua-operator">.</span><span class="lua-variable">Brights</span><span class="lua-operator">.</span><span class="lua-variable">White</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">BGColors</span><span class="lua-operator">.</span><span class="lua-variable">NoBrights</span><span class="lua-operator">.</span><span class="lua-variable">Black</span><span class="lua-operator">,</span> 
+    <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">TextStyle</span><span class="lua-operator">.</span><span class="lua-variable">Bold</span>
+<span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Render</span>
+<span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">render</span><span class="lua-operator">()</span>
+            </div>
+
+            <h3>File Browser Implementation</h3>
+            <div class="code-block" data-language="lua">
+<span class="lua-keyword">local</span> <span class="lua-variable">RMP</span> <span class="lua-operator">=</span> <span class="lua-function">require</span><span class="lua-operator">(</span><span class="lua-string">"rmp.rmp"</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Create path and file listing</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">path</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Path</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">files</span> <span class="lua-operator">=</span> <span class="lua-variable">path</span><span class="lua-operator">:</span><span class="lua-function">listDir</span><span class="lua-operator">()</span>
+
+<span class="lua-comment">-- Convert to options</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">file_names</span> <span class="lua-operator">=</span> <span class="lua-operator">{}</span>
+<span class="lua-keyword">for</span> <span class="lua-variable">_</span><span class="lua-operator">,</span> <span class="lua-variable">file_info</span> <span class="lua-keyword">in</span> <span class="lua-function">ipairs</span><span class="lua-operator">(</span><span class="lua-variable">files</span><span class="lua-operator">)</span> <span class="lua-keyword">do</span>
+    <span class="lua-keyword">local</span> <span class="lua-variable">prefix</span> <span class="lua-operator">=</span> <span class="lua-variable">file_info</span><span class="lua-operator">.</span><span class="lua-variable">is_file</span> <span class="lua-keyword">and</span> <span class="lua-string">"📄 "</span> <span class="lua-keyword">or</span> <span class="lua-string">"📁 "</span>
+    <span class="lua-function">table.insert</span><span class="lua-operator">(</span><span class="lua-variable">file_names</span><span class="lua-operator">,</span> <span class="lua-variable">prefix</span> <span class="lua-operator">..</span> <span class="lua-variable">file_info</span><span class="lua-operator">.</span><span class="lua-variable">name</span><span class="lua-operator">)</span>
+<span class="lua-keyword">end</span>
+
+<span class="lua-comment">-- Create scrollable file list</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">options</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Options</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">(</span><span class="lua-variable">file_names</span><span class="lua-operator">)</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">scroller</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Scroller</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">(</span><span class="lua-number">20</span><span class="lua-operator">,</span> <span class="lua-variable">options</span><span class="lua-operator">)</span> <span class="lua-comment">-- Show 20 items</span>
+
+<span class="lua-comment">-- Handle navigation</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">frame</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Frame</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">addEventListener</span><span class="lua-operator">(</span><span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">EventType</span><span class="lua-operator">.</span><span class="lua-variable">Keyboard</span><span class="lua-operator">,</span> <span class="lua-keyword">function</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">)</span>
+    <span class="lua-keyword">if</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_UP</span> <span class="lua-keyword">then</span>
+        <span class="lua-variable">scroller</span><span class="lua-operator">:</span><span class="lua-function">prevLine</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">elseif</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_DOWN</span> <span class="lua-keyword">then</span>
+        <span class="lua-variable">scroller</span><span class="lua-operator">:</span><span class="lua-function">nextLine</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">elseif</span> <span class="lua-variable">key</span> <span class="lua-operator">==</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">KEY_ENTER</span> <span class="lua-keyword">then</span>
+        <span class="lua-keyword">local</span> <span class="lua-variable">selected_file</span> <span class="lua-operator">=</span> <span class="lua-variable">files</span><span class="lua-operator">[</span><span class="lua-variable">scroller</span><span class="lua-operator">:</span><span class="lua-function">getCursorPosition</span><span class="lua-operator">()</span><span class="lua-operator">]</span>
+        <span class="lua-keyword">if</span> <span class="lua-keyword">not</span> <span class="lua-variable">selected_file</span><span class="lua-operator">.</span><span class="lua-variable">is_file</span> <span class="lua-keyword">then</span>
+            <span class="lua-comment">-- Navigate to directory</span>
+            <span class="lua-variable">path</span><span class="lua-operator">:</span><span class="lua-function">setPath</span><span class="lua-operator">(</span>
+                <span class="lua-variable">path</span><span class="lua-operator">:</span><span class="lua-function">getPath</span><span class="lua-operator">()</span> <span class="lua-operator">..</span> <span class="lua-string">"/"</span> <span class="lua-operator">..</span> <span class="lua-variable">selected_file</span><span class="lua-operator">.</span><span class="lua-variable">name</span>
+            <span class="lua-operator">)</span>
+            <span class="lua-comment">-- Refresh file list...</span>
+        <span class="lua-keyword">end</span>
+    <span class="lua-keyword">end</span>
+<span class="lua-keyword">end</span><span class="lua-operator">)</span>
+
+<span class="lua-comment">-- Render file browser</span>
+<span class="lua-keyword">local</span> <span class="lua-variable">vterm</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">VirtualTerminal</span><span class="lua-operator">.</span><span class="lua-function">new</span><span class="lua-operator">()</span>
+<span class="lua-keyword">while</span> <span class="lua-keyword">true</span> <span class="lua-keyword">do</span>
+    <span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">clear</span><span class="lua-operator">()</span>
+    
+    <span class="lua-comment">-- Draw current path</span>
+    <span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">writeText</span><span class="lua-operator">(</span>
+        <span class="lua-number">1</span><span class="lua-operator">,</span> <span class="lua-number">1</span><span class="lua-operator">,</span> 
+        <span class="lua-string">"Path: "</span> <span class="lua-operator">..</span> <span class="lua-variable">path</span><span class="lua-operator">:</span><span class="lua-function">getPath</span><span class="lua-operator">()</span><span class="lua-operator">,</span> 
+        <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">FGColors</span><span class="lua-operator">.</span><span class="lua-variable">Brights</span><span class="lua-operator">.</span><span class="lua-variable">Cyan</span>
+    <span class="lua-operator">)</span>
+    
+    <span class="lua-comment">-- Draw file list</span>
+    <span class="lua-keyword">local</span> <span class="lua-variable">visible_items</span> <span class="lua-operator">=</span> <span class="lua-variable">scroller</span><span class="lua-operator">:</span><span class="lua-function">getVisible</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">for</span> <span class="lua-variable">i</span><span class="lua-operator">,</span> <span class="lua-variable">item</span> <span class="lua-keyword">in</span> <span class="lua-function">ipairs</span><span class="lua-operator">(</span><span class="lua-variable">visible_items</span><span class="lua-operator">)</span> <span class="lua-keyword">do</span>
+        <span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">writeText</span><span class="lua-operator">(</span>
+            <span class="lua-number">3</span><span class="lua-operator">,</span> <span class="lua-number">3</span> <span class="lua-operator">+</span> <span class="lua-variable">i</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">item</span><span class="lua-operator">.</span><span class="lua-variable">text</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">item</span><span class="lua-operator">.</span><span class="lua-variable">fg</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">item</span><span class="lua-operator">.</span><span class="lua-variable">bg</span><span class="lua-operator">,</span> 
+            <span class="lua-variable">item</span><span class="lua-operator">.</span><span class="lua-variable">style</span>
+        <span class="lua-operator">)</span>
+    <span class="lua-keyword">end</span>
+    
+    <span class="lua-variable">vterm</span><span class="lua-operator">:</span><span class="lua-function">render</span><span class="lua-operator">()</span>
+    <span class="lua-keyword">local</span> <span class="lua-variable">key</span> <span class="lua-operator">=</span> <span class="lua-variable">RMP</span><span class="lua-operator">.</span><span class="lua-variable">Terminal</span><span class="lua-operator">:</span><span class="lua-function">handleKey</span><span class="lua-operator">()</span>
+    <span class="lua-variable">frame</span><span class="lua-operator">:</span><span class="lua-function">run</span><span class="lua-operator">(</span><span class="lua-variable">key</span><span class="lua-operator">,</span> <span class="lua-keyword">nil</span><span class="lua-operator">,</span> <span class="lua-keyword">nil</span><span class="lua-operator">)</span>
+<span class="lua-keyword">end</span>
+            </div>
+</pre>
+        </section>
+
+        <footer style="text-align: center; padding: 2rem 0; color: #666; border-top: 1px solid var(--border-color); margin-top: 2rem;">
+            <p>&copy; 2024-2025 Ray Den. RMP Framework Documentation. Licensed under MIT License.</p>
+            <p>Generated from rmp.lua API v1.0.0</p>
+        </footer>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            
+            // Update button text
+            const toggleBtn = document.querySelector('.theme-toggle');
+            toggleBtn.innerHTML = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+            
+            // Save preference
+            localStorage.setItem('rmp-docs-theme', newTheme);
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('rmp-docs-theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            const toggleBtn = document.querySelector('.theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.innerHTML = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+            }
+        }
+
+        // Enhanced search functionality
+        function setupSearch() {
+            const searchBox = document.getElementById('searchBox');
+            const searchResults = document.getElementById('searchResults');
+            
+            // Get all searchable elements
+            const searchableElements = {
+                classes: document.querySelectorAll('.class-item'),
+                constants: document.querySelectorAll('.constant-group'),
+                sections: document.querySelectorAll('.section'),
+                methods: document.querySelectorAll('.method-list li'),
+                constantItems: document.querySelectorAll('.constant-list li')
+            };
+
+            function performSearch(query) {
+                query = query.toLowerCase().trim();
+                let totalMatches = 0;
+                
+                if (query === '') {
+                    // Show all content when search is empty
+                    showAllContent();
+                    searchResults.textContent = '';
+                    return;
+                }
+
+                // Search in classes
+                searchableElements.classes.forEach(item => {
+                    const className = item.querySelector('.class-name').textContent.toLowerCase();
+                    const methods = Array.from(item.querySelectorAll('.method-name')).map(m => m.textContent.toLowerCase());
+                    const description = item.querySelector('p').textContent.toLowerCase();
+                    const searchData = item.getAttribute('data-search') || '';
+                    
+                    const matches = className.includes(query) || 
+                                  methods.some(method => method.includes(query)) || 
+                                  description.includes(query) ||
+                                  searchData.includes(query);
+                    
+                    if (matches) {
+                        item.style.display = 'block';
+                        totalMatches++;
+                        highlightText(item, query);
+                    } else {
+                        item.style.display = 'none';
+                        removeHighlight(item);
+                    }
+                });
+
+                // Search in constants groups
+                searchableElements.constants.forEach(group => {
+                    const title = group.querySelector('h4').textContent.toLowerCase();
+                    const constants = Array.from(group.querySelectorAll('.constant-list li')).map(li => li.textContent.toLowerCase());
+                    
+                    const matches = title.includes(query) || 
+                                  constants.some(constant => constant.includes(query));
+                    
+                    if (matches) {
+                        group.style.display = 'block';
+                        totalMatches++;
+                        highlightText(group, query);
+                    } else {
+                        group.style.display = 'none';
+                        removeHighlight(group);
+                    }
+                });
+
+                // Search in sections
+                const sections = ['constants', 'enums', 'utilities', 'examples'];
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const sectionTitle = section.querySelector('h2').textContent.toLowerCase();
+                        const sectionContent = section.textContent.toLowerCase();
+                        
+                        if (sectionTitle.includes(query) || sectionContent.includes(query)) {
+                            section.style.display = 'block';
+                        } else if (query.length > 2) {
+                            section.style.display = 'none';
+                        }
+                    }
+                });
+
+                // Update results count
+                updateResultsCount(totalMatches, query);
+            }
+
+            function showAllContent() {
+                // Show all classes
+                searchableElements.classes.forEach(item => {
+                    item.style.display = 'block';
+                    removeHighlight(item);
+                });
+                
+                // Show all constant groups
+                searchableElements.constants.forEach(group => {
+                    group.style.display = 'block';
+                    removeHighlight(group);
+                });
+                
+                // Show all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'block';
+                    removeHighlight(section);
+                });
+            }
+
+            function highlightText(element, query) {
+                // Remove previous highlights
+                removeHighlight(element);
+                
+                const walker = document.createTreeWalker(
+                    element,
+                    NodeFilter.SHOW_TEXT,
+                    {
+                        acceptNode: function(node) {
+                            // Skip script and style elements
+                            if (node.parentNode.tagName === 'SCRIPT' || node.parentNode.tagName === 'STYLE') {
+                                return NodeFilter.FILTER_REJECT;
+                            }
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                    },
+                    false
+                );
+                
+                const textNodes = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    if (node.textContent.trim().length > 0) {
+                        textNodes.push(node);
+                    }
+                }
+                
+                textNodes.forEach(textNode => {
+                    const text = textNode.textContent;
+                    const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+                    if (regex.test(text)) {
+                        const highlightedText = text.replace(regex, '<span class="highlight">$1</span>');
+                        const span = document.createElement('span');
+                        span.innerHTML = highlightedText;
+                        textNode.parentNode.replaceChild(span, textNode);
+                    }
+                });
+            }
+
+            function removeHighlight(element) {
+                const highlights = element.querySelectorAll('.highlight');
+                highlights.forEach(highlight => {
+                    highlight.outerHTML = highlight.innerHTML;
+                });
+            }
+
+            function escapeRegExp(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            function updateResultsCount(count, query) {
+                if (count === 0 && query.length > 0) {
+                    searchResults.textContent = `No results found for "${query}"`;
+                    searchResults.style.color = 'var(--accent-color)';
+                } else if (count > 0) {
+                    searchResults.textContent = `Found ${count} result${count === 1 ? '' : 's'} for "${query}"`;
+                    searchResults.style.color = 'var(--secondary-color)';
+                } else {
+                    searchResults.textContent = '';
+                }
+            }
+
+            // Debounce search for better performance
+            let searchTimeout;
+            searchBox.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    performSearch(e.target.value);
+                }, 300);
+            });
+        }
+
+        // Smooth scrolling for navigation
+        function setupSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            setupSearch();
+            setupSmoothScrolling();
+            
+            // Show loading message briefly
+            console.log('RMP Framework Documentation loaded successfully!');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+F or Cmd+F to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                document.getElementById('searchBox').focus();
+            }
+            
+            // Escape to clear search
+            if (e.key === 'Escape') {
+                const searchBox = document.getElementById('searchBox');
+                searchBox.value = '';
+                searchBox.dispatchEvent(new Event('input'));
+            }
+        });
+    </script>
+</body>
+</html>
