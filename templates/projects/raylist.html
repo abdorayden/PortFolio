@@ -7,276 +7,502 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <link rel="icon" href="https://github.com/abdorayden/PortFolio/blob/master/assets/logo.jpeg?raw=true" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
     <style>
+        :root {
+            --primary-color: #00bcd4;
+            --primary-dark: #008ba3;
+            --secondary-color: #ffeb3b;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #c7d1d9;
+            --sidebar-width: 280px;
+            --header-height: 80px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: "Courier New", Courier, monospace;
-            background: #121212;
-            color: #c7d1d9;
-            margin: 0;
+            background: var(--dark-bg);
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+        
         header {
-            padding: 20px;
+            padding: 15px 20px;
             text-align: center;
-            background: #1e1e1e;
-            border-bottom: 2px solid #00bcd4;
+            background: var(--card-bg);
+            border-bottom: 2px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+        
         nav {
             display: flex;
             justify-content: center;
-            background: #1e1e1e;
-            padding: 10px;
-            border-bottom: 2px solid #00bcd4;
+            background: var(--card-bg);
+            padding: 12px;
+            border-bottom: 2px solid var(--primary-color);
+            flex-wrap: wrap;
+            gap: 15px;
         }
+        
         nav a {
-            color: #00bcd4;
+            color: var(--primary-color);
             text-decoration: none;
-            margin: 0 15px;
-            font-size: 16px;
-            padding: 5px 15px;
+            padding: 8px 16px;
+            border: 1px solid var(--primary-color);
             border-radius: 5px;
-            transition: background 0.3s ease, color 0.3s ease;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
-        nav a:hover {
-            background: #00bcd4;
-            color: #121212;
+        
+        nav a:hover, nav a:focus {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 188, 212, 0.3);
         }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - var(--header-height));
+        }
+        
         .sidebar {
-            width: 100%;
-            max-width: 200px;
-            background: #1e1e1e;
-            padding: 20px;
-            border-right: 2px solid #00bcd4;
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 2px solid var(--primary-color);
             overflow-y: auto;
-            height: 100vh;
-            position: fixed;
+            height: calc(100vh - var(--header-height));
+            position: sticky;
+            top: var(--header-height);
+            padding: 20px;
+            transition: transform 0.3s ease;
         }
+        
         .sidebar h2 {
-            color: #ffeb3b;
-            margin: 0;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5rem;
         }
+        
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
+        
         .sidebar ul li {
             margin: 10px 0;
         }
+        
         .sidebar ul li a {
-            color: #00bcd4;
+            color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
         }
-        .sidebar ul li a:hover {
-            color: #ffeb3b;
+        
+        .sidebar ul li a:hover, 
+        .sidebar ul li a:focus,
+        .sidebar ul li a.active {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            transform: translateX(5px);
         }
-        .container {
-            padding: 20px;
-            margin-left: 220px;
-            overflow-y: auto;
-            height: 100vh;
+        
+        .content {
             flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            max-width: 100%;
         }
+        
         .card {
-            background: #1e1e1e;
+            background: var(--card-bg);
+            border: 1px solid var(--primary-color);
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            padding: 20px;
-            animation: fadeIn 1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 188, 212, 0.1);
+            margin-bottom: 25px;
+            padding: 25px;
+            animation: fadeIn 0.5s ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 188, 212, 0.2);
+        }
+        
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        
         .card h2, .card h3 {
-            color: #ffeb3b;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 8px;
         }
+        
+        .card p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .card ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .card ul li {
+            margin: 8px 0;
+        }
+        
         .terminal {
             background: #1e1e1e;
             color: #00ff00;
             padding: 20px;
             border-radius: 5px;
             font-family: "Courier New", Courier, monospace;
-            box-shadow: 0px 0px 20px #00bcd4;
-            display: flex;
-            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+            margin: 15px 0;
+            overflow-x: auto;
+            border: 1px solid var(--primary-color);
         }
+        
         pre[class*="language-"], code[class*="language-"] {
             background: #1e1e1e !important;
-            color: #f8f8f2;
+            color: #f8f8f2 !important;
+            padding: 15px !important;
+            border-radius: 4px;
+            overflow: auto;
         }
+        
         .hacker-text {
             overflow: hidden;
             white-space: nowrap;
             display: inline-block;
             animation: typing 3s steps(30, end), blink 2.5s step-end infinite;
-            border-right: 2px solid #00bcd4;
+            border-right: 2px solid var(--primary-color);
+            margin: 0;
+            font-size: 1.8rem;
         }
+        
         @keyframes typing {
-            from { width: 0%; }
+            from { width: 0; }
             to { width: 100%; }
         }
+        
         @keyframes blink {
             50% { border-color: transparent; }
         }
         
+        .menu-toggle {
+            display: none;
+            background: var(--card-bg);
+            color: var(--primary-color);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid var(--primary-color);
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .menu-toggle:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+        }
+        
+        /* Mobile styles */
         @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
             .sidebar {
                 width: 100%;
                 height: auto;
-                position: fixed;
+                position: relative;
                 border-right: none;
-                border-bottom: 2px solid #00bcd4;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            .sidebar.hidden {
+                border-bottom: 2px solid var(--primary-color);
                 transform: translateX(-100%);
             }
-            .container {
-                margin-left: 0;
-                height: auto;
+            
+            .sidebar.open {
+                transform: translateX(0);
             }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
             .menu-toggle {
                 display: block;
-                background: #1e1e1e;
-                color: #00bcd4;
+            }
+            
+            .hacker-text {
+                font-size: 1.4rem;
+            }
+            
+            header {
+                padding: 10px 15px;
+            }
+            
+            nav {
                 padding: 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            .card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hacker-text {
+                font-size: 1.2rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav a {
+                width: 80%;
                 text-align: center;
-                cursor: pointer;
-                border-bottom: 2px solid #00bcd4;
             }
-            .menu-toggle:hover {
-                background: #00bcd4;
-                color: #121212;
-            }
+        }
+        
+        /* Improved accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        /* Focus indicators */
+        a:focus, button:focus, input:focus, textarea:focus, select:focus, 
+        [tabindex]:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const menuToggle = document.querySelector(".menu-toggle");
             const sidebar = document.querySelector(".sidebar");
-
-            if (window.innerWidth <= 768) {
-                sidebar.classList.add("hidden");
+            const allLinks = document.querySelectorAll('.sidebar ul li a');
+            
+            // Mobile menu toggle
+            if (menuToggle) {
                 menuToggle.addEventListener("click", function() {
-                    sidebar.classList.toggle("hidden");
+                    sidebar.classList.toggle("open");
+                    menuToggle.textContent = sidebar.classList.contains("open") ? "Close Menu" : "Open Menu";
                 });
             }
+            
+            // Add active class to current section in sidebar
+            const sections = document.querySelectorAll('.card[id]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        allLinks.forEach(link => link.classList.remove('active'));
+                        const activeLink = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                            
+                            // On mobile, if sidebar is open, scroll to active link
+                            if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+                                activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '-20% 0px -70% 0px'
+            });
+            
+            sections.forEach(section => {
+                if (section.id) {
+                    observer.observe(section);
+                }
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Close sidebar on mobile after clicking a link
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove('open');
+                            menuToggle.textContent = "Open Menu";
+                        }
+                        
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
         });
     </script>
 </head>
 <body>
-    <div class="menu-toggle">Menu</div>
-    <div class="sidebar">
-        <h2>Documentation</h2>
-        <ul>
-            <li><a href="#raylist-library">RayList Library</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#installation">Installation</a></li>
-            <li><a href="#usage">Usage</a></li>
-            <li><a href="#preffix">Preffix method Call</a></li>
-            <li><a href="#types">Types</a></li>
-            <li><a href="#List">List</a></li>
-            <li><a href="#rlappend">RLAppend macro</a></li>
-            <li><a href="#method-append">List_Append</a></li>
-            <li><a href="#method-insert">List_Insert</a></li>
-            <li><a href="#method-search">List_Search</a></li>
-            <li><a href="#method-delete">List_Del_Index</a></li>
-            <li><a href="#method-get">List_Get</a></li>
-            <li><a href="#method-reverse">List_Reverse</a></li>
-            <li><a href="#method-print">List_Print</a></li>
-            <li><a href="#method-error-handling">List_Get_Error</a></li>
-            <li><a href="#method-len">List_Len</a></li>
-            <li><a href="#method-execfunctions-sync">List_Exec_Sync</a></li>
-            <li><a href="#method-execfunctions-async">List_Exec_Async</a></li>
-            <li><a href="#method-filter">List_Filter</a></li>
-            <li><a href="#method-map">List_Map</a></li>
-            <li><a href="#method-clear">List_Clear</a></li>
-
-            <li><a href="#stack-queue">Stack and Queue</a></li>
-            <li><a href="#collections">RLCollections </a></li>
-
-            <li><a href="#macro-defer">List_Defer</a></li>
-            <li><a href="#macro-SetObject">List_SetObject</a></li>
-            <li><a href="#lambda">List_Lambda_CallBack</a></li>
-            <li><a href="#macro-CopyObject-DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
-        </ul>
-    </div>
-    <div class="container">
-        <header>
-            <h1 class="hacker-text">RayList Project Documentation</h1>
-        </header>
-        <nav>
-            <a href="https://rayden-six.vercel.app">Home</a>
-            <a href="https://rayden-six.vercel.app/raylist/future">library example</a>
-            <a href="https://github.com/abdorayden/raylist" target="_blank"><i class="fab fa-github"></i></a>
-        </nav>
-        <div id="raylist-library" class="card">
-            <h2>RayList Library</h2>
-            <p>RayList is a C library that implements a dynamic linked list supporting multiple data types, with various functions for list manipulation. It allows you to manage lists, stacks, and queues efficiently with support for custom data types and asynchronous task execution. raylist also contains magic macros to solve list C problems like (RLSetObject , RLDefer , ...)</p>
-        </div>
-        <div id="features" class="card">
-            <h3>Features</h3>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header>
+        <h1 class="hacker-text">RayList Project Documentation</h1>
+    </header>
+    
+    <nav>
+        <a href="https://rayden-six.vercel.app">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <a href="https://rayden-six.vercel.app/raylist/future">
+            <i class="fas fa-code"></i> Library Example
+        </a>
+        <a href="https://github.com/abdorayden/raylist" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+        </a>
+    </nav>
+    
+    <div class="menu-toggle">Open Menu</div>
+    
+    <div class="main-container">
+        <aside class="sidebar">
+            <h2>Documentation</h2>
             <ul>
-                <li>Dynamic linked list supporting multiple data types</li>
-                <li>Functions for list manipulation (append, insert, delete, search, filter, map, etc.)</li>
-                <li>Support for stack and queue data structures</li>
-                <li>Asynchronous task execution using threads</li>
-                <li>Customizable memory allocation functions</li>
+                <li><a href="#raylist-library">RayList Library</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#usage">Usage</a></li>
+                <li><a href="#preffix">Preffix method Call</a></li>
+                <li><a href="#types">Types</a></li>
+                <li><a href="#List">List</a></li>
+                <li><a href="#rlappend">RLAppend macro</a></li>
+                <li><a href="#method-append">List_Append</a></li>
+                <li><a href="#method-insert">List_Insert</a></li>
+                <li><a href="#method-search">List_Search</a></li>
+                <li><a href="#method-delete">List_Del_Index</a></li>
+                <li><a href="#method-get">List_Get</a></li>
+                <li><a href="#method-reverse">List_Reverse</a></li>
+                <li><a href="#method-print">List_Print</a></li>
+                <li><a href="#method-error-handling">List_Get_Error</a></li>
+                <li><a href="#method-len">List_Len</a></li>
+                <li><a href="#method-execfunctions-sync">List_Exec_Sync</a></li>
+                <li><a href="#method-execfunctions-async">List_Exec_Async</a></li>
+                <li><a href="#method-filter">List_Filter</a></li>
+                <li><a href="#method-map">List_Map</a></li>
+                <li><a href="#method-clear">List_Clear</a></li>
+                <li><a href="#stack-queue">Stack and Queue</a></li>
+                <li><a href="#collections">RLCollections</a></li>
+                <li><a href="#macro-defer">List_Defer</a></li>
+                <li><a href="#macro-SetObject">List_SetObject</a></li>
+                <li><a href="#lambda">List_Lambda_CallBack</a></li>
+                <li><a href="#macro-CopyObject-DisableCopyObject">List_CopyObj DisableCopyObj</a></li>
             </ul>
-        </div>
-        <div id="installation" class="card">
-            <h3>Installation</h3>
-            <p>To use RayList in your project, include the <code>raylist.h</code> header file and link against the compiled library. Ensure you have the required dependencies installed. and define macro LIST_C to act like C file because the library is like stb stile header only library</p>
-            <div class="terminal">
-                <pre class="language-c"><code class="language-c">// should include stdarg.h
-#include <stdarg.h>
+        </aside>
+        
+        <main class="content" id="main-content">
+            <div id="raylist-library" class="card">
+                <h2>RayList Library</h2>
+                <p>RayList is a C library that implements a dynamic linked list supporting multiple data types, with various functions for list manipulation. It allows you to manage lists, stacks, and queues efficiently with support for custom data types and asynchronous task execution. raylist also contains magic macros to solve list C problems like (RLSetObject , RLDefer , ...)</p>
+            </div>
+            
+            <div id="features" class="card">
+                <h3>Features</h3>
+                <ul>
+                    <li>Dynamic linked list supporting multiple data types</li>
+                    <li>Functions for list manipulation (append, insert, delete, search, filter, map, etc.)</li>
+                    <li>Support for stack and queue data structures</li>
+                    <li>Asynchronous task execution using threads</li>
+                    <li>Customizable memory allocation functions</li>
+                </ul>
+            </div>
+            
+            <div id="installation" class="card">
+                <h3>Installation</h3>
+                <p>To use RayList in your project, include the <code>raylist.h</code> header file and link against the compiled library. Ensure you have the required dependencies installed. and define macro LIST_C to act like C file because the library is like stb stile header only library</p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">// should include stdarg.h
+#include &lt;stdarg.h&gt;
 // enable raylist implementation
 #define LIST_C
-#include "raylist.h"
-                </code></pre>
+#include "raylist.h"</code></pre>
+                </div>
             </div>
-        </div>
-        <div id="usage" class="card">
-            <h3>Usage</h3>
-            <p>Here is a basic example of how to use RayList:</p>
-            <div class="terminal">
-                <pre class="language-c"><code class="language-c">
-#include<stdarg.h>
-#include<stdio.h>
+            
+            <div id="usage" class="card">
+                <h3>Usage</h3>
+                <p>Here is a basic example of how to use RayList:</p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#include&lt;stdarg.h&gt;
+#include&lt;stdio.h&gt;
 
 #define LIST_C
 #include "raylist.h"
 
 int main() {
     RLList my_list = List(0);  // Initialize an empty list
-    my_list.List_Append(RL_INT, (void*)&(int){10});
+    my_list.List_Append(RL_INT, (void*)&amp;(int){10});
     my_list.List_Append(RL_STR, "Hello, World!");
     my_list.List_Print();
     return 0;
-}
-                </code></pre>
+}</code></pre>
+                </div>
             </div>
-        </div>
-<div id="preffix" class="card">
-				<h3>List</h3>
-				<p>
-					list contains methods like in python
-					and it's own preffix
-					Example :
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-// this macro enable list preffix
+            
+            <div id="preffix" class="card">
+                <h3>List</h3>
+                <p>
+                    list contains methods like in python
+                    and it's own preffix
+                    Example :
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">// this macro enable list preffix
 #define USING_LIST
 
 #define LIST_C
@@ -289,24 +515,18 @@ int main() {
     my_list.Filter(callback, RL_INT); // now you can use method like this
     my_list.Print();
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
+}</code></pre>
+                </div>
+            </div>
 
-
-			<div id="types" class="card">
-				<h3>List Types</h3>
-				<p>
-					types can used in list , stack , queue
-					this type helps raylist for memory managment
-
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-// this macro enable list preffix
+            <div id="types" class="card">
+                <h3>List Types</h3>
+                <p>
+                    types can used in list , stack , queue
+                    this type helps raylist for memory managment
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">// this macro enable list preffix
 #define USING_LIST
 
 #define LIST_C
@@ -326,48 +546,42 @@ int main() {
 	// RL_VOIDFUNC	type function return void
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="List" class="card">
-				<h3>List</h3>
-				<p>
-					List return RLList interface which implements all list method<br>
-					list also accept va_list arguments to add data dynamicly 
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="List" class="card">
+                <h3>List</h3>
+                <p>
+                    List return RLList interface which implements all list method<br>
+                    list also accept va_list arguments to add data dynamicly
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
 	// Example Append
 	RLList mylist = List(3, // 3 is number of the data we add to the list
-				RL_STR , "Hello", // <type> , <data> 
+				RL_STR , "Hello", // &lt;type&gt; , &lt;data&gt;
 				RL_BOOL , true,	  //   .
 				RL_STR , "world"  //   .
 	);
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="rlappend" class="card">
-				<h3>List RLAppend</h3>
-				<p>
-					RLAppend macro works like append method but use generics <br>
-					macro can detecte type of the data , without casting to void*<br>
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="rlappend" class="card">
+                <h3>List RLAppend</h3>
+                <p>
+                    RLAppend macro works like append method but use generics <br>
+                    macro can detecte type of the data , without casting to void*<br>
 
-					work with int , float and char only
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+                    work with int , float and char only
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -381,20 +595,17 @@ int main() {
 	RLAppend(RL_FLT , 3.14f);
 	RLAppend(RL_FLT , 2.73f);
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-append" class="card">
-				<h3>List Append</h3>
-				<p>
-					append method takes type and data 	
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-append" class="card">
+                <h3>List Append</h3>
+                <p>
+                    append method takes type and data
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -408,20 +619,17 @@ int main() {
 	mylist.List_Append(RL_STR , "World");
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-insert" class="card">
-				<h3>List Insert</h3>
-				<p>
-					insert method takes index poition to add data , type and data 	
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-insert" class="card">
+                <h3>List Insert</h3>
+                <p>
+                    insert method takes index poition to add data , type and data
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -437,21 +645,18 @@ int main() {
 	mylist.List_Insert(0 , RL_STR , "baz"); // insert baz str in index 0
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-search" class="card">
-				<h3>List Search</h3>
-				<p>
-					search method takes int pointer type to return index of the data we search for , type of data and the data 	<br>
-					function return boolean true if function found the data else false
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-search" class="card">
+                <h3>List Search</h3>
+                <p>
+                    search method takes int pointer type to return index of the data we search for , type of data and the data 	<br>
+                    function return boolean true if function found the data else false
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -462,27 +667,24 @@ int main() {
 
 	);
 	int idx;
-	if(mylist.List_Search(&idx , RL_STR , "World")){
+	if(mylist.List_Search(&amp;idx , RL_STR , "World")){
 		printf("data found at index : %d\n" , idx);
 	}else{
 		printf("data not found \n");
 	}
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-delete" class="card">
-				<h3>List Delete</h3>
-				<p>
-					delete method takes int index the position of the data we want to delete 	
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-delete" class="card">
+                <h3>List Delete</h3>
+                <p>
+                    delete method takes int index the position of the data we want to delete
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -497,20 +699,17 @@ int main() {
 	mylist.Del_Index(0);
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-get" class="card">
-				<h3>List Get</h3>
-				<p>
-					get method takes int index the position of the data we want to get 	
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-get" class="card">
+                <h3>List Get</h3>
+                <p>
+                    get method takes int index the position of the data we want to get
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -521,25 +720,22 @@ int main() {
 		RL_STR , "bar"
 
 	);
-	// function will return foo 
+	// function will return foo
 	puts((char*)mylist.List_Get(1));
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-reverse" class="card">
-				<h3>List Reverse</h3>
-				<p>
-					reverse method take no argument and return nothing <br>
-					reverse will reverse the list
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-reverse" class="card">
+                <h3>List Reverse</h3>
+                <p>
+                    reverse method take no argument and return nothing <br>
+                    reverse will reverse the list
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -553,21 +749,18 @@ int main() {
 	mylist.List_Reverse(); // list reverse
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-print" class="card">
-				<h3>List Print</h3>
-				<p>
-					print method take no argument and return nothing <br>
-					print method will print the data in list like python3 format
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-print" class="card">
+                <h3>List Print</h3>
+                <p>
+                    print method take no argument and return nothing <br>
+                    print method will print the data in list like python3 format
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -578,26 +771,23 @@ int main() {
 		RL_STR , "bar"
 
 	);
-	mylist.List_Print(); 
+	mylist.List_Print();
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-error-handling" class="card">
-				<h3>List Error Handle</h3>
-				<p>
-					get_error method take no argument and return string error , and NULL if not<br>
-					while you working with raylist , library detecte errors , so after any operation<br>
-					check if method return NULL or not ,<br>
-					if return value is not NULL log the error
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-error-handling" class="card">
+                <h3>List Error Handle</h3>
+                <p>
+                    get_error method take no argument and return string error , and NULL if not<br>
+                    while you working with raylist , library detecte errors , so after any operation<br>
+                    check if method return NULL or not ,<br>
+                    if return value is not NULL log the error
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -608,26 +798,23 @@ int main() {
 		RL_STR , "bar"
 
 	);
-	char* err = mylist.List_Get_Error(); 
+	char* err = mylist.List_Get_Error();
 	if(err != NULL){
 		fprintf(stderr , "[ERROR] %s" , err);
 	}
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-len" class="card">
-				<h3>List length</h3>
-				<p>
-					len method take no argument and return how many data in list
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-len" class="card">
+                <h3>List length</h3>
+                <p>
+                    len method take no argument and return how many data in list
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -641,32 +828,29 @@ int main() {
 	int len = mylist.List_Len(); // len == 3
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-execfunctions-sync" class="card">
-				<h3>List Call Functions Sync</h3>
-				<p>
-					exec_sync method take index of the function , and the data (data passed to calling function argument) , and the flag<br>
-					if index is less than 0 or bigger than length of list will execute all functions<br>
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-execfunctions-sync" class="card">
+                <h3>List Call Functions Sync</h3>
+                <p>
+                    exec_sync method take index of the function , and the data (data passed to calling function argument) , and the flag<br>
+                    if index is less than 0 or bigger than length of list will execute all functions<br>
 
-					Exec_Flag : <br>
+                    Exec_Flag : <br>
 
-						OUTT 	the return value from called function will returned in Exec_Sync method<br>
-						 	OUTT flag is not enabled if index parameter in Exec_Sync was out of range<br>
+                        OUTT 	the return value from called function will returned in Exec_Sync method<br>
+                         	OUTT flag is not enabled if index parameter in Exec_Sync was out of range<br>
 
-						INPLACE	the return value will replaced function callback index  <br>
-							the void function is not replaced <br>
+                        INPLACE	the return value will replaced function callback index  <br>
+                            the void function is not replaced <br>
 
-						
-						ADDED 	the function return value will added to the list
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+
+                        ADDED 	the function return value will added to the list
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 void foo(void){
@@ -685,40 +869,37 @@ int main() {
 
 	);
 	myname.List_Exec_Sync(0 , NULL , OUTT); // void return type function don't care about flag
-	myname.List_Exec_Sync(1 , "rayden" , ADDED); 
+	myname.List_Exec_Sync(1 , "rayden" , ADDED);
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-execfunctions-async" class="card">
-				<h3>List Call Functions Async</h3>
-				<p>
-					exec_async method take index of the function , and the data (data passed to calling function argument)<br>
-					if index is less than 0 or bigger than length of list will execute all functions<br>
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-execfunctions-async" class="card">
+                <h3>List Call Functions Async</h3>
+                <p>
+                    exec_async method take index of the function , and the data (data passed to calling function argument)<br>
+                    if index is less than 0 or bigger than length of list will execute all functions<br>
 
-					this function will call functions Asynchronously , this method call function iin separite thread and return interface <br>
+                    this function will call functions Asynchronously , this method call function iin separite thread and return interface <br>
 
-					interface : <br>
-						thread_id -> thread handler of the calling function<br>
-						Kill : <br>
-	 						* Kill function<br>
-	 						* for killing the thread<br>
+                    interface : <br>
+                        thread_id -> thread handler of the calling function<br>
+                        Kill : <br>
+    						* Kill function<br>
+    						* for killing the thread<br>
 
-						Wait : <br>
-	 						* Wait function <br>
-	 						* function waits for the thread specified by thread to terminate<br>
-						- both of these method takes handle thread in parameter<br>
+                        Wait : <br>
+    						* Wait function <br>
+    						* function waits for the thread specified by thread to terminate<br>
+                        - both of these method takes handle thread in parameter<br>
 
-					this method work with specific macro called RLTestCancel this macro should be called inside target function Kill method can detecte the function and kill thread
+                    this method work with specific macro called RLTestCancel this macro should be called inside target function Kill method can detecte the function and kill thread
 
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 void limitloop(void)
@@ -755,26 +936,23 @@ int main() {
 	rt.Kill(tr.thread); // killing functionof tr interface
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-filter" class="card">
-				<h3>List Filter</h3>
-				<p>
-					filter method used to filter the list According to condition in callback function except void* parameter and return boolean<br>
-					filter accept function call back  , type for filter , and Filter_Flag<br>
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-filter" class="card">
+                <h3>List Filter</h3>
+                <p>
+                    filter method used to filter the list According to condition in callback function except void* parameter and return boolean<br>
+                    filter accept function call back  , type for filter , and Filter_Flag<br>
 
-					Filter_Flag :<br>
-						ALL  	// (filtring all list)<br>
-						ONLY	// (filtring only type)
+                    Filter_Flag :<br>
+                        ALL  	// (filtring all list)<br>
+                        ONLY	// (filtring only type)
 
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 
@@ -793,31 +971,28 @@ int main() {
 		RLAppend(RL_INT , i);
 	}
 	mylist.List_Filter(for_filter , RL_INT , ONLY);
-					       // now our list contains odd numbers
-					       // if flag was ALL other types will be delete it
+				       // now our list contains odd numbers
+				       // if flag was ALL other types will be delete it
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-map" class="card">
-				<h3>List Map</h3>
-				<p>
-					map method used to apply changes to the elemetn's in the list According to condition ,in callback function except void* parameter and return void*
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-map" class="card">
+                <h3>List Map</h3>
+                <p>
+                    map method used to apply changes to the elemetn's in the list According to condition ,in callback function except void* parameter and return void*
 
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 
 void* for_map(void* data)
 {
-	if(*(int*)data % 2 != 0){	
+	if(*(int*)data % 2 != 0){
 		// if data number is odd , change it to 100
 		*(int*)data = 100;
 	}
@@ -832,24 +1007,21 @@ int main() {
 		RLAppend(RL_INT , i);
 	}
 	mylist.List_Map(for_map , RL_INT);
-					       // now all odd numbers is equale to 100
+				       // now all odd numbers is equale to 100
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="method-clear" class="card">
-				<h3>List Clear</h3>
-				<p>
-					clear method will free's all allocated data in list
+}</code></pre>
+                </div>
+            </div>
+            
+            <div id="method-clear" class="card">
+                <h3>List Clear</h3>
+                <p>
+                    clear method will free's all allocated data in list
 
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -862,33 +1034,28 @@ int main() {
 	mylist.List_Clear(); // len list == 0
 
     return 0;
-}
-                </code></pre>
-				</div>
-			</div>
+}</code></pre>
+                </div>
+            </div>
 
-			<div id="stack-queue" class="card">
-				<h3>Queue and Stack</h3>
-				<p>
-					both of thoes functions implements RLCollections interface 
-					this functions accept buffer limiter (can fix the size)
-					and also you can put Buf_Disable parameter to make it dynamic
-					RLCollections has macro RLPush this macro is generic like RLappend macro
-					magic macros also work for this interface
-				</p>
-			</div>
+            <div id="stack-queue" class="card">
+                <h3>Queue and Stack</h3>
+                <p>
+                    both of thoes functions implements RLCollections interface
+                    this functions accept buffer limiter (can fix the size)
+                    and also you can put Buf_Disable parameter to make it dynamic
+                    RLCollections has macro RLPush this macro is generic like RLappend macro
+                    magic macros also work for this interface
+                </p>
+            </div>
 
-
-			<div id="collections" class="card">
-				<h3>RLCollections Interface</h3>
-				<p>
-					RLCollections Example :
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
+            <div id="collections" class="card">
+                <h3>RLCollections Interface</h3>
+                <p>
+                    RLCollections Example :
+                </p>
+                <div class="terminal">
+                    <pre class="language-c"><code class="language-c">#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -905,16 +1072,16 @@ int main() {
 	//	LBOOL Is_Empty(void);
 	/*
 	 *  return String if the error is set true (status > 0)
-	 * */ 
+	 * */
 	//	string Get_Error(void);
 	/*
-	 *	Push function will take the data and stored to the __list__ global variable 
+	 *	Push function will take the data and stored to the __list__ global variable
 	 *
 	 * 	Push(
 	 *		Type : the data type
 	 *		void*: data pointer point address of stored data
 	 * 	)
-	 *	
+	 *
 	 *	NOTE : the append method works like push in stack algorithm
 	 *
 	 *	Example :
@@ -924,14 +1091,14 @@ int main() {
 	//	void Push(Type type, void* data);
 	/*
 	 *	Peek function return last value of the Stack (Stack)
-	 *	Example : 
+	 *	Example :
 	 *		void* value = my_list.Stack_Peek();
 	 * */
 	//	void* Peek(void);
 	/*
 	 *	Stack_Pop function will pop the last value from the list
 	 *
-	 *	Example : 
+	 *	Example :
 	 *		void* value = my_list.Stack_Pop();
 	 * */
 	//	void* Pop(void);
@@ -942,179 +1109,16 @@ int main() {
 
 	RLCollections stack = Stack(Buf_Disable);
 
-	RLDefer(stack.Clear); // clear will be called at the end of program
+	RLDefer(stack.Clear); // clear will be called when function ends
 
-	for(int i = 0 ; i < 10 ; i++)
-	{
-		RLPush(RL_INT , i);
-	}
-
-	RLSetObject(2);
-	RLCollections queue = Queue(10); // queue with 10 buffer
-	RLPush(RL_FLT , 10.23f);
-
-    	return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="macro-defer" class="card">
-				<h3>List Defer</h3>
-				<p>
-					defer raylist macro registers the given function to be called at normal process termination , accept callback function return type void and accept no arguments<br>
-					works like defer in go<br>
-					macro is atexit function from standard library<br>
-					function will not work when forced with CTRL-C
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
-#include "raylist.h"
-
-int main() {
-	// Example Append
-	RLList mylist = List(0);
-
-	RLDefer(mylist.Clear); // clear will be called at the end of program
-
-	for(int i = 0 ; i < 10 ; i++)
-	{
-		RLAppend(RL_INT , i);
-	}
-
-    	return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-			<div id="macro-SetObject" class="card">
-				<h3>List RLSetObject</h3>
-				<p>
-					RLSetObject macro used for multiple list storage<br>
-					you can create another allocated list (linked list) RLSetObject change method access direction to pointed list
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
-#include "raylist.h"
-
-int main() {
-	RLList mylist = List(0);
-
-	RLList mysecondlist = List(0);
-
-	// default direction of methods and macros work with mylist object
-	for(int i = 0 ; i < 10 ; i++)
-	{
-		RLAppend(RL_INT , i);
-	}
-	// start with 1
-	RLSetObject(2)
-	//
-	// now all methods will work with mysecondlist object
-	//
-    	return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-
-			<div id="lambda" class="card">
-				<h3>RLAmbda Callback</h3>
-				<p>
-				RLAmbda macro allows you to implements anonymouse function directly in parameter function type,<br>
-				Positives : <br>
-				- Avoid mixing function names<br>
-				- Best choice for small functions<br>
-				- She looks beautiful<br>
-
-				also make it easier for map and filter method call back functions <br>
-				RLMap(body) : you can define this call back in map method and handle the body , the default parameter is rlmapdata <br>
-				RLFilter(body) : you can define this call back in filter method and handle the body , the default parameter is rlfilterdata
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#include &ltstdio.h &gt
-#include &ltstdlib.h&gt
-#include &ltstring.h&gt
-#include &ltstdarg.h&gt
-
-#define USING_LIST
-#define LIST_C
-#include "../raylist.h"
-
-int main(void)
-{
-	RLList list = List(0);
-	RLDefer(list.Clear);
-
-	RLCopyObject(RLSIZEOF(int));
-	for(int i = 0 ; i < 10 ; i++){
-		list.Append(RL_INT , (void*)&i);
-	}
-	RLDisableCopyObject();
-
-	// callback function in Filter method
-	list.Filter(RLFilter({
-			if(*(int*)rlfilterdata % 2 != 0)	return false;
-
-			return true;
-
-	}) , RL_INT , ONLY);
-	// callback function in Map method
-	list.Map(RLMap({
-			if(*(int*)rlmapdata == 0){
-				*(int*)rlmapdata = 10;
-			}
-			return rlmapdata;
-	}) , RL_INT);
-	list.Print();
 	return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-
-
-
-			<div id="macro-CopyObject-DisableCopyObject" class="card">
-				<h3>List RLCopyObject and RLDisableCopyObject</h3>
-				<p>
-					RLCopyObject allow raylist to copy the target object instead of pointing his memory<br>
-					raylist by default point address variables and this creates problems if the target object can be NULL or data changes
-					in same object
-				</p>
-				<div class="terminal">
-					<pre
-						class="language-c"
-					><code class="language-c">
-#define LIST_C
-#include "raylist.h"
-
-int main() {
-	RLList mylist = List(0);
-
-	RLCopyObject(sizeof(int)) // macro accept size of the copy object
-	for(int i = 0 ; i < 10 ; i++)
-	{
-		mylist.List_Append(RL_INT , (void*)&i);
-	}
-	RLDisableCopyObject();
-	// the list result is not [9,9,9,9,9,9,9,9,9] , it's [0,1,2,3,4,5,6,7,8,9]
-    	return 0;
-}
-                </code></pre>
-				</div>
-			</div>
-
-
-
-		</div>
-	</body>
+}</code></pre>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
+</body>
 </html>
