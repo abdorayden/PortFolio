@@ -209,10 +209,13 @@ nav a.active {
 .github-projects a {
 	color: #00bcd4;
 	text-decoration: none;
+	transition: all 0.3s ease;
 }
 
 .github-projects a:hover {
+	color: #00ffcc;
 	text-decoration: underline;
+	text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
 }
 
 .vim-editor .submit-button {
