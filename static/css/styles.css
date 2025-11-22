@@ -9,6 +9,7 @@ body {
 	background: #121212;
 	color: #00bcd4;
 	overflow-y: auto;
+	line-height: 1.6;
 }
 
 header {
@@ -23,24 +24,33 @@ nav {
 	display: flex;
 	justify-content: center;
 	background: #1e1e1e;
-	padding: 10px;
+	padding: 15px;
 	border-bottom: 2px solid #00bcd4;
+	flex-wrap: wrap;
+	gap: 10px;
 }
 
 nav a {
 	color: #00bcd4;
 	text-decoration: none;
-	margin: 0 15px;
-	font-size: 16px;
+	padding: 8px 16px;
 	border: 2px solid #00bcd4;
-	padding: 5px 15px;
 	border-radius: 5px;
-	transition:
-		background 0.3s ease,
-		color 0.3s ease;
+	transition: all 0.3s ease;
+	font-size: 16px;
+	min-width: 120px;
+	text-align: center;
 }
 
-nav a:hover {
+nav a:hover, nav a:focus {
+	background: #00bcd4;
+	color: #121212;
+	transform: translateY(-2px);
+	outline: 2px solid #00bcd4;
+	outline-offset: 2px;
+}
+
+nav a.active {
 	background: #00bcd4;
 	color: #121212;
 }
@@ -54,6 +64,7 @@ nav a:hover {
 		blink 2.5s step-end infinite;
 	border-right: 2px solid #00bcd4;
 	margin-top: 10px;
+	width: 0;
 }
 
 @keyframes typing {
@@ -62,7 +73,7 @@ nav a:hover {
 	}
 
 	to {
-		width: 35%;
+		width: 100%;
 	}
 }
 
@@ -76,128 +87,110 @@ nav a:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 20px;
+	gap: 30px;
 	padding: 20px;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
 .row {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px;
+	gap: 25px;
 	width: 100%;
 	justify-content: center;
+	align-items: stretch;
 }
 
 .card {
-	display: flex;
 	background: #1e1e1e;
 	border: 2px solid #00bcd4;
 	border-radius: 10px;
-	padding: 20px;
-	flex: 1;
+	padding: 25px;
+	flex: 1 1 calc(33% - 25px);
 	min-width: 300px;
 	max-width: 500px;
+	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	box-shadow: 0px 0px 20px #00bcd4;
-	transition: transform 0.3s ease;
+	box-shadow: 0px 0px 20px rgba(0, 188, 212, 0.3);
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #00bcd4, transparent, #00bcd4);
 }
 
 .quote {
-	/*display: flex;*/
 	background: #1e1e1e;
 	border: 2px solid #00bcd4;
 	border-radius: 10px;
-	padding: 15px;
-	/*flex: 1;*/
+	padding: 25px;
+	flex: 1 1 calc(33% - 25px);
 	min-width: 300px;
 	max-width: 500px;
-
-	/*flex-direction: column;*/
+	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
-	box-shadow: 0px 0px 20px #00bcd4;
-	transition: transform 0.3s ease;
+	box-shadow: 0px 0px 20px rgba(0, 188, 212, 0.3);
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.quote::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #00bcd4, transparent, #00bcd4);
 }
 
 .quote #p-quote {
-	margin-top: 10%;
-	margin-left: 2%;
+	margin-top: 10px;
 	color: #91c7d7;
 	font-size: 17px;
- }
-
-.projects-list {
-	list-style: none;
-	padding: 0;
-	margin-top: 20px;
-}
-
-.projects-list li {
-	margin: 15px 0;
-	padding: 10px;
-	background: #121212;
-	border: 1px dashed #00bcd4;
-	border-radius: 5px;
-	text-align: center;
-	transition:
-		background 0.3s ease,
-		transform 0.3s ease;
-}
-
-.projects-list li:hover {
-	background: #1e1e1e;
-	transform: scale(1.02);
-}
-
-.projects-list a {
-	color: #00bcd4;
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 18px;
-}
-
-.projects-list a:hover {
-	text-decoration: underline;
-	color: #00ffcc;
-}
-
-.projects-list p {
-	margin-top: 5px;
-	font-size: 14px;
-	color: #b0c4de;
-	line-height: 1.5;
-}
-
-a {
-	font-size: 30px;
-	margin-right: 15px;
-	text-decoration: none;
-	color: #000;
-}
-a:hover {
-	color: #0073b1;
-}
-
-.card:hover {
-	transform: scale(1.05);
-}
-
-.quote:hover {
-	transform: scale(1.05);
+	font-style: italic;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
 }
 
 .skills {
 	list-style: none;
 	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
 }
 
 .skills li {
-	margin: 10px 0;
+	margin: 5px;
 	background: #121212;
-	padding: 10px;
-	border: 1px dashed #00bcd4;
-	border-radius: 5px;
+	padding: 10px 15px;
+	border: 1px solid #00bcd4;
+	border-radius: 20px;
 	text-align: center;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	flex: 0 0 auto;
+}
+
+.skills li:hover {
+	background: #00bcd4;
+	color: #121212;
+	transform: scale(1.05);
 }
 
 .github-projects ul {
@@ -224,100 +217,240 @@ a:hover {
 
 .vim-editor .submit-button {
 	margin-top: 10px;
-	padding: 5px 10px;
+	padding: 10px;
 	border: 2px solid #00bcd4;
 	background: transparent;
 	color: #00bcd4;
-	font-size: 14px;
+	font-size: 16px;
 	cursor: pointer;
-	transition:
-		background 0.3s ease,
-		color 0.3s ease;
+	transition: all 0.3s ease;
 	display: inline-block;
 	width: 100%;
+	border-radius: 5px;
+	font-weight: bold;
 }
 
-.vim-editor .submit-button:hover {
+.vim-editor .submit-button:hover, .vim-editor .submit-button:focus {
 	background: #00bcd4;
 	color: #121212;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 188, 212, 0.4);
+	outline: 2px solid #00bcd4;
+	outline-offset: 2px;
 }
 
 .vim-editor-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 20px;
+	padding: 30px 20px;
 	width: 100%;
+	background: rgba(30, 30, 30, 0.5);
+	border-radius: 10px;
+	margin-top: 20px;
 }
 
 .vim-editor {
 	background: #121212;
 	color: #00ff00;
 	border: 2px solid #00bcd4;
-	border-radius: 5px;
+	border-radius: 8px;
 	width: 100%;
-	max-width: 500px;
-	height: 200px;
-	padding: 10px;
+	max-width: 600px;
+	height: 300px;
+	padding: 15px;
 	font-family: "Courier New", Courier, monospace;
-	box-shadow: 0px 0px 20px #00bcd4;
+	box-shadow: 0 0 25px rgba(0, 188, 212, 0.5);
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.vim-editor::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #00bcd4, transparent, #00bcd4);
+}
+
+.vim-header {
+	margin-bottom: 10px;
+}
+
+.vim-header h3 {
+	color: #00bcd4;
+	margin-bottom: 5px;
+	font-size: 18px;
+}
+
+.vim-instructions {
+	font-size: 12px;
+	color: #91c7d7;
+	margin: 0;
 }
 
 .vim-editor textarea {
 	width: 100%;
-	height: 150px;
+	flex-grow: 1;
 	background: transparent;
 	color: #00ff00;
-	border: none;
+	border: 1px solid #333;
+	border-radius: 4px;
 	resize: none;
 	outline: none;
-	font-size: 14px;
+	font-size: 15px;
+	padding: 10px;
+	line-height: 1.5;
+	margin-bottom: 10px;
+}
+
+.vim-controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .vim-editor .status-bar {
 	background: #1e1e1e;
-	padding: 5px;
+	padding: 8px 12px;
 	color: #00bcd4;
-	border-top: 2px solid #00bcd4;
-	font-size: 12px;
+	border: 1px solid #00bcd4;
+	border-radius: 4px;
+	font-size: 14px;
 	text-align: left;
+	flex-grow: 1;
 }
 
 .card-client {
 	background: #2cb5a0;
-	width: 13rem;
-	padding: 20px;
-	border: 4px solid #7cdacc;
-	box-shadow: 0 6px 10px rgba(207, 212, 222, 1);
+	width: 100%;
+	max-width: 300px;
+	padding: 25px;
+	border: 3px solid #7cdacc;
+	box-shadow: 0 8px 16px rgba(44, 181, 160, 0.3);
 	border-radius: 10px;
 	text-align: center;
 	color: #fff;
+	transition: all 0.3s ease;
+}
+
+.card-client:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 12px 20px rgba(44, 181, 160, 0.4);
+}
+
+.card-client .name-client {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .card-client .social-media {
-	margin-top: 15px;
+	margin-top: 20px;
 }
 
 .card-client .social-media a {
 	margin: 0 10px;
 	color: #fff;
 	text-decoration: none;
+	font-size: 24px;
+	transition: all 0.3s ease;
+	display: inline-block;
 }
 
-.card-client .social-media a svg {
-	width: 20px;
-	height: 20px;
-	fill: #fff;
-	transition: fill 0.3s ease;
+.card-client .social-media a:hover {
+	color: #00bcd4;
+	transform: scale(1.2);
+	text-decoration: none;
 }
 
-.card-client .social-media a:hover svg {
-	fill: #00bcd4;
+@media (max-width: 1100px) {
+	.card, .quote {
+		flex: 1 1 calc(50% - 25px);
+	}
 }
 
 @media (max-width: 768px) {
+	.container {
+		padding: 15px;
+		gap: 20px;
+	}
+
 	.row {
 		flex-direction: column;
+		gap: 20px;
+	}
+
+	.card, .quote {
+		flex: 1 1 100%;
+		min-width: unset;
+	}
+
+	nav {
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	}
+
+	nav a {
+		width: 80%;
+		max-width: 200px;
+	}
+
+	.skills {
+		gap: 8px;
+	}
+
+	.skills li {
+		padding: 8px 12px;
+		font-size: 13px;
+	}
+
+	.vim-editor-container {
+		padding: 20px 15px;
+	}
+
+	.vim-editor {
+		height: 220px;
+	}
+
+	.card-client {
+		max-width: 100%;
+		padding: 20px;
+	}
+}
+
+@media (max-width: 480px) {
+	body {
+		font-size: 14px;
+	}
+
+	header {
+		font-size: 20px;
+		padding: 15px;
+	}
+
+	.card, .quote {
+		padding: 20px;
+	}
+
+	.nav a {
+		font-size: 14px;
+		padding: 6px 12px;
+		min-width: 100px;
+	}
+
+	.vim-editor {
+		height: 200px;
+		padding: 10px;
+	}
+
+	.vim-editor textarea {
+		font-size: 14px;
 	}
 }
 
@@ -329,29 +462,46 @@ a:hover {
 	top: 20px;
 	right: 20px;
 	width: 300px;
-	border-radius: 5px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 	font-size: 16px;
 	display: none;
 	z-index: 1000;
-	transition: opacity 0.5s ease;
+	transition: all 0.3s ease;
+	transform: translateX(120%);
 }
 
 .notification.show {
 	display: block;
+	transform: translateX(0);
 	opacity: 1;
+}
+
+.notification.error {
+	background-color: #f44336;
+}
+
+.notification.warning {
+	background-color: #ff9800;
 }
 
 .close-btn {
 	color: white;
-	font-size: 20px;
+	font-size: 24px;
 	font-weight: bold;
 	position: absolute;
-	top: 5px;
-	right: 10px;
+	top: 8px;
+	right: 12px;
 	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: background-color 0.3s ease;
 }
 
 .close-btn:hover {
-	color: #ccc;
+	background-color: rgba(255, 255, 255, 0.2);
 }

@@ -6,6 +6,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
+		<meta name="description" content="Abdenour Souane (Rayden) - Computer Science Engineer student and penetration tester with expertise in cybersecurity and low-level programming">
 		<title>Abdenour Souane Portfolio</title>
 		<link
 			rel="stylesheet"
@@ -14,7 +15,7 @@
 		<link
 			rel="icon"
 			href="https://github.com/abdorayden/PortFolio/blob/master/assets/eminem.png?raw=true"
-			type="image/x-icon type"
+			type="image/x-icon"
 		/>
 		<link
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -23,178 +24,189 @@
 	</head>
 
 	<body>
-		<header>
-			<span class="hacker-text"
-				>Welcome to Rayden's Portfolio</span
-			>
+		<header role="banner">
+			<h1 class="hacker-text">Welcome to Rayden's Portfolio</h1>
 		</header>
-		<nav>
-			<a href="#about">About Me</a>
-			<a href="#skills">My Skills</a>
-			<a href="#projects">My Projects</a>
+		<nav role="navigation" aria-label="Main navigation">
+			<a href="#about" aria-label="Go to About section">About Me</a>
+			<a href="#skills" aria-label="Go to Skills section">My Skills</a>
+			<a href="#projects" aria-label="Go to Projects section">My Projects</a>
 		</nav>
-		<div class="container">
-			<div class="row">
-				<div class="quote">
-					<h2>Quote</h2>
-					<div id="p-quote"></div>
+		<main role="main">
+			<div class="container">
+				<div class="row">
+					<section class="quote" aria-labelledby="quote-heading">
+						<h2 id="quote-heading">Quote of the Day</h2>
+						<div id="p-quote" aria-live="polite" aria-atomic="true"></div>
+					</section>
+					<section id="about" class="card" aria-labelledby="about-heading">
+						<h2 id="about-heading">About Me</h2>
+						<p>
+							Hello! My name is Abdenour
+							Souane, also known as Rayden.
+							I'm a Computer Science
+							Engineering student and a
+							penetration tester with a deep
+							passion for cybersecurity and
+							low-level programming.
+						</p>
+					</section>
+					<section class="card-client" aria-labelledby="contact-heading">
+						<h3 id="contact-heading">Contact Info</h3>
+						<p class="name-client">
+							Souane Abdenour
+						</p>
+						<p>CS Engineer student</p>
+						<div class="social-media" aria-label="Social media links">
+							<a
+								href="https://www.linkedin.com/in/abdenour-souane"
+								target="_blank"
+								aria-label="LinkedIn profile"
+								><i
+									class="fab fa-linkedin"
+								></i
+							></a>
+							<a
+								href="https://github.com/abdorayden"
+								target="_blank"
+								aria-label="GitHub profile"
+								><i
+									class="fab fa-github"
+								></i
+							></a>
+							<a
+								href="https://www.instagram.com/abdenour__souane/"
+								target="_blank"
+								aria-label="Instagram profile"
+								><i
+									class="fab fa-instagram"
+								></i
+							></a>
+						</div>
+					</section>
 				</div>
-				<div id="about" class="card">
-					<h2>About Me</h2>
-					<p>
-						Hello! My name is Abdenour
-						Souane, also known as Rayden.
-						I'm a Computer Science
-						Engineering student and a
-						penetration tester with a deep
-						passion for cybersecurity and
-						low-level programming.
-					</p>
+
+				<div class="row">
+					<section id="skills" class="card" aria-labelledby="skills-heading">
+						<h2 id="skills-heading">My Skills</h2>
+						<ul class="skills" aria-label="Programming languages and technologies">
+							<li>vim</li>
+							<li>linux</li>
+							<li>c</li>
+							<li>lua</li>
+							<li>go</li>
+							<li>bash</li>
+							<li>python</li>
+							<li>java</li>
+						</ul>
+					</section>
+
+					<section id="projects" class="card" aria-labelledby="projects-heading">
+						<h2 id="projects-heading">My GitHub Projects</h2>
+						<ul class="projects-list" aria-label="List of projects">
+							<li>
+								<a
+									href="https://rayden-six.vercel.app/raylist"
+									target="_blank"
+									>RayList</a
+								>
+								<p>
+									A C library that
+									implements a
+									dynamic linked
+									list with
+									support for
+									multiple data
+									types.
+								</p>
+							</li>
+							<li>
+								<a
+									href="https://github.com/abdorayden/raynet.git"
+									target="_blank"
+									>RayNet</a
+								>
+								<p>
+									raynet is
+									network analyser
+									tool for
+									pentesters have
+									multiple modules
+									for scannig and
+									testing
+									vulerabilitys
+									and Exploit this
+									tool is still
+									under
+									developement
+								</p>
+							</li>
+							<li>
+								<a
+									href="https://rayden-six.vercel.app/raymp"
+									target="_blank"
+									>RayMp</a
+								>
+								<p>
+									Raymp software:
+									a TUI framework with plugins and templates
+									for a better development experience.
+								</p>
+							</li>
+							<li>
+								<a
+									href="https://github.com/abdorayden/csvlib"
+									target="_blank"
+									>RayCsv</a
+								>
+								<p>
+									A C library for
+									parsing CSV
+									files.
+								</p>
+							</li>
+						</ul>
+					</section>
 				</div>
-				<div class="card-client">
-					<p class="name-client">
-						Souane Abdenour
-					</p>
-					<p>CS Engineer student</p>
-					<div class="social-media">
-						<a
-							href="https://www.linkedin.com/in/abdenour-souane"
-							target="_blank"
-							><i
-								class="fab fa-linkedin"
-							></i
-						></a>
-						<a
-							href="https://github.com/abdorayden"
-							target="_blank"
-							><i
-								class="fab fa-github"
-							></i
-						></a>
-						<a
-							href="https://www.instagram.com/abdenour__souane/"
-							target="_blank"
-							><i
-								class="fab fa-instagram"
-							></i
-						></a>
+
+				<section class="vim-editor-container" aria-labelledby="vim-editor-heading">
+					<div class="vim-editor">
+						<h3 id="vim-editor-heading">Interactive Vim Editor</h3>
+						<p class="vim-instructions">Press 'i' to enter insert mode, ESC to exit to command mode</p>
+						<textarea
+							id="editor-textarea"
+							placeholder="Write useful information, advice or quote that others may benefit from :)) ..."
+							aria-label="Vim-style editor for adding content"
+							aria-describedby="vim-editor-instructions"
+						></textarea>
+						<div class="vim-controls">
+							<button
+								class="submit-button"
+								id="submit-button"
+								aria-describedby="vim-status"
+							>
+								Submit Content
+							</button>
+							<div class="status-bar" id="vim-status" aria-live="polite" aria-atomic="true">
+								-- INSERT --
+							</div>
+						</div>
 					</div>
-				</div>
+				</section>
 			</div>
+		</main>
 
-			<div class="row">
-				<div id="skills" class="card">
-					<h2>My Skills</h2>
-					<ul class="skills">
-						<li>Vim</li>
-						<li>Linux</li>
-						<li>C</li>
-						<li>lua</li>
-						<li>go</li>
-						<li>bash</li>
-						<li>python</li>
-						<li>java</li>
-					</ul>
-				</div>
-
-				<div id="projects" class="card">
-					<h2>My GitHub Projects</h2>
-					<ul class="projects-list">
-						<li>
-							<a
-								href="https://rayden-six.vercel.app/raylist"
-								target="_blank"
-								>RayList</a
-							>
-							<p>
-								A C library that
-								implements a
-								dynamic linked
-								list with
-								support for
-								multiple data
-								types.
-							</p>
-						</li>
-						<li>
-							<a
-								href="https://github.com/abdorayden/raynet.git"
-								target="_blank"
-								>RayNet</a
-							>
-							<p>
-								raynet is
-								network analyser
-								tool for
-								pentesters have
-								multiple modules
-								for scannig and
-								testing
-								vulerabilitys
-								and Exploit this
-								tool is still
-								under
-								developement
-							</p>
-						</li>
-						<li>
-							<a
-								href="https://rayden-six.vercel.app/raymp"
-								target="_blank"
-								>RayMp</a
-							>
-							<p>
-								Raymp software: 
-								a TUI framework with plugins and templates 
-								for a better development experience. 
-							</p>
-						</li>
-						<li>
-							<a
-								href="https://github.com/abdorayden/csvlib"
-								target="_blank"
-								>RayCsv</a
-							>
-							<p>
-								A C library for
-								parsing CSV
-								files.
-							</p>
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="vim-editor-container">
-				<div class="vim-editor">
-					<textarea
-						id="editor-textarea"
-						placeholder="Write useful information, advice or quote that others may benefit from :)) ..."
-					></textarea>
-					<button
-						class="submit-button"
-						id="submit-button"
-					>
-						ReadMe
-					</button>
-					<div class="status-bar" id="status-bar">
-						-- INSERT --
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div id="notification" class="notification">
-			<span class="close-btn" onclick="closeNotification()"
+		<div id="notification" class="notification" role="alert" aria-live="assertive">
+			<span class="close-btn" onclick="closeNotification()" aria-label="Close notification"
 				>&times;</span
 			>
-			<strong class="resp">Success!</strong>
+			<span class="resp">Success!</span>
 		</div>
 
 		<script>
 			const textarea =
 				document.getElementById("editor-textarea");
-			const statusBar = document.getElementById("status-bar");
+			const statusBar = document.getElementById("vim-status");
 			const submitButton =
 				document.getElementById("submit-button");
 
