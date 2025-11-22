@@ -7,8 +7,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <link rel="icon" href="https://github.com/abdorayden/PortFolio/blob/master/assets/logo.jpeg?raw=true" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
     <style>
         :root {
             --primary-color: #00bcd4;
@@ -81,6 +79,7 @@
             display: flex;
             flex: 1;
             min-height: calc(100vh - var(--header-height));
+            flex-wrap: wrap; /* Allow wrapping on small screens */
         }
         
         .sidebar {
@@ -114,19 +113,21 @@
         .sidebar ul li a {
             color: var(--primary-color);
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 12px 15px;
             display: block;
             border-radius: 5px;
             transition: all 0.3s ease;
             font-size: 14px;
+            margin: 5px 0;
+            border: 1px solid transparent;
         }
-        
-        .sidebar ul li a:hover, 
+
+        .sidebar ul li a:hover,
         .sidebar ul li a:focus,
         .sidebar ul li a.active {
             background: var(--primary-color);
             color: var(--dark-bg);
-            transform: translateX(5px);
+            border-color: var(--primary-color);
         }
         
         .content {
@@ -134,6 +135,7 @@
             padding: 25px;
             overflow-y: auto;
             max-width: 100%;
+            min-width: 0; /* Allows flex item to shrink below content size */
         }
         
         .card {
@@ -145,6 +147,7 @@
             padding: 25px;
             animation: fadeIn 0.5s ease-in-out;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow-x: auto; /* Allow horizontal scrolling for wide content */
         }
         
         .card:hover {
@@ -188,14 +191,25 @@
             margin: 15px 0;
             overflow-x: auto;
             border: 1px solid var(--primary-color);
+            line-height: 1.5;
         }
-        
+
         pre[class*="language-"], code[class*="language-"] {
             background: #1e1e1e !important;
             color: #f8f8f2 !important;
             padding: 15px !important;
             border-radius: 4px;
             overflow: auto;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background: rgba(0, 188, 212, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 14px;
         }
         
         .hacker-text {
@@ -221,17 +235,26 @@
             display: none;
             background: var(--card-bg);
             color: var(--primary-color);
-            padding: 15px;
+            padding: 16px;
             text-align: center;
             cursor: pointer;
             border-bottom: 2px solid var(--primary-color);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            transition: all 0.3s ease;
         }
-        
-        .menu-toggle:hover {
+
+        .menu-toggle:hover, .menu-toggle:focus {
             background: var(--primary-color);
             color: var(--dark-bg);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle:active {
+            transform: translateY(0);
         }
         
         /* Mobile styles */
@@ -239,7 +262,7 @@
             .main-container {
                 flex-direction: column;
             }
-            
+
             .sidebar {
                 width: 100%;
                 height: auto;
@@ -247,57 +270,114 @@
                 border-right: none;
                 border-bottom: 2px solid var(--primary-color);
                 transform: translateX(-100%);
+                max-height: 80vh;
+                overflow-y: auto;
             }
-            
+
             .sidebar.open {
                 transform: translateX(0);
             }
-            
+
             .content {
                 padding: 20px 15px;
+                min-height: auto;
             }
-            
+
             .menu-toggle {
                 display: block;
+                padding: 12px;
+                font-size: 16px;
             }
-            
+
             .hacker-text {
+                font-size: 1.3rem;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            header {
+                padding: 12px 15px;
+            }
+
+            nav {
+                padding: 12px 10px;
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 8px 12px;
+                font-size: 13px;
+                margin: 4px;
+            }
+
+            .card {
+                padding: 18px;
+                margin-bottom: 20px;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 188, 212, 0.1);
+            }
+
+            .terminal {
+                padding: 12px;
+                font-size: 11px; /* Even smaller font on mobile for code */
+                margin: 12px 0;
+            }
+
+            pre[class*="language-"], code[class*="language-"] {
+                font-size: 11px !important;
+                padding: 8px !important;
+                line-height: 1.4;
+            }
+
+            h2 {
                 font-size: 1.4rem;
             }
-            
-            header {
-                padding: 10px 15px;
-            }
-            
-            nav {
-                padding: 10px;
-                gap: 10px;
-            }
-            
-            nav a {
-                padding: 6px 12px;
-                font-size: 14px;
-            }
-            
-            .card {
-                padding: 20px;
-                margin-bottom: 20px;
+
+            h3 {
+                font-size: 1.2rem;
             }
         }
         
         @media (max-width: 480px) {
             .hacker-text {
                 font-size: 1.2rem;
+                white-space: normal; /* Allow text wrapping on very small screens */
             }
-            
+
             nav {
                 flex-direction: column;
                 align-items: center;
+                gap: 10px;
             }
-            
+
             nav a {
-                width: 80%;
+                width: 90%;
                 text-align: center;
+                margin: 5px 0;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .terminal {
+                padding: 10px;
+                font-size: 10px; /* Even smaller for very small screens */
+            }
+
+            pre[class*="language-"], code[class*="language-"] {
+                font-size: 10px !important;
+                padding: 6px !important;
+            }
+
+            .menu-toggle {
+                padding: 14px;
+                font-size: 17px;
+            }
+
+            .content {
+                padding: 16px 12px;
             }
         }
         
@@ -1142,5 +1222,7 @@ int main() {
             </div>
         </main>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>
