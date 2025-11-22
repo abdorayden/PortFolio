@@ -7,6 +7,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <link rel="icon" href="https://github.com/abdorayden/PortFolio/blob/master/assets/logo.jpeg?raw=true" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
     <style>
         :root {
             --primary-color: #00bcd4;
@@ -106,7 +108,7 @@
         }
         
         .sidebar ul li {
-            margin: 10px 0;
+            margin: 8px 0;
         }
         
         .sidebar ul li a {
@@ -450,7 +452,6 @@
                 <h2>RayList Library</h2>
                 <p>RayList is a C library that implements a dynamic linked list supporting multiple data types, with various functions for list manipulation. It allows you to manage lists, stacks, and queues efficiently with support for custom data types and asynchronous task execution. raylist also contains magic macros to solve list C problems like (RLSetObject , RLDefer , ...)</p>
             </div>
-            
             <div id="features" class="card">
                 <h3>Features</h3>
                 <ul>
@@ -461,7 +462,6 @@
                     <li>Customizable memory allocation functions</li>
                 </ul>
             </div>
-            
             <div id="installation" class="card">
                 <h3>Installation</h3>
                 <p>To use RayList in your project, include the <code>raylist.h</code> header file and link against the compiled library. Ensure you have the required dependencies installed. and define macro LIST_C to act like C file because the library is like stb stile header only library</p>
@@ -470,15 +470,16 @@
 #include &lt;stdarg.h&gt;
 // enable raylist implementation
 #define LIST_C
-#include "raylist.h"</code></pre>
+#include "raylist.h"
+                </code></pre>
                 </div>
             </div>
-            
             <div id="usage" class="card">
                 <h3>Usage</h3>
                 <p>Here is a basic example of how to use RayList:</p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#include&lt;stdarg.h&gt;
+                    <pre class="language-c"><code class="language-c">
+#include&lt;stdarg.h&gt;
 #include&lt;stdio.h&gt;
 
 #define LIST_C
@@ -490,10 +491,10 @@ int main() {
     my_list.List_Append(RL_STR, "Hello, World!");
     my_list.List_Print();
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="preffix" class="card">
                 <h3>List</h3>
                 <p>
@@ -502,7 +503,8 @@ int main() {
                     Example :
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">// this macro enable list preffix
+                    <pre class="language-c"><code class="language-c">
+// this macro enable list preffix
 #define USING_LIST
 
 #define LIST_C
@@ -515,7 +517,8 @@ int main() {
     my_list.Filter(callback, RL_INT); // now you can use method like this
     my_list.Print();
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
 
@@ -524,9 +527,11 @@ int main() {
                 <p>
                     types can used in list , stack , queue
                     this type helps raylist for memory managment
+
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">// this macro enable list preffix
+                    <pre class="language-c"><code class="language-c">
+// this macro enable list preffix
 #define USING_LIST
 
 #define LIST_C
@@ -546,10 +551,10 @@ int main() {
 	// RL_VOIDFUNC	type function return void
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="List" class="card">
                 <h3>List</h3>
                 <p>
@@ -557,7 +562,8 @@ int main() {
                     list also accept va_list arguments to add data dynamicly
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -568,10 +574,10 @@ int main() {
 				RL_STR , "world"  //   .
 	);
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="rlappend" class="card">
                 <h3>List RLAppend</h3>
                 <p>
@@ -581,7 +587,8 @@ int main() {
                     work with int , float and char only
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -595,17 +602,18 @@ int main() {
 	RLAppend(RL_FLT , 3.14f);
 	RLAppend(RL_FLT , 2.73f);
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-append" class="card">
                 <h3>List Append</h3>
                 <p>
                     append method takes type and data
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -619,17 +627,18 @@ int main() {
 	mylist.List_Append(RL_STR , "World");
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-insert" class="card">
                 <h3>List Insert</h3>
                 <p>
                     insert method takes index poition to add data , type and data
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -645,10 +654,10 @@ int main() {
 	mylist.List_Insert(0 , RL_STR , "baz"); // insert baz str in index 0
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-search" class="card">
                 <h3>List Search</h3>
                 <p>
@@ -656,7 +665,8 @@ int main() {
                     function return boolean true if function found the data else false
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -674,17 +684,18 @@ int main() {
 	}
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-delete" class="card">
                 <h3>List Delete</h3>
                 <p>
                     delete method takes int index the position of the data we want to delete
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -699,17 +710,18 @@ int main() {
 	mylist.Del_Index(0);
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-get" class="card">
                 <h3>List Get</h3>
                 <p>
                     get method takes int index the position of the data we want to get
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -724,10 +736,10 @@ int main() {
 	puts((char*)mylist.List_Get(1));
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-reverse" class="card">
                 <h3>List Reverse</h3>
                 <p>
@@ -735,7 +747,8 @@ int main() {
                     reverse will reverse the list
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -749,10 +762,10 @@ int main() {
 	mylist.List_Reverse(); // list reverse
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-print" class="card">
                 <h3>List Print</h3>
                 <p>
@@ -760,7 +773,8 @@ int main() {
                     print method will print the data in list like python3 format
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -774,10 +788,10 @@ int main() {
 	mylist.List_Print();
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-error-handling" class="card">
                 <h3>List Error Handle</h3>
                 <p>
@@ -787,7 +801,8 @@ int main() {
                     if return value is not NULL log the error
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -804,17 +819,18 @@ int main() {
 	}
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-len" class="card">
                 <h3>List length</h3>
                 <p>
                     len method take no argument and return how many data in list
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -828,10 +844,10 @@ int main() {
 	int len = mylist.List_Len(); // len == 3
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-execfunctions-sync" class="card">
                 <h3>List Call Functions Sync</h3>
                 <p>
@@ -850,7 +866,8 @@ int main() {
                         ADDED 	the function return value will added to the list
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 void foo(void){
@@ -872,10 +889,10 @@ int main() {
 	myname.List_Exec_Sync(1 , "rayden" , ADDED);
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-execfunctions-async" class="card">
                 <h3>List Call Functions Async</h3>
                 <p>
@@ -899,7 +916,8 @@ int main() {
 
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 void limitloop(void)
@@ -936,10 +954,10 @@ int main() {
 	rt.Kill(tr.thread); // killing functionof tr interface
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-filter" class="card">
                 <h3>List Filter</h3>
                 <p>
@@ -952,7 +970,8 @@ int main() {
 
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 
@@ -971,14 +990,14 @@ int main() {
 		RLAppend(RL_INT , i);
 	}
 	mylist.List_Filter(for_filter , RL_INT , ONLY);
-				       // now our list contains odd numbers
-				       // if flag was ALL other types will be delete it
+					       // now our list contains odd numbers
+					       // if flag was ALL other types will be delete it
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-map" class="card">
                 <h3>List Map</h3>
                 <p>
@@ -986,7 +1005,8 @@ int main() {
 
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 
@@ -1007,13 +1027,13 @@ int main() {
 		RLAppend(RL_INT , i);
 	}
 	mylist.List_Map(for_map , RL_INT);
-				       // now all odd numbers is equale to 100
+					       // now all odd numbers is equale to 100
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
-            
             <div id="method-clear" class="card">
                 <h3>List Clear</h3>
                 <p>
@@ -1021,7 +1041,8 @@ int main() {
 
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -1034,7 +1055,8 @@ int main() {
 	mylist.List_Clear(); // len list == 0
 
     return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
 
@@ -1049,13 +1071,15 @@ int main() {
                 </p>
             </div>
 
+
             <div id="collections" class="card">
                 <h3>RLCollections Interface</h3>
                 <p>
                     RLCollections Example :
                 </p>
                 <div class="terminal">
-                    <pre class="language-c"><code class="language-c">#define LIST_C
+                    <pre class="language-c"><code class="language-c">
+#define LIST_C
 #include "raylist.h"
 
 int main() {
@@ -1112,13 +1136,11 @@ int main() {
 	RLDefer(stack.Clear); // clear will be called when function ends
 
 	return 0;
-}</code></pre>
+}
+                </code></pre>
                 </div>
             </div>
         </main>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
 </body>
 </html>
