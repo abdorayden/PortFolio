@@ -218,6 +218,64 @@ nav a.active {
 	text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
 }
 
+.projects-list {
+	list-style: none;
+	padding: 0;
+	margin-top: 15px;
+}
+
+.projects-list li {
+	margin: 15px 0;
+	padding: 15px;
+	background: #121212;
+	border: 1px solid #00bcd4;
+	border-radius: 8px;
+	text-align: left;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.projects-list li::before {
+	content: '▶';
+	color: #00bcd4;
+	margin-right: 10px;
+}
+
+.projects-list li:hover {
+	background: #1e1e1e;
+	transform: translateY(-3px);
+	box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+.projects-list a {
+	color: #00bcd4;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 18px;
+	display: block;
+	margin-bottom: 8px;
+	transition: all 0.3s ease;
+	border: 1px solid transparent;
+	padding: 5px;
+	border-radius: 4px;
+}
+
+.projects-list a:hover {
+	color: #00ffcc;
+	text-decoration: underline;
+	background-color: rgba(0, 188, 212, 0.1);
+	border-color: #00bcd4;
+	text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
+}
+
+.projects-list p {
+	margin: 8px 0 0;
+	font-size: 15px;
+	color: #b0c4de;
+	line-height: 1.5;
+}
+
 .vim-editor .submit-button {
 	margin-top: 10px;
 	padding: 10px;
