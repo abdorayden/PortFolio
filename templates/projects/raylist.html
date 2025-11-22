@@ -8,6 +8,39 @@
     <link rel="icon" href="https://github.com/abdorayden/PortFolio/blob/master/assets/logo.jpeg?raw=true" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-tomorrow.min.css" />
     <style>
+        /* Additional syntax highlighting overrides to ensure colors display */
+        .token.comment, .token.prolog, .token.doctype, .token.cdata {
+            color: #629755 !important; /* Green for comments */
+        }
+        .token.punctuation {
+            color: #f8f8f2 !important; /* Default text color */
+        }
+        .token.property, .token.tag, .token.constant, .token.symbol, .token.deleted {
+            color: #f92672 !important; /* Red */
+        }
+        .token.boolean, .token.number {
+            color: #ae81ff !important; /* Purple */
+        }
+        .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted {
+            color: #a6e22e !important; /* Green */
+        }
+        .token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string, .token.variable {
+            color: #f8f8f2 !important; /* Default text color */
+        }
+        .token.function {
+            color: #fd971f !important; /* Orange */
+        }
+        .token.keyword {
+            color: #f92672 !important; /* Red */
+        }
+        .token.atrule, .token.attr-value, .token.function-name {
+            color: #fd971f !important; /* Orange */
+        }
+        .token.important, .token.class-name {
+            color: #fd971f !important; /* Orange */
+        }
+    </style>
+    <style>
         :root {
             --primary-color: #00bcd4;
             --primary-dark: #008ba3;
@@ -1286,5 +1319,11 @@ int main() {
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
+    <script>
+        // Ensure syntax highlighting is applied after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
 </body>
 </html>
